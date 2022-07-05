@@ -1,0 +1,14 @@
+button, button:active, button:focus {
+    box-shadow: none!important;
+    border: 0!important;
+    border-color: transparent!important;
+}
+
+.accordion-button::after {
+    background: none;
+}
+
+.accordion-body {
+    padding-top: 8px;
+    padding-right: 10px;
+}

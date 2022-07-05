@@ -1,0 +1,201 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+    --menu-text-color: #222934;
+}
+
+* {
+    -webkit-user-drag: none;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+.fill-h {
+    height: 100%;
+    width: auto;
+}
+
+.fill-w {
+    height: auto;
+    width: 100%;
+}
+
+
+/* basic background */
+.lowest-background {
+    background: url("./cat_feet_bg.svg") left 116% / 440px no-repeat, linear-gradient(178deg, rgb(212, 237, 237) 0%, rgba(212, 237, 237, 0.7) 540px, rgba(255, 255, 255, 0.6) 720px, rgb(255, 170, 107) 100%) no-repeat
+}
+
+.logo-box{
+    animation: rotate .1s ease-in-out infinite 0s;
+}   
+
+@keyframes rotate {
+    0%, 100% {
+        transform: rotate(0);
+    }
+    50% {
+        transform: rotate(3deg);
+    }
+}
+
+
+
+/* aside setting */
+.side-wrap {
+    flex-shrink: 0;
+    flex-basis: 240px;
+}
+
+.content-wrap {
+    flex-shrink: 1;
+    width: 100%;
+}
+
+.side-wrap .menu-box {
+    padding-right: 12px;
+    scrollbar-width: none;
+    /* Firefox */
+    -ms-overflow-style: none;
+    /* IE 10+ */
+}
+
+.side-wrap .menu-box::-webkit-scrollbar {
+    display: none;
+    /* Chrome Safari */
+}
+
+.side-wrap .menu-item {
+    position: relative;
+    padding: 2px 0;
+    margin-bottom: 4px;
+}
+
+.side-wrap .menu-button.collapsed, 
+.side-wrap .menu-button.no-accordion {
+    padding-left: 80px;
+    background: linear-gradient(60deg, transparent 0, transparent 0%, rgba(255, 255, 255, .6) 00%, rgba(255, 255, 255, .6) 90%, transparent 90%, transparent 100%) no-repeat -280px center;
+}
+
+.side-wrap .menu-button {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 8px 0;
+    padding-left: 65px;
+    color: var(--menu-text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background .3s;
+    background: linear-gradient(60deg, transparent 0, transparent 0%, rgba(255, 255, 255, .6) 00%, rgba(255, 255, 255, .6) 90%, transparent 90%, transparent 100%) no-repeat;
+}
+
+
+/* nav list icon */
+.side-wrap .menu-button::before{
+    position: absolute;
+    content: '';
+    left: 30px;
+    top: 0;
+    width: 26px;
+    height: 100%;
+    transition: all .3s;
+}
+
+.side-wrap .menu-button.collapsed::before, .side-wrap .menu-button.no-accordion::before {
+    left: 45px;
+}
+
+.menu-button.icon-home::before {
+    background: url('./house_button_icon.svg') no-repeat left center / contain;
+}
+.menu-button.icon-products::before {
+    background: url('./products_icon.svg') no-repeat left center / contain;
+    transform: rotate(45deg);
+}
+.menu-button.icon-orderlist::before {
+    background: url('./page_flip_icon.svg') no-repeat left center / contain;
+}
+.menu-button.icon-message::before {
+    background: url('./message_icon.svg') no-repeat left center / contain;
+}
+.menu-button.icon-coupon::before {
+    background: url('./price_label_icon.svg') no-repeat left center / contain;
+    transform: rotate(90deg);
+}
+.menu-button.icon-setting::before {
+    background: url('./settings_icon.svg') no-repeat left center / contain;
+}
+
+
+/* nav hover & active css */
+.side-wrap .menu-button::after,
+.side-wrap .menu-button.collapsed::after, 
+.side-wrap .menu-button.no-accordion::after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 0;
+    height: calc(100% - 4px);
+    width: 0px;
+    border-radius: 0 8px 8px 0;
+    transform: translateY(-50%);
+    background-color: transparent;
+    transition: all .45s;
+    z-index: 99;
+}
+
+.side-wrap .menu-button:hover::after,
+.side-wrap .menu-button::after {
+    width: 7px;
+    background-color: #49586F;
+}
+
+.side-wrap .menu-button:hover {
+    background: linear-gradient(60deg, transparent 0, transparent 0%, rgba(255, 255, 255, .6) 00%, rgba(255, 255, 255, .6) 90%, transparent 90%, transparent 100%) no-repeat;
+    transition: all .3s;
+}
+
+.menu-button .icon {
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    top: 50%;
+    right: 40px;
+    transform: translate(0,-50%);
+    border-radius: 10px;
+    background-color: #555;
+    transition: all .1s;
+}
+
+.menu-button.collapsed .icon{
+    right: 0px;
+    transform: translate(100%,-50%);
+}
+
+/* second layer button */
+.menu-item li {
+    margin-bottom: 4px;
+}
+
+.menu-item li a {
+    padding: 4px 0;
+    padding-left: 44px;
+    display: block;
+    color: var(--menu-text-color);
+    text-decoration: none;
+    transition: all .3s;
+}
+
+.menu-item a:hover{
+    background-color: rgba(34, 41, 52, 0.1);
+    border-radius: 2px;
+}
+
+
+
+
+.content-wrap .content-box {
+    background-color: white;
+    border-radius: 20px 0 0 20px;
+    box-shadow: -0px 0px 10px rgba(0, 0, 0, .1);
+}
