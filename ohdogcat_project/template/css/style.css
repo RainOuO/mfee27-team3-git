@@ -312,6 +312,7 @@ a {
 /* #main Section-Scroll-Bar  */
 #main {
     scrollbar-width: thin;
+    padding-right: 1.5rem;
 }
 
 #main::-webkit-scrollbar {
