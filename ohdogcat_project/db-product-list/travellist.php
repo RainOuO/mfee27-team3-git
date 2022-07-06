@@ -24,11 +24,44 @@
             color: #222934;
             background-color: #FFC845;
         }
+        .filterBtn:hover {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:active {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:visited {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:focus {
+            color: #222934;
+            background-color: #FFC845;
+        }
 
         .detailBtn {
             color: #222934;
             background-color: #D5EEEE;
         }
+        .detailBtn:hover {
+            color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:active {
+            color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:visited {
+           color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:focus {
+            color: #222934;
+            background-color: #D5EEEE;
+        }
+
 
         .catBtn {
             background-color: #D5EEEE;
@@ -218,7 +251,7 @@
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
-                                <h1>旅遊票券列表</h1>
+                                <h2>旅遊票券列表</h2>
                             </div>
                             <div class="pe-1" role="">
                             <input type="button" class="btn catBtn my-3" value="商品總覽" onclick="window.location.href='backtoALLIST.php'">
@@ -241,7 +274,7 @@
                                     </ul>
                                 </div>
                                 <div class="filters ms-2">
-                                    <div id="searchbykey" style="display:block">
+                                    <div id="searchbykey" style="display:none">
                                         <form action="doFilter-keyword.php" method="post">
                                             <div class="col-10 d-flex mt-4 keywordBar ">
                                                 <input type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字">
@@ -251,7 +284,7 @@
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
-                                    <div id="searchbydate" style="display:block">
+                                    <div id="searchbydate" style="display:none">
                                         <form action="doFilter-date.php" method="post">
                                             <div class="col-10 d-flex mt-4">
                                                 <div class="col-5 mx-1">
@@ -271,7 +304,7 @@
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
-                                    <div id="searchbyprice" style="display:block">
+                                    <div id="searchbyprice" style="display:none">
                                         <form action="doFilter-price.php" method="post">
                                             <div class="col-9 d-flex mt-4 priceBar">
                                                 <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="min-price">
@@ -475,27 +508,6 @@
                                 </nav>
                             </div>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
                     </main>
                 </div>
             </div>
@@ -506,8 +518,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script>
         let keywordFilter = document.querySelector("#keyFilter");
         let key = document.querySelector("#searchbykey");
@@ -517,19 +527,19 @@
         let price = document.querySelector("#searchbyprice");
 
         keywordFilter.addEventListener("click", function() {
-            console.log("click1");
+            // console.log("click2");
             key.style.display = "block";
             date.style.display = "none";
             price.style.display = "none";
         });
         dateFilter.addEventListener("click", function() {
-            console.log("click2");
+            // console.log("click2");
             key.style.display = "none";
             date.style.display = "block";
             price.style.display = "none";
         });
         priceFilter.addEventListener("click", function() {
-            console.log("click3");
+            // console.log("click3");
             key.style.display = "none";
             date.style.display = "none";
             price.style.display = "block";

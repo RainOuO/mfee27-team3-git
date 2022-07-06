@@ -12,14 +12,30 @@
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
     <style>
-        * {
+       * {
             -webkit-user-drag: none;
             font-family: 'Noto Sans TC', sans-serif;
             color: #222934;
-
+            
         }
 
         .filterBtn {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:hover {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:active {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:visited {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:focus {
             color: #222934;
             background-color: #FFC845;
         }
@@ -28,6 +44,23 @@
             color: #222934;
             background-color: #D5EEEE;
         }
+        .detailBtn:hover {
+            color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:active {
+            color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:visited {
+           color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:focus {
+            color: #222934;
+            background-color: #D5EEEE;
+        }
+
 
         .catBtn {
             background-color: #D5EEEE;
@@ -216,7 +249,7 @@
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
-                                <h1>商品總覽</h1>
+                                <h2>商品總覽</h2>
                             </div>
                             <div class="pe-1" role="">
                                 <input type="button" class="btn catBtn my-3" value="商品總覽" onclick="window.location.href='backtoALLIST.php'">

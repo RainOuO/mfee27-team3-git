@@ -20,6 +20,8 @@
     <style>
         .photo-window {
             padding: 5px;
+            text-align : center;
+            
         }
 
 
@@ -42,7 +44,7 @@
         }
 
         .slideshow {
-         
+         box-shadow: 2px 2px 5px;
             width: 600px;
             height: 170px;
             overflow-y: auto;
@@ -215,12 +217,12 @@
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 p-4">
 
                         <div class="border-bottom pb-2">
-                            <h1>查看商品</h1>
+                            <h2>商品內容管理</h2>
                         </div>
                         <div class="d-flex justify-content-between align-items-center m-2">
                             <div class="title d-flex mt-2">
                                 <img src="./8666681_edit_icon.png" width="48" height="48" alt="">
-                                <h3 class="pt-3">基本設定</h3>
+                                <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4> 
                             </div>
                             <div class="crudBox">
                                 <button type="button" class="btn filterBtn mx-1">修改</button>
@@ -232,14 +234,14 @@
                         <hr>
                         <div class="row d-flex justify-content-center">
                             <div class="photo d-flex flex-column col-5">
-                                <div class="photo-window d-flex flex-column ">
-                                    <div class="cover-photo">
+                                <div class="photo-window d-flex flex-column  ">
+                                    <div class="cover-photo m-3">
                                         <img src="./dogsuit.jpg" alt="">
                                     </div>
                                     <div class="slideshow d-flex">
                                         <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1"src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
+                                        <div class="photo1"> <img class="photo1"src="./dog2.jpg" alt=""></div>
+                                        <div class="photo1"> <img class="photo1" src="./dog.jpg" alt=""></div>
                                         <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
                                         <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
                                         <div class="photo1"> <img class="photo1"src="./dogsuit.jpg" alt=""></div>
@@ -247,12 +249,12 @@
                                     </div>
                                 </div>
                                 <form action="doUpload.php" method="post" enctype="multipart/form-data">
-                                    <div class="row upload">
-                                        <div class="mb-3 d-flex col-auto">
+                                    <div class="row upload mt-3 d-flex justify-content-center" >
+                                        <div class=" d-flex col-6">
                                             <input class="form-control" type="file" name="myFile">
                                             <button class="btn filterBtn" type="submit">上傳封面照片</button>
                                         </div>
-                                        <div class="mb-3 d-flex col-auto">
+                                        <div class="d-flex col-6">
                                             <input class="form-control" type="file" name="myFile">
                                             <button class="btn filterBtn" type="submit">上傳商品照片</button>
                                         </div>

@@ -23,11 +23,44 @@
             color: #222934;
             background-color: #FFC845;
         }
+        .filterBtn:hover {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:active {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:visited {
+            color: #222934;
+            background-color: #FFC845;
+        }
+        .filterBtn:focus {
+            color: #222934;
+            background-color: #FFC845;
+        }
 
         .detailBtn {
             color: #222934;
             background-color: #D5EEEE;
         }
+        .detailBtn:hover {
+            color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:active {
+            color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:visited {
+           color: #fff;
+            background-color: #49586f;
+        }
+        .detailBtn:focus {
+            color: #222934;
+            background-color: #D5EEEE;
+        }
+
 
         .catBtn {
             background-color: #D5EEEE;
@@ -88,6 +121,7 @@
         .dateS {
             height: 30px;
         }
+
 
     </style>
 </head>
@@ -217,7 +251,7 @@
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
-                                <h1>餐廳票券列表</h1>
+                                <h2>餐廳票券列表</h2>
                             </div>
                             <div class="pe-1" role="">
                             <input type="button" class="btn catBtn my-3" value="商品總覽" onclick="window.location.href='backtoALLIST.php'">
@@ -505,8 +539,6 @@
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
     <script>
         let keywordFilter = document.querySelector("#keyFilter");
         let key = document.querySelector("#searchbykey");
