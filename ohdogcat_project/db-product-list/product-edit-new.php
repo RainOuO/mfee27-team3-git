@@ -20,12 +20,32 @@
     <style>
         .photo-window {
             padding: 5px;
-            text-align : center;
-            
+            text-align: center;
+
         }
 
 
         .filterBtn {
+            color: #222934;
+            background-color: #FFC845;
+        }
+
+        .filterBtn:hover {
+            color: #222934;
+            background-color: #FFC845;
+        }
+
+        .filterBtn:active {
+            color: #222934;
+            background-color: #FFC845;
+        }
+
+        .filterBtn:visited {
+            color: #222934;
+            background-color: #FFC845;
+        }
+
+        .filterBtn:focus {
             color: #222934;
             background-color: #FFC845;
         }
@@ -35,17 +55,17 @@
             height: 500px;
             /* border: 1px solid #000; */
             border-radius: 15px;
+            min-width: 350px;
+            width: 100%;
+            object-fit: contain;
+            overflow: hidden;
 
-        }
-
-        .cover-photo img {
-
-            object-fit: cover;
         }
 
         .slideshow {
-         box-shadow: 2px 2px 5px;
+            box-shadow: 2px 2px 5px;
             width: 600px;
+            max-width: 100%;
             height: 170px;
             overflow-y: auto;
             object-fit: contain;
@@ -54,45 +74,49 @@
 
 
         .photo1 {
-           width: 150px;
-           height: 150px;
+            width: 150px;
+            height: 150px;
         }
 
         .photo1 img {
-            
+
             object-fit: contain;
             border: 2px solid grey;
 
         }
 
         /* 網頁捲軸【寬度】 */
-        ::-webkit-scrollbar {
-            width: 10px;
+        .slideshow::-webkit-scrollbar {
+            width: 5px;
         }
 
         /* 網頁捲軸【背景】顏色 */
-        ::-webkit-scrollbar-track {
-            background: #3cbdd0;
+        .slideshow::-webkit-scrollbar-track {
+            background: rgba(0, 0, 0, 0.5);
         }
 
         /* 網頁捲軸【把手】顏色 */
-        ::-webkit-scrollbar-thumb {
+        .slideshow::-webkit-scrollbar-thumb {
             background: #D5EEEE;
             width: 5px;
             border-radius: 15px;
         }
 
         /* 網頁捲軸【滑過時】把手的顏色 */
-        ::-webkit-scrollbar-thumb:hover {
+        .slideshow::-webkit-scrollbar-thumb:hover {
             background: #49586f;
             height: 3px;
             width: 3px;
             border-radius: 10px;
         }
+
+        .photo-upload .photo-window {
+            max-width: 100%;
+        }
     </style>
 </head>
 
-<body>
+<body class="bg vw-100 vh-100" id="bg">
     <div class="lowest-background w-100 vh-100 d-flex  overflow-hidden">
         <aside id="side-bar" class="side-wrap vh-100 d-flex flex-column">
             <div class="logo-box d-flex justify-content-center align-items-center py-2">
@@ -222,34 +246,34 @@
                         <div class="d-flex justify-content-between align-items-center m-2">
                             <div class="title d-flex mt-2">
                                 <img src="./8666681_edit_icon.png" width="48" height="48" alt="">
-                                <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4> 
+                                <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
                             </div>
                             <div class="crudBox">
-                                <button type="button" class="btn filterBtn mx-1">修改</button>
+                                <button type="button" class="btn filterBtn mx-1">儲存</button>
                                 <button type="button" class="btn filterBtn mx-1">複製</button>
                                 <button type="button" class="btn filterBtn mx-1">清空</button>
-                                <button type="button" class="btn filterBtn ms-1">刪除</button>
+                                <button type="button" class="btn filterBtn ms-1">取消</button>
                             </div>
                         </div>
                         <hr>
                         <div class="row d-flex justify-content-center">
-                            <div class="photo d-flex flex-column col-5">
+                            <div class="photobar d-flex flex-column col-5">
                                 <div class="photo-window d-flex flex-column  ">
                                     <div class="cover-photo m-3">
                                         <img src="./dogsuit.jpg" alt="">
                                     </div>
                                     <div class="slideshow d-flex">
                                         <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1"src="./dog2.jpg" alt=""></div>
+                                        <div class="photo1"> <img class="photo1" src="./dog2.jpg" alt=""></div>
                                         <div class="photo1"> <img class="photo1" src="./dog.jpg" alt=""></div>
                                         <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
                                         <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1"src="./dogsuit.jpg" alt=""></div>
-                                        <div> <img class="photo1"src="./dogsuit.jpg" alt=""></div>
+                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
+                                        <div> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
                                     </div>
                                 </div>
                                 <form action="doUpload.php" method="post" enctype="multipart/form-data">
-                                    <div class="row upload mt-3 d-flex justify-content-center" >
+                                    <div class="row photo-upload mt-3 d-flex justify-content-center">
                                         <div class=" d-flex col-6">
                                             <input class="form-control" type="file" name="myFile">
                                             <button class="btn filterBtn" type="submit">上傳封面照片</button>
@@ -260,17 +284,23 @@
                                         </div>
                                     </div>
                                 </form>
-
                             </div>
                             <div class="basic-setting col-6">
                                 <form action="doUpdate">
-                                    <label for="">商品名稱</label>
+                                    <label for="">商品名稱**</label>
                                     <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control">
-                                    <label for="">商品分類</label>
-                                    <input type="text" name="category" placeholder="預計下拉選單" class="form-control">
+                                    <label for="">商品分類**</label>
+                                    <select name='category' class="form-control">
+                                        <option value='0'>旅遊票券</option>
+                                        <option value='1'>活動票券</option>
+                                        <option value='2'>餐廳票券</option>
+                                        <option value='3'>寵物周邊</option>
+                                        <option value='4'>寵物服飾</option>
+                                        <option value='5'>寵物食品</option>
+                                    </select>
                                     <label for="">商品介紹</label>
-                                    <input type="text" name="intro" placeholder="最多輸入50字元" class="form-control">
-                                    <label for="">商品價格</label>
+                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
+                                    <label for="">商品價格**</label>
                                     <input type="text" name="price" placeholder="只能輸入大於0的數字" class="form-control">
                                     <label for="">商品規格</label>
                                     <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
@@ -278,36 +308,49 @@
                                         <img src="./8666681_edit_icon.png" width="48" height="48" alt="">
                                         <h3 class="pt-3">進階設定</h3>
                                     </div>
-
-
                                     <hr>
                                     <label for="">上架時間</label>
                                     <input type="datetime-local" name="spec" class="form-control">
-                                    <label for="">優惠券使用</label>
-                                    <input type="text" name="spec" placeholder="下拉式" class="form-control">
+                                    <label for="">下架時間</label>
+                                    <input type="datetime-local" name="spec" class="form-control">
+                                    <label for="">優惠券方案使用</label><br>
+                                    <select name='dragdown' class="form-control">
+                                        <option value='0'>全站周年慶</option>
+                                        <option value='1'>父親節活動</option>
+                                        <option value='2'>兒童節寵愛牠</option>
+                                        <option value='4'>站內年中慶 全站三件打85折</option>
+                                        <option value='5'>由優惠券管理作連動</option>
+                                        <option value='6'>無</option>
+                                    </select>
                                     <label for="">商品有效期限</label>
-                                    <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
+                                    <input type="date" name="spec" placeholder="自由增建選項" class="form-control">
+                                    <label for="">商品庫存數</label>
+                                    <input type="text" name="spec" placeholder="只能輸入大於0的數字" class="form-control">
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                        <label class="form-check-label" for="flexRadioDefault1">
+                                            商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
+                                        </label>
+                                    </div>
                                 </form>
                             </div>
                         </div>
                         <hr>
                         <form method="post">
                             <div class="text-end mb-1 d-flex justify-content-between">
-                                <h3>商品網頁編輯頁面</h3> <button class="btnry" type="submit">儲存草稿</button>
+                                <h3>商品文案編輯頁面</h3> <button class="btnry" type="submit">儲存草稿</button>
                             </div>
-                            <textarea id="mytextarea" name="product">歡迎編輯 傳到session</textarea>
-
+                            <textarea id="mytextarea" name="product">歡迎編輯 請勿上傳不雅文字</textarea>
                         </form>
                         <hr>
                         <div class="d-flex justify-content-end">
                             <div class="crudBox">
-                                <button type="button" class="btn filterBtn mx-1">修改</button>
+                                <button type="button" class="btn filterBtn mx-1">儲存</button>
                                 <button type="button" class="btn filterBtn mx-1">複製</button>
                                 <button type="button" class="btn filterBtn mx-1">清空</button>
-                                <button type="button" class="btn filterBtn ms-1">刪除</button>
+                                <button type="button" class="btn filterBtn ms-1">取消</button>
                             </div>
                         </div>
-
                     </main>
                 </div>
             </div>

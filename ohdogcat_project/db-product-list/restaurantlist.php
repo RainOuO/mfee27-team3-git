@@ -327,7 +327,7 @@
                             <div class="countBox">
                                 <h4 class="countBox">以下商品共: 00筆</h4>
                             </div>
-                            <button class="btn filterBtn me-1 ms-3 my-3">新增商品</button>
+                            <button class="btn filterBtn me-1 ms-3 my-3"onclick="window.location.href='product-edit-new.php'">新增商品</button>
                         </div>
                         <div class="table-responsive">
                             <table class="table table-sm">
