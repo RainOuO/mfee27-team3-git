@@ -8,12 +8,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS v5.2.0-beta1 -->
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
-        integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
-    <link rel="stylesheet" href="<?=$css?>">
-    
+    <link rel="stylesheet" href="<?= $css ?>">
+
 </head>
 
 <body>
@@ -21,7 +20,7 @@
         <aside id="side-bar" class="side-wrap vh-100 d-flex flex-column">
             <div class="logo-box d-flex justify-content-center align-items-center py-2">
                 <a href="" class="fill-w d-block px-4">
-                    <img class="img-component dog-body"  src="../images/dashboard/logo_dog-body.svg" class="fill-w" alt="">
+                    <img class="img-component dog-body" src="../images/dashboard/logo_dog-body.svg" class="fill-w" alt="">
                     <img class="img-component dog-tail" src="../images/dashboard/logo_dog-tail.svg" class="fill-w" alt="">
                     <img class="img-component dog-text" src="../images/dashboard/logo_dog-text.svg" class="fill-w" alt="">
                 </a>
@@ -30,13 +29,10 @@
                 <ul class="list-unstyled accordion" id="menu-accordion">
                     <li class="menu-item"><a href="" class="menu-button icon-home no-accordion">首頁</a></li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-products accordion-button collapsed"
-                            data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="true"
-                            aria-controls="collapseProducts">商品管理
+                        <button href="" class="menu-button icon-products accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="true" aria-controls="collapseProducts">商品管理
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseProducts" class="accordion-collapse collapse"
-                            data-bs-parent="#menu-accordion">
+                        <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
@@ -59,13 +55,10 @@
                         </div>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-orderlist accordion-button collapsed"
-                            data-bs-toggle="collapse" data-bs-target="#collapseOrderList" aria-expanded="true"
-                            aria-controls="collapseOrderList">訂單管理
+                        <button href="" class="menu-button icon-orderlist accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOrderList" aria-expanded="true" aria-controls="collapseOrderList">訂單管理
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseOrderList" class="accordion-collapse collapse"
-                            data-bs-parent="#menu-accordion">
+                        <div id="collapseOrderList" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
@@ -88,13 +81,10 @@
                         </div>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-message accordion-button collapsed"
-                            data-bs-toggle="collapse" data-bs-target="#collapseMessages" aria-expanded="true"
-                            aria-controls="collapseMessages">信件匣
+                        <button href="" class="menu-button icon-message accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseMessages" aria-expanded="true" aria-controls="collapseMessages">信件匣
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseMessages" class="accordion-collapse collapse"
-                            data-bs-parent="#menu-accordion">
+                        <div id="collapseMessages" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
@@ -111,13 +101,10 @@
                         </div>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-coupon accordion-button collapsed"
-                            data-bs-toggle="collapse" data-bs-target="#collapseCoupon" aria-expanded="true"
-                            aria-controls="collapseCoupon">優惠券管理
+                        <button href="" class="menu-button icon-coupon accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseCoupon" aria-expanded="true" aria-controls="collapseCoupon">優惠券管理
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseCoupon" class="accordion-collapse collapse"
-                            data-bs-parent="#menu-accordion">
+                        <div id="collapseCoupon" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
@@ -151,20 +138,18 @@
                     </div>
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
-                        <?=require('./main.php')?>
+                        <?= require('./main.php') ?>
                     </main>
                 </div>
             </div>
         </div>
     </div>
     <!-- Bootstrap JavaScript Libraries -->
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js"
-        integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
     </script>
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
-        integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
-    <script src="<?=$js?>"></script>
+    <script src="<?= $js ?>"></script>
 </body>
 
 </html>

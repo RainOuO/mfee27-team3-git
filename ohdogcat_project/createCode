@@ -1,0 +1,49 @@
+<?php
+/**
+* @param int $no_of_codes//定義一個int型別的引數 用來確定生成多少個優惠碼
+* @param array $exclude_codes_array//定義一個exclude_codes_array型別的陣列
+* @param int $code_length //定義一個code_length的引數來確定優惠碼的長度
+* @return array//返回陣列
+*/
+function generate_promotion_code($no_of_codes,$exclude_codes_array=”,$code_length = 4)
+{
+$characters = “0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ”;
+$promotion_codes = array();//這個陣列用來接收生成的優惠碼
+for($j = 0 ; $j < $no_of_codes; $j )
+{
+$code = “”;
+for ($i = 0; $i < $code_length; $i )
+{
+$code .= $characters[mt_rand(0, strlen($characters)-1)];
+}
+//如果生成的4位隨機數不再我們定義的$promotion_codes函式裡面
+if(!in_array($code,$promotion_codes))
+{
+if(is_array($exclude_codes_array))//
+{
+if(!in_array($code,$exclude_codes_array))//排除已經使用的優惠碼
+{
+$promotion_codes[$j] = $code;將生成的新優惠碼賦值給promotion_codes陣列
+}
+else
+{
+$j–;
+}
+}
+else
+{
+$promotion_codes[$j] = $code;//將優惠碼賦值給陣列
+}
+}
+else
+{
+$j–;
+}
+}
+return $promotion_codes;
+}
+echo ‘<h1>Promotion / Discount Codes</h1>’;
+echo ‘<pre>’;
+print_r(generate_promotion_code(50,”,4));
+echo ‘</pre>’;
+?>
