@@ -250,7 +250,7 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center m-2">
                             <div class="title d-flex mt-2">
-                                <img src="./8666681_edit_icon.png" width="48" height="48" alt="">
+                                <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                                 <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
                             </div>
                             <div class="crudBox">
@@ -265,17 +265,17 @@
                             <div class="photobar d-flex flex-column col-5">
                                 <div class="photo-window d-flex flex-column  ">
                                     <div class="cover-photo m-3">
-                                        <img src="./doglogo.png" alt="">
+                                        <img src="./IMAGES/doglogo.png" alt="">
                                     </div>
                                     <div class="swiper mySwiper">
                                         <div class="swiper-wrapper">
-                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
                                            
                                         </div>
                                         <div class="swiper-pagination"></div>
@@ -314,7 +314,7 @@
                                     <label for="">商品規格</label>
                                     <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
                                     <div class="d-flex mt-2">
-                                        <img src="./8666681_edit_icon.png" width="48" height="48" alt="">
+                                        <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                                         <h3 class="pt-3">進階設定</h3>
                                     </div>
                                     <hr>

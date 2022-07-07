@@ -1,8 +1,14 @@
+<?php
+require("./doproducts.php");
+require("./doPricefilter.php");
+
+
+?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>活動票券列表</title>
+    <title>商品總覽</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,29 +18,33 @@
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
     <style>
-       * {
+        * {
             -webkit-user-drag: none;
             font-family: 'Noto Sans TC', sans-serif;
             color: #222934;
-            
+
         }
 
         .filterBtn {
             color: #222934;
             background-color: #FFC845;
         }
+
         .filterBtn:hover {
             color: #222934;
             background-color: #FFC845;
         }
+
         .filterBtn:active {
             color: #222934;
             background-color: #FFC845;
         }
+
         .filterBtn:visited {
             color: #222934;
             background-color: #FFC845;
         }
+
         .filterBtn:focus {
             color: #222934;
             background-color: #FFC845;
@@ -44,18 +54,22 @@
             color: #222934;
             background-color: #D5EEEE;
         }
+
         .detailBtn:hover {
             color: #fff;
             background-color: #49586f;
         }
+
         .detailBtn:active {
             color: #fff;
             background-color: #49586f;
         }
+
         .detailBtn:visited {
-           color: #fff;
+            color: #fff;
             background-color: #49586f;
         }
+
         .detailBtn:focus {
             color: #222934;
             background-color: #D5EEEE;
@@ -145,19 +159,14 @@
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="" class="menu-link">商品總覽</a>
+
+                                        <a href="ALLIST.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link">旅館票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">餐廳票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">活動票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">實體商品列表</a>
+                                        <?php foreach ($rowsCate as $row) : ?>
+                                            <?php if ($type == $row["type_name"]) echo "active"; ?>
+                                            <a href="ALLIST.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?= $row['type_name'] ?></a>
+                                        <?php endforeach; ?>
                                     </li>
                                 </ul>
                             </div>
@@ -249,15 +258,11 @@
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
-                                <h2>商品總覽</h2>
-                            </div>
-                            <div class="pe-1" role="">
-                                <input type="button" class="btn catBtn my-3" value="商品總覽" onclick="window.location.href='backtoALLIST.php'">
-                                <input type="button" class="btn catBtn my-3" value="旅遊票券列表" onclick="window.location.href='travellist.php'">
-                                <input type="button" class="btn catBtn my-3" value="餐廳票券列表" onclick="window.location.href='restaurantlist.php'">
-                                <input type="button" class="btn catBtn my-3" value="活動票券列表" onclick="window.location.href='campaignlist.php'">
-                                <input type="button" class="btn catBtn my-3" value="實體商品列表" onclick="window.location.href='productlist.php'">
-
+                                <?php if (isset($_GET['type'])) : ?>
+                                        <h2> <?=$row['type_name'] ?></h2>
+                                <?php else : ?>
+                                    <h2>商品總覽</h2>
+                                <?php endif; ?>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between row pb-1 pe-3">
@@ -284,7 +289,7 @@
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbydate" style="display:none">
-                                        <form action="doFilter-date.php" method="post">
+                                        <form action="doPricefilter.php" method="post">
                                             <div class="col-10 d-flex mt-4">
                                                 <div class="col-5 mx-1">
                                                     <div class="dateF">上架日</div>
@@ -304,10 +309,10 @@
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbyprice" style="display:none">
-                                        <form action="doFilter-price.php" method="post">
+                                        <form action="doPricefilter.php" method="post">
                                             <div class="col-9 d-flex mt-4 priceBar">
-                                                <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="min-price">
-                                                <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="max-price">
+                                                <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="minprice">
+                                                <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="maxprice">
                                                 <button class="col-auto btn ms-1 filterBtn" type="submit">搜尋</button>
                                             </div>
                                         </form>
@@ -315,218 +320,75 @@
                                 </div>
                             </div>
                             <div class="col-5 row d-flex justify-content-end btn-group align-items-center mt-4">
-                                <a href="" class="orderBtn  col-2 ">單價↑</i></a>
-                                <a href="" class="orderBtn col-2 ">單價↓</i></a>
-                                <a href="" class="orderBtn  col-2 ">上架時間↑</i></a>
-                                <a href="" class="orderBtn  col-2 ">上架時間↓</i></a>
+                                <a href="" class="orderBtn col-2 ">單價↑</a>
+                                <a href="" class="orderBtn col-2 ">單價↓</a>
+                                <a href="" class="orderBtn col-2 ">上架時間↑</a>
+                                <a href="" class="orderBtn col-2 ">上架時間↓</a>
                             </div>
                         </div>
                         <hr>
                         <div class="d-flex justify-content-end align-items-center">
                             <div class="countBox">
-                                <h4 class="countBox">以下商品共: 00筆</h4>
+                                <?php if ($productsCount > 0) : ?>
+                                    <h4 class="countBox">此頁為商品第<?= $starItem ?>-<?= $endItem ?>筆資料，共<?= $pageCount ?>筆商品資料</h4>
+
+                                <?php endif; ?>
                             </div>
-                            <button class="btn filterBtn me-1 ms-3 my-3">新增商品</button>
+                            <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='product-edit-new-swiper.php'">新增商品</button>
                         </div>
                         <div class="table-responsive">
-                            <table class="table table-sm">
-                                <thead>
-                                    <tr>
-                                        <th class="align-middle text-center">票券ID</th>
-                                        <th class="align-middle">商品分類</th>
-                                        <th>商品名稱</th>
-                                        <th>商品描述</th>
-                                        <th>優惠方案</th>
-                                        <th class="align-middle text-end">單價</th>
-                                        <th class="align-middle text-center">上架區間</th>
-                                        <th class="align-middle text-center">庫存</th>
-                                        <th class="align-middle text-center">啟用</th>
-                                        <th class="align-middle text-center">編修</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td class="align-middle text-center">001</td>
-                                        <td class="align-middle text">寵物周邊>寵物服飾>小型犬></td>
-                                        <td class="align-middle">狗狗救生衣</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>站內年中慶 全站三件打85折</td>
-                                        <td class="align-middle text-end">379</td>
-                                        <td class="align-middle text-center">22/07/05~22/07/31</td>
-                                        <td class="align-middle text-center">20</td>
-                                        <td class="align-middle text-center">1</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">002</td>
-                                        <td class="align-middle ">寵物周邊>寵物服飾>貓</td>
-                                        <td class="align-middle">貓咪造型衣服</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>站內年中慶 全站三件打85折</td>
-                                        <td class="align-middle text-end">3790</td>
-                                        <td class="align-middle text-center">22/07/15~22/09/30</td>
-                                        <td class="align-middle text-center">11</td>
-                                        <td class="align-middle text-center">1</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">003</td>
-                                        <td class="align-middle ">寵物周邊>寵物清潔></td>
-                                        <td class="align-middle">潔牙骨</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>兒童節寵愛牠</td>
-                                        <td class="align-middle text-end">2000</td>
-                                        <td class="align-middle text-center">22/07/01~22/08/30</td>
-                                        <td class="align-middle text-center">9</td>
-                                        <td class="align-middle text-center">1</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">004</td>
-                                        <td class="align-middle ">寵物周邊>寵物清潔></td>
-                                        <td class="align-middle">貓砂</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>站內年中慶 全站三件打85折</td>
-                                        <td class="align-middle text-end">1900</td>
-                                        <td class="align-middle text-center">22/07/05~22/08/05</td>
-                                        <td class="align-middle text-center">5</td>
-                                        <td class="align-middle text-center">1</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">005</td>
-                                        <td class="align-middle ">寵物周邊>寵物食品>貓食</td>
-                                        <td class="align-middle">貓咪零嘴</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>兒童節寵愛牠</td>
-                                        <td class="align-middle text-end">1780</td>
-                                        <td class="align-middle text-center">22/07/10~22/08/18</td>
-                                        <td class="align-middle text-center">7</td>
-                                        <td class="align-middle text-center">1</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">006</td>
-                                        <td class="align-middle ">寵物周邊>寵物食品>搔癢棒</td>
-                                        <td class="align-middle">貓咪玩具</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>兒童節寵愛牠</td>
-                                        <td class="align-middle text-end">350</td>
-                                        <td class="align-middle text-center">22/08/10~22/08/18</td>
-                                        <td class="align-middle text-center">15</td>
-                                        <td class="align-middle text-center">0</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">007</td>
-                                        <td class="align-middle ">寵物周邊>寵物食品>狗食</td>
-                                        <td class="align-middle">狗狗罐頭</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>父親節優惠</td>
-                                        <td class="align-middle text-end">350</td>
-                                        <td class="align-middle text-center">22/07/15~22/09/18</td>
-                                        <td class="align-middle text-center">7</td>
-                                        <td class="align-middle text-center">1</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">008</td>
-                                        <td class="align-middle ">寵物周邊>寵物服飾>貓</td>
-                                        <td class="align-middle">貓圍巾</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>站內年中慶 全站三件打85折</td>
-                                        <td class="align-middle text-end">300</td>
-                                        <td class="align-middle text-center">22/07/10~22/08/18</td>
-                                        <td class="align-middle text-center">6</td>
-                                        <td class="align-middle text-center">1</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">009</td>
-                                        <td class="align-middle ">寵物周邊>寵物食品>貓食</td>
-                                        <td class="align-middle">貓咪零嘴</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>618周年慶 滿千送百</td>
-                                        <td class="align-middle text-end">1050</td>
-                                        <td class="align-middle text-center">22/07/10~22/08/18</td>
-                                        <td class="align-middle text-center">2</td>
-                                        <td class="align-middle text-center">1</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td class="align-middle text-center">010</td>
-                                        <td class="align-middle">寵物周邊>護具>狗></td>
-                                        <td class="align-middle">狗狗項圈</td>
-                                        <td class="align-middle">商品描述...</td>
-                                        <td>毛孩親一夏優惠活動 滿300折扣...</td>
-                                        <td class="align-middle text-end">790</td>
-                                        <td class="align-middle text-center">22/07/10~22/08/18</td>
-                                        <td class="align-middle text-center">售完</td>
-                                        <td class="align-middle text-center">0</td>
-                                        <td class="align-middle text-center">
-                                            <button type="button" class="btn detailBtn">查看</button>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                            <div class="d-flex justify-content-center pt-3">
-                                <nav aria-label="Page navigation example ">
-                                    <ul class="pagination">
-                                        <li class=" ">
-                                            <a class="pageBtn" href="#" aria-label="Previous">
-                                                <span aria-hidden="true">&laquo;</span>
-                                            </a>
-                                        </li>
-                                        <li class=""><a class="pageBtn" href="#">1</a></li>
-                                        <li class=""><a class="pageBtn" href="#">2</a></li>
-                                        <li class=""><a class="pageBtn" href="#">3</a></li>
-                                        <li class="">
-                                            <a class=" pageBtn" href="#" aria-label="Next">
-                                                <span aria-hidden="true">&raquo;</span>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </nav>
-                            </div>
+                            <?php if ($productsCount > 0) : ?>
+                                <table class="table table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th class="align-middle text-center">商家ID</th>
+                                            <th class="align-middle text-center">商品ID</th>
+                                            <th class="align-middle">商品分類</th>
+                                            <th>商品名稱</th>
+                                            <th>商品描述</th>
+                                            <th>優惠方案</th>
+                                            <th class="align-middle text-end">單價</th>
+                                            <th class="align-middle text-center">上架區間</th>
+                                            <th class="align-middle text-center">庫存</th>
+                                            <th class="align-middle text-center">啟用</th>
+                                            <th class="align-middle text-center">編修</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php //把資料轉換成關聯式陣列
+                                        while ($row = $result->fetch_assoc()) : //從資料庫一次抽取單筆資料 用while迴圈顯示
+                                        ?>
+                                            <tr>
+                                                <td class="align-middle text-center"><?= $row["store_id"] ?></td>
+                                                <td class="align-middle text-center"><?= $row["id"] ?></td>
+                                                <td class="align-middle text"><?= $row["product_category"] ?></td>
+                                                <td class="align-middle"><?= $row["name"] ?></td>
+                                                <td class="align-middle col-2"><?= $row["description"] ?></td>
+                                                <td>站內年中慶 全站三件打85折</td>
+                                                <td class="align-middle text-end"><?= $row["price"] ?></td>
+                                                <td class="align-middle text-center"><?= $row["valid_time_start"] ?>~<br><?= $row["valid_time_end"] ?></td>
+                                                <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
+                                                <td class="align-middle text-center"><?= $row["valid"] ?></td>
+                                                <td class="align-middle text-center">
+                                                    <button type="button" class="btn detailBtn">查看</button>
+                                                </td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    </tbody>
+                                </table>
+                                <div class="d-flex justify-content-center pt-3">
+                                    <nav aria-label="Page navigation example ">
+                                        <ul class="pagination">
+                                            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                                                <li class="page-item pageBtn" onclick="window.location.href='ALLIST.php?type=<?= $type ?>&page=<?= $i ?>'"><?= $i ?></li>
+                                            <?php endfor; ?>
+                                        </ul>
+                                    </nav>
+                                </div>
+                            <?php else : ?>
+                                目前沒有資料
+                            <?php endif; ?>
                         </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
                     </main>
                 </div>
