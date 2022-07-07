@@ -316,10 +316,10 @@
                                 </div>
                             </div>
                             <div class="col-5 row d-flex justify-content-end btn-group align-items-center mt-4">
-                                <a href="" class="orderBtn  col-2 ">單價↑</i></a>
-                                <a href="" class="orderBtn col-2 ">單價↓</i></a>
-                                <a href="" class="orderBtn  col-2 ">上架時間↑</i></a>
-                                <a href="" class="orderBtn  col-2 ">上架時間↓</i></a>
+                                <a href="" class="orderBtn  col-2 ">單價↑</a>
+                                <a href="" class="orderBtn col-2 ">單價↓</a>
+                                <a href="" class="orderBtn  col-2 ">上架時間↑</a>
+                                <a href="" class="orderBtn  col-2 ">上架時間↓</a>
                             </div>
                         </div>
                         <hr>

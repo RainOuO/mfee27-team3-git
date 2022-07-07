@@ -17,13 +17,12 @@
             selector: '#mytextarea'
         });
     </script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         .photo-window {
-            padding: 5px;
             text-align: center;
 
         }
-
 
         .filterBtn {
             color: #222934;
@@ -78,40 +77,46 @@
             height: 150px;
         }
 
-        .photo1 img {
 
-            object-fit: contain;
-            border: 2px solid grey;
-
-        }
-/* 
-        網頁捲軸【寬度】 */
-        .slideshow::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        /* 網頁捲軸【背景】顏色 */
-        .slideshow::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        /* 網頁捲軸【把手】顏色 */
-        .slideshow::-webkit-scrollbar-thumb {
-            background: #D5EEEE;
-            width: 5px;
-            border-radius: 15px;
-        }
-
-        /* 網頁捲軸【滑過時】把手的顏色 */
-        .slideshow::-webkit-scrollbar-thumb:hover {
-            background: #49586f;
-            height: 3px;
-            width: 3px;
-            border-radius: 10px;
-        }
 
         .photo-upload .photo-window {
             max-width: 100%;
+        }
+
+
+        .swiper {
+            width: 600px;
+            height: 160px;
+            /* background: #D5EEEE;
+            border: 5px solid #D5EEEE; */
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border: 1px solid lightgrey;
         }
     </style>
 </head>
@@ -260,27 +265,31 @@
                             <div class="photobar d-flex flex-column col-5">
                                 <div class="photo-window d-flex flex-column  ">
                                     <div class="cover-photo m-3">
-                                        <img src="./dogsuit.jpg" alt="">
+                                        <img src="./doglogo.png" alt="">
                                     </div>
-                                    <div class="slideshow d-flex">
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dog2.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dog.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
+                                    <div class="swiper mySwiper">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./doglogo.png" alt=""></div>
+                                           
+                                        </div>
+                                        <div class="swiper-pagination"></div>
                                     </div>
                                 </div>
                                 <form action="doUpload.php" method="post" enctype="multipart/form-data">
                                     <div class="row photo-upload mt-3 d-flex justify-content-center">
                                         <div class=" d-flex col-6">
                                             <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">上傳封面照片</button>
+                                            <button class="btn filterBtn" type="submit">封面照片</button>
                                         </div>
                                         <div class="d-flex col-6">
                                             <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">上傳商品照片</button>
+                                            <button class="btn filterBtn" type="submit">商品照片</button>
                                         </div>
                                     </div>
                                 </form>
@@ -364,6 +373,20 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
     <script>
         tinymce.init({
             selector: 'textarea',
