@@ -1,22 +1,40 @@
 <?php
-require("../db-connect.php");
-
+require("./db-connect.php");
 session_start();
+if(isset($_GET['id']) && !empty($_GET['id'])){
+    $store_id = $_GET['id'];
+};
 
-$sql = "SELECT product.* FROM product";
+$cart = [];
+
+for($i =0; $i<count($_SESSION["cart"]); $i++){
+    if(in_array($store_id, $_SESSION["cart"][$i]['store'])){
+        $cart = $_SESSION["cart"][$i];
+        $cart['target'] = $i;
+    }
+}
+
+
+
+
+$sql = "SELECT id, name, price, main_photo FROM product";
 
 $result = $conn->query($sql);
 $product_count = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 $productName = array_column($rows, 'name', 'id');
 $productPrice = array_column($rows, 'price', 'id');
+$productImg = array_column($rows, 'main_photo', 'id');
 
 $totalPrice = 0; 
-if(isset($_SESSION["cart"])){
-    for($i=0; $i<count($_SESSION["cart"]); $i++){
-        $totalPrice += ($productPrice[key($_SESSION["cart"][$i])]*current($_SESSION["cart"][$i]));
+if(!empty($cart)){
+    for($i=0; $i<count($cart['product']); $i++){
+        $totalPrice += ($productPrice[$cart['product'][$i]]*$cart['amount'][$i]);
     }
 }
+
+$_SESSION["total_price"] = $totalPrice;
+$_SESSION["pay"] = $cart;
 
 ?>
 <!doctype html>
@@ -46,6 +64,7 @@ if(isset($_SESSION["cart"])){
         <table class="table table-bordered">
             <thead>
                 <tr>
+                    <th>封面照片</th>
                     <th>產品名稱</th>
                     <th>單價</th>
                     <th>數量</th>
@@ -53,16 +72,17 @@ if(isset($_SESSION["cart"])){
                 </tr>
             </thead>
             <tbody>
-                <?php foreach($_SESSION["cart"] as $item):?>
+                <?php for($i=0; $i<count($cart['product']); $i++):?>
                 <tr>
-                    <td><?= $productName[key($item)]?></td>
-                    <td><?= $productPrice[key($item)]?></td>
-                    <td class="text-end"><?= current($item)?></td>
-                    <td class="text-end"><?= ($productPrice[key($item)]*current($item))?></td>
+                    <td><img src="./images/<?= $productImg[$cart['image'][$i]]?>" class="w-100" style="max-width: 150px;" alt=""></td>
+                    <td><?= $productName[$cart['product'][$i]]?></td>
+                    <td><?= $productPrice[$cart['product'][$i]]?></td>
+                    <td><?= $cart['amount'][$i]?></td>
+                    <td><?= ($productPrice[$cart['product'][$i]]*$cart['amount'][$i])?></td>
                 </tr>
-                <?php endforeach;?>
+                <?php endfor;?>
                 <tr>
-                    <td colspan="4" class="text-end">購物車總計： <?= $totalPrice?> 元</td>
+                    <td colspan="5" class="text-end">購物車總計： <?= $totalPrice?> 元</td>
                 </tr>
             </tbody>
         </table>

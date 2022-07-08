@@ -1,28 +1,40 @@
 <?php
+require('./test-account_setting.php');
 session_start();
 
-if(!isset($_SESSION["cart"])){
-    echo "購物車不可為空";
+if(!isset($_SESSION["pay"])){
+    echo "結帳失敗，沒有商品";
     exit;
+}else{
+    $pay = $_SESSION["pay"];
 }
 
-require('../db-connect.php');
-$user_id = 1;
-$now = date('Y-m-d H:i:s');
 
-$sql = "INSERT INTO user_order_product(user_id, order_time) VALUES ('$user_id', '$now')";
+// echo ($_SESSION["cart"][$pay['target']]);
+// var_dump($_SESSION["cart"][$pay['target']]);
+
+$totalPrice = $_SESSION['total_price'];
+
+require('./db-connect.php');
+$user_id = $test_user;
+$now = date('Y-m-d H:i:s');
+$order_no = 'MFEE27'.date('YzHis').'00'.$user_id;
+
+$sql = "INSERT INTO order_product(user_id, order_no, total, order_time) VALUES ('$user_id', '$order_no', '$totalPrice', '$now')";
 
 if($conn->query($sql)===TRUE){
-    $order_id = $conn->insert_id;
-    foreach($_SESSION['cart'] as $item){
-        $product_id = key($item);
-        $amount = current($item);
-        $sqlDetail = "INSERT INTO user_order_product_detail (order_id, product_id, amount) VALUES ('$order_id', '$product_id', '$amount')" ;
+    $order_id = $conn->insert_id; //抓出剛剛 insert 進去的資料的 id
+    for($i=0; $i<count($pay['product']); $i++){
+        $product_id = $pay['product'][$i]; // 將單一品項的 id 抓出來
+        $amount = $pay['amount'][$i]; // 將單一品項的數量抓出來
+        $sqlDetail = "INSERT INTO order_product_detail (order_id, product_id, amount) VALUES ('$order_id', '$product_id', '$amount')" ;
         if(!$conn->query($sqlDetail)===TRUE){
             echo "Error：" . $sqlDetail . "<br>" . $conn->error;
         }
-        unset($_SESSION["cart"]);
-    }    
+    }
+    unset($_SESSION["pay"]);
+    unset($_SESSION['total_price']);
+    unset($_SESSION["cart"][$pay['target']]);
 }else{
     echo "Error：" . $sql . "<br>" . $conn->error;
 }
