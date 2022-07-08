@@ -1,3 +1,4 @@
+
 * {
     -webkit-user-drag: none;
     font-family: 'Noto Sans TC', sans-serif;
@@ -14,11 +15,11 @@
 }
 
 .catBtn {
-    background-color: #D5EEEE;
+    border-color: #49586f;
     color: #222934;
-    font-size: 14px;
+    font-size: 16px;
     margin: 4px 0;
-    margin-right: .25vw;
+    margin-right: 0.25vw;
     letter-spacing: .5px;
     padding: 4px 12px;
 }
@@ -83,6 +84,3 @@ td {
     padding: 12px 0!important;
 }
 
-.table-responsive {
-    max-width: 600px;
-}

@@ -163,11 +163,13 @@ header("Pragma: no-cache");
                                     src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
                         </a>
                     </div>
-                    <?php require('./filter-section.php')?>
+                    <div class="button-area">
+                        <?php require('./filter-section.php')?>
+                    </div>
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
                         <?php require($main)?>
                     </main>
-                    <div class="flex-shrink-1">
+                    <div class="content-footer flex-shrink-1">
                         <?php require('./footer.php')?>
                     </div>
                 </div>
