@@ -1,8 +1,6 @@
 <?php
-require("./doproducts.php");
 require("./doPricefilter.php");
-
-
+require("./doproducts.php");
 
 ?>
 <!doctype html>
@@ -160,7 +158,6 @@ require("./doPricefilter.php");
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-
                                         <a href="ALLIST.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
@@ -259,13 +256,7 @@ require("./doPricefilter.php");
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
-                                <?php if (!isset($_GET["type"])) : ?>
-                                    <h2>商品總覽</h2>
-                                <?php else : ?>
-                                    <?php foreach ($rowstitle as $rowwww) : ?>
-                                        <h2> <?= $rowwww['type_name'] ?></h2>
-                                    <?php endforeach; ?>
-                                <?php endif; ?>
+                                    <h2>商品搜尋-依價格:</h2>
                             </div>
                         </div>
                         <div class="d-flex justify-content-between row pb-1 pe-3">
@@ -292,7 +283,7 @@ require("./doPricefilter.php");
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbydate" style="display:none">
-                                        <form action="FILTER-PAGE.php" method="post">
+                                        <form action="doPricefilter.php" method="post">
                                             <div class="col-10 d-flex mt-4">
                                                 <div class="col-5 mx-1">
                                                     <div class="dateF">上架日</div>
@@ -312,13 +303,10 @@ require("./doPricefilter.php");
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbyprice" style="display:none">
-                                        <form action="./FILTER-PAGE.php" method="post">
+                                        <form action="./ALLIST.php" method="post">
                                             <div class="col-9 d-flex mt-4 priceBar">
-                                                <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="minprice" value="<?php $minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
-                                                                                                                                            echo $minPrice ?>">
-
-                                                <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="maxprice" value="<?php $maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : 9999;
-                                                                                                                                            echo $maxPrice ?>">
+                                                <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="minprice">
+                                                <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="maxprice">
                                                 <button class="col-auto btn ms-1 filterBtn" type="submit">搜尋</button>
                                             </div>
                                         </form>
@@ -342,59 +330,7 @@ require("./doPricefilter.php");
                             </div>
                             <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='product-edit-new-swiper.php'">新增商品</button>
                         </div>
-                        <div class="table-responsive">
-                            <?php if ($productsCount > 0) : ?>
-                                <table class="table table-sm">
-                                    <thead>
-                                        <tr>
-                                            <th class="align-middle text-center">商家ID</th>
-                                            <th class="align-middle text-center">商品ID</th>
-                                            <th class="align-middle">商品分類</th>
-                                            <th>商品名稱</th>
-                                            <th>商品描述</th>
-                                            <th>優惠方案</th>
-                                            <th class="align-middle text-end">單價</th>
-                                            <th class="align-middle text-center">上架區間</th>
-                                            <th class="align-middle text-center">庫存</th>
-                                            <th class="align-middle text-center">啟用</th>
-                                            <th class="align-middle text-center">編修</th>
-                                        </tr>
-                                    </thead>
-                                    <tbody>
-                                        <?php //把資料轉換成關聯式陣列
-                                        while ($row = $result->fetch_assoc()) : //從資料庫一次抽取單筆資料 用while迴圈顯示
-                                        ?>
-                                            <tr>
-                                                <td class="align-middle text-center"><?= $row["store_id"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["id"] ?></td>
-                                                <td class="align-middle text"><?= $row["product_category"] ?></td>
-                                                <td class="align-middle"><?= $row["name"] ?></td>
-                                                <td class="align-middle col-2"><?= $row["description"] ?></td>
-                                                <td>站內年中慶 全站三件打85折</td>
-                                                <td class="align-middle text-end"><?= $row["price"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["valid_time_start"] ?>~<br><?= $row["valid_time_end"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["valid"] ?></td>
-                                                <td class="align-middle text-center">
-                                                    <button type="button" class="btn detailBtn">查看</button>
-                                                </td>
-                                            </tr>
-                                        <?php endwhile; ?>
-                                    </tbody>
-                                </table>
-                                <div class="d-flex justify-content-center pt-3">
-                                    <nav aria-label="Page navigation example ">
-                                        <ul class="pagination">
-                                            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                                                <li class="page-item"><a class="page-link" href="users.php?page=<?= $i ?>&type=<?=$type?>"><?= $i ?></a></li>
-                                            <?php endfor; ?>
-                                        </ul>
-                                    </nav>
-                                </div>
-                            <?php else : ?>
-                                目前沒有資料
-                            <?php endif; ?>
-                        </div>
+
 
                     </main>
                 </div>
