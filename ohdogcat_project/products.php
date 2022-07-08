@@ -31,8 +31,10 @@ $resultStore = $conn->query($sqlStore);
 $productStore_count = $resultStore->num_rows;
 $rowsStore = ($productStore_count>0)? $resultStore->fetch_all(MYSQLI_ASSOC):'';
 $storeName = array_column($rowsStore, 'name', 'id');
-
-
+$product_num = 0;
+foreach($_SESSION['cart'] as $item){
+    $product_num = $product_num + count($item['product']);
+}
 
 
 // 判斷分類
@@ -52,7 +54,7 @@ for($i=0; $i<count($rows); $i++){
 <html lang="en">
 
 <head>
-    <title>Products</title>
+    <title>商品列表</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -100,7 +102,7 @@ for($i=0; $i<count($rows); $i++){
                 <button id="getCartInfo" class="btn btn-primary position-relative" type="button"
                     data-bs-toggle="offcanvas" data-bs-target="#offcanvasRight" aria-controls="offcanvasRight">
                     購物車
-                    <span class="cart-count"><?=(isset($_SESSION["cart"]) != 0)? count($_SESSION["cart"]):0;?></span>
+                    <span class="cart-count"><?= $product_num ?></span>
                 </button>
             </div>
             <div class="py-4">

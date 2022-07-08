@@ -18,9 +18,10 @@ $totalPrice = $_SESSION['total_price'];
 require('./db-connect.php');
 $user_id = $test_user;
 $now = date('Y-m-d H:i:s');
-$order_no = 'MFEE27'.date('YzHis').'00'.$user_id;
+$order_no = 'ODC'.date('YzHis').'00'.$user_id;
+$store_id = $pay['store']['0'];
 
-$sql = "INSERT INTO order_product(user_id, order_no, total, order_time) VALUES ('$user_id', '$order_no', '$totalPrice', '$now')";
+$sql = "INSERT INTO order_product(user_id, store_id, order_no, total, order_time) VALUES ('$user_id', '$store_id', '$order_no', '$totalPrice', '$now')";
 
 if($conn->query($sql)===TRUE){
     $order_id = $conn->insert_id; //抓出剛剛 insert 進去的資料的 id

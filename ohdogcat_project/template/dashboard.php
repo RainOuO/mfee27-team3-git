@@ -1,3 +1,9 @@
+<?php
+header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
+header("Cache-Control: post-check=0, pre-check=0", false);
+header("Pragma: no-cache");
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -6,14 +12,18 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="pragma" content="no-cache">
+    <meta http-equiv="expires" content="0">
+    <meta http-equiv="cache-control" content="no-cache">
 
     <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
-    <link rel="stylesheet" href="<?=$css?>">
-    
+
+    <link rel="stylesheet" href="<?= $css ?>">
+
 </head>
 
 <body>
@@ -21,9 +31,12 @@
         <aside id="side-bar" class="side-wrap vh-100 d-flex flex-column">
             <div class="logo-box d-flex justify-content-center align-items-center py-2">
                 <a href="" class="fill-w d-block px-4">
-                    <img class="img-component dog-body"  src="../images/dashboard/logo_dog-body.svg" class="fill-w" alt="">
-                    <img class="img-component dog-tail" src="../images/dashboard/logo_dog-tail.svg" class="fill-w" alt="">
-                    <img class="img-component dog-text" src="../images/dashboard/logo_dog-text.svg" class="fill-w" alt="">
+                    <img class="img-component dog-body" src="../images/dashboard/logo_dog-body.svg" class="fill-w"
+                        alt="">
+                    <img class="img-component dog-tail" src="../images/dashboard/logo_dog-tail.svg" class="fill-w"
+                        alt="">
+                    <img class="img-component dog-text" src="../images/dashboard/logo_dog-text.svg" class="fill-w"
+                        alt="">
                 </a>
             </div>
             <nav class="menu-box mt-2 overflow-auto flex-shrink-1 h-100">
@@ -35,8 +48,7 @@
                             aria-controls="collapseProducts">商品管理
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseProducts" class="accordion-collapse collapse"
-                            data-bs-parent="#menu-accordion">
+                        <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
@@ -93,8 +105,7 @@
                             aria-controls="collapseMessages">信件匣
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseMessages" class="accordion-collapse collapse"
-                            data-bs-parent="#menu-accordion">
+                        <div id="collapseMessages" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
@@ -116,8 +127,7 @@
                             aria-controls="collapseCoupon">優惠券管理
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseCoupon" class="accordion-collapse collapse"
-                            data-bs-parent="#menu-accordion">
+                        <div id="collapseCoupon" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
@@ -141,18 +151,25 @@
             </div>
         </aside>
         <div class="content-wrap vh-100">
-            <div class="container-fluid h-100 py-4 overflow-hidden">
+            <div class="container-fluid h-100 py-3 overflow-hidden">
                 <div class="d-flex flex-column h-100">
-                    <div class="content-header d-flex justify-content-end flex-shrink-0">
-                        <a href="" class="d-flex justify-content-end align-items-center">
+                    <div class="content-header d-flex justify-content-end mb-3">
+                        <div class="d-flex flex-shrink-1 w-100 align-items-center">
+                            <?php require('./header.php')?>
+                        </div>
+                        <a href="" class="d-flex justify-content-end align-items-center flex-shrink-0">
                             <div class="user-name pe-4">汪汪先輩</div>
-                            <div class="user-sticker rounded-3 overflow-hidden"><img src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
+                            <div class="user-sticker rounded-3 overflow-hidden"><img
+                                    src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
                         </a>
                     </div>
-                    <hr class="flex-shrink-0">
+                    <?php require('./filter-section.php')?>
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
-                        <?php require_once('./main.php')?>
+                        <?php require($main)?>
                     </main>
+                    <div class="flex-shrink-1">
+                        <?php require('./footer.php')?>
+                    </div>
                 </div>
             </div>
         </div>

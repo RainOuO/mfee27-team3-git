@@ -24,6 +24,9 @@ a {
     width: 100%;
 }
 
+.transition-3 {
+    transition: all .3s;
+}
 
 /* basic background */
 .lowest-background {
