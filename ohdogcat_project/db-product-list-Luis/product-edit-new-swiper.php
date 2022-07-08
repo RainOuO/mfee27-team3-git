@@ -1,3 +1,13 @@
+<?php 
+require("./db-connect.php");
+require("./doproducts.php");
+$sql2 = "SELECT * FROM product WHERE valid=1 $sqlTYPE $sqlSTORE";
+$result2 = $conn->query($sql2);
+
+
+?>
+
+
 <!doctype html>
 <html lang="en">
 
@@ -276,7 +286,7 @@
                                             <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
                                             <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
                                             <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                           
+
                                         </div>
                                         <div class="swiper-pagination"></div>
                                     </div>
@@ -295,53 +305,59 @@
                                 </form>
                             </div>
                             <div class="basic-setting col-6">
-                                <form action="doUpdate">
-                                    <label for="">商品名稱**</label>
-                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control">
-                                    <label for="">商品分類**</label>
-                                    <select name='category' class="form-control">
-                                        <option value='0'>旅遊票券</option>
-                                        <option value='1'>活動票券</option>
-                                        <option value='2'>餐廳票券</option>
-                                        <option value='3'>寵物周邊</option>
-                                        <option value='4'>寵物服飾</option>
-                                        <option value='5'>寵物食品</option>
-                                    </select>
-                                    <label for="">商品介紹</label>
-                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
-                                    <label for="">商品價格**</label>
-                                    <input type="text" name="price" placeholder="只能輸入大於0的數字" class="form-control">
-                                    <label for="">商品規格</label>
-                                    <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
-                                    <div class="d-flex mt-2">
-                                        <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
-                                        <h3 class="pt-3">進階設定</h3>
-                                    </div>
-                                    <hr>
-                                    <label for="">上架時間</label>
-                                    <input type="datetime-local" name="spec" class="form-control">
-                                    <label for="">下架時間</label>
-                                    <input type="datetime-local" name="spec" class="form-control">
-                                    <label for="">優惠券方案使用</label><br>
-                                    <select name='dragdown' class="form-control">
-                                        <option value='0'>全站周年慶</option>
-                                        <option value='1'>父親節活動</option>
-                                        <option value='2'>兒童節寵愛牠</option>
-                                        <option value='4'>站內年中慶 全站三件打85折</option>
-                                        <option value='5'>由優惠券管理作連動</option>
-                                        <option value='6'>無</option>
-                                    </select>
-                                    <label for="">商品有效期限</label>
-                                    <input type="date" name="spec" placeholder="自由增建選項" class="form-control">
-                                    <label for="">商品庫存數</label>
-                                    <input type="text" name="spec" placeholder="只能輸入大於0的數字" class="form-control">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
-                                        </label>
-                                    </div>
-                                </form>
+                                <?php if ($productsCount1 > 0) :
+                                    $row = $result2->fetch_assoc() ?>
+                                    <form action="doUpdate">
+                                        <label for="">商品名稱**</label>
+                                        <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control"
+                                        value="">
+                                        <label for="">商品分類**</label>
+                                        <select name='category' class="form-control">
+                                            <option value='0'>旅遊票券</option>
+                                            <option value='1'>活動票券</option>
+                                            <option value='2'>餐廳票券</option>
+                                            <option value='3'>寵物周邊</option>
+                                            <option value='4'>寵物服飾</option>
+                                            <option value='5'>寵物食品</option>
+                                        </select>
+                                        <label for="">商品介紹</label>
+                                        <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
+                                        <label for="">商品價格**</label>
+                                        <input type="text" name="price" placeholder="只能輸入大於0的數字" class="form-control">
+                                        <label for="">商品規格</label>
+                                        <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
+                                        <div class="d-flex mt-2">
+                                            <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
+                                            <h3 class="pt-3">進階設定</h3>
+                                        </div>
+                                        <hr>
+                                        <label for="">上架時間</label>
+                                        <input type="datetime-local" name="spec" class="form-control">
+                                        <label for="">下架時間</label>
+                                        <input type="datetime-local" name="spec" class="form-control">
+                                        <label for="">優惠券方案使用</label><br>
+                                        <select name='dragdown' class="form-control">
+                                            <option value='0'>全站周年慶</option>
+                                            <option value='1'>父親節活動</option>
+                                            <option value='2'>兒童節寵愛牠</option>
+                                            <option value='4'>站內年中慶 全站三件打85折</option>
+                                            <option value='5'>由優惠券管理作連動</option>
+                                            <option value='6'>無</option>
+                                        </select>
+                                        <label for="">商品有效期限</label>
+                                        <input type="date" name="spec" placeholder="自由增建選項" class="form-control">
+                                        <label for="">商品庫存數</label>
+                                        <input type="text" name="spec" placeholder="只能輸入大於0的數字" class="form-control">
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                            <label class="form-check-label" for="flexRadioDefault1">
+                                                商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
+                                            </label>
+                                        </div>
+                                    </form>
+                                <?php else : ?>
+                                    無此筆資料
+                                <?php endif; ?>
                             </div>
                         </div>
                         <hr>

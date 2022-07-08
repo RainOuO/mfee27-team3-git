@@ -48,9 +48,9 @@ $resultAll = $conn->query($sqlAll); //連線資料庫取得所有資料庫的欄
 $perPage =10;
 $start = ($page - 1) * $perPage;
 //資料庫
-$sql = "SELECT * FROM product WHERE valid=1 $sqlTYPE $sqlSTORE LIMIT $start,10";// //選取資料庫的所有欄位資料
+$sql = "SELECT * FROM product WHERE valid=1  $sqlTYPE $sqlSTORE LIMIT $start,10";// //選取資料庫的所有欄位資料
 
-$sql1="SELECT * FROM product WHERE valid=1 $sqlTYPE $sqlSTORE";
+$sql1="SELECT * FROM product WHERE valid=1  $sqlTYPE $sqlSTORE";
 $result1 = $conn->query($sql1);
 $productsCount1 = $result1->num_rows;
 

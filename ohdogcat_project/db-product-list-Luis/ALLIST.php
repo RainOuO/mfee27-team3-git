@@ -120,6 +120,7 @@ require("./doproducts.php");
             border-radius: 5px;
             color: #222934;
         }
+
         .pageBtn:active {
             color: #fff;
             background-color: #49586f;
@@ -283,37 +284,17 @@ require("./doproducts.php");
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbykey" style="display:none">
-                                        <form action="doFilter-keyword.php" method="post">
-                                            <div class="col-10 d-flex mt-4 keywordBar ">
-                                                <input type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字">
-                                                <button class="col-3 btn mx-2 filterBtn" type="submit">搜尋</button>
-                                            </div>
-                                        </form>
+                                    <?php require("keyword-filter.php"); ?>
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbydate" style="display:none">
-                                        <form action="FILTER-PAGE.php" method="post">
-                                            <div class="col-10 d-flex mt-4">
-                                                <div class="col-5 mx-1">
-                                                    <div class="dateF">上架日</div>
-                                                    <input type="date" class="form-control dateS" name="start-date">
-                                                </div>
-                                                <div class="col-auto mx-1 mt-3">
-                                                    <div class="">~</div>
-                                                </div>
-                                                <div class="col-5 mx-1">
-                                                    <div class="dateF">下架日</div>
-                                                    <input type="date" class="form-control dateS" name="end-date">
-                                                </div>
-                                                <button class=" col-auto btn mx-1 filterBtn" type="submit">搜尋</button>
-                                            </div>
-                                        </form>
+                                    <?php require("date-filter.php"); ?>
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbyprice" style="display:none">
-                                        <?php require("price-filter.php");?>
+                                        <?php require("price-filter.php"); ?>
                                     </div>
                                 </div>
                             </div>
@@ -369,7 +350,7 @@ require("./doproducts.php");
                                                 <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
                                                 <td class="align-middle text-center"><?= $row["valid"] ?></td>
                                                 <td class="align-middle text-center">
-                                                    <button type="button" class="btn detailBtn">查看</button>
+                                                    <button type="button" class="btn detailBtn"><a href="product-detail.php?id=<?= $row["id"] ?>">查看</a></button>
                                                 </td>
                                             </tr>
                                         <?php endwhile; ?>

@@ -10,27 +10,25 @@ if (isset($_GET["type"]) && !empty($_GET["type"])) {
     $sqlTYPE = "";
 }
 
-$startdate =$_GET["startdate"];
-$enddate =$_GET["enddate"];
-var_dump($startdate);
-var_dump($enddate);
+$minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
+$maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : 9999;
+// $maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : ;
 
-// convert(varchar(16),'2010-09-20',120);
-$sql = "SELECT * FROM product WHERE $sqlTYPE valid_time_start) >=  convert(varchar(10),$startdate,111) 
-AND valid_time_end <= convert(varchar(10),$enddate,111)"; //選取資料表
+$sql = "SELECT * FROM product WHERE $sqlTYPE price>= $minPrice and price <= $maxPrice "; //選取資料表
 // $sql = "SELECT product.*, catagory.name AS catagory_name FROM product
 // JOIN catagory ON product.catagory_id = catagory.id WHERE product.price >= $minPrice and price <= $maxPrice ";
 $result = $conn->query($sql); //連線
 $product_count = $result->num_rows; //取得資料筆數 
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
+// var_dump($rows);
 
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>商品搜尋-依上架日</title>
+    <title>商品搜尋-依價格</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -283,10 +281,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
                                 <?php if (empty($_GET["type"])) : ?>
-                                    <h2>商品總覽: 依上架日篩選</h2>
+                                    <h2>商品總覽: 依價格篩選</h2>
                                 <?php else : ?>
                                     <?php foreach ($rowstitle as $rowwww) : ?>
-                                        <h2> <?= $rowwww['type_name'] ?>: 依上架日篩選</h2>
+                                        <h2> <?= $rowwww['type_name'] ?>: 依價格篩選</h2>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </div>

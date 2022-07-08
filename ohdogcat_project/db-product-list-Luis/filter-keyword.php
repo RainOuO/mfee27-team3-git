@@ -2,33 +2,35 @@
 require("./doproducts.php");
 require("./db-connect.php");
 
-if (isset($_GET["type"]) && !empty($_GET["type"])) {
-    $type = $_GET["type"];
-    $sqlTYPE = "product_type = $type AND ";
+// if (isset($_GET["type"]) && !empty($_GET["type"])) {
+//     $type = $_GET["type"];
+//     $sqlTYPE = "product_type = $type AND ";
+// } else {
+//     $type = "";
+//     $sqlTYPE = "";
+// }
+if (!isset($_GET["search"])) {
+    $search = "";
+    // $userCount = 0;
 } else {
-    $type = "";
-    $sqlTYPE = "";
+    $search = $_GET["search"];
 }
 
-$minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
-$maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : 9999;
-// $maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : ;
 
-$sql = "SELECT * FROM product WHERE $sqlTYPE price>= $minPrice and price <= $maxPrice "; //選取資料表
-// $sql = "SELECT product.*, catagory.name AS catagory_name FROM product
-// JOIN catagory ON product.catagory_id = catagory.id WHERE product.price >= $minPrice and price <= $maxPrice ";
-$result = $conn->query($sql); //連線
-$product_count = $result->num_rows; //取得資料筆數 
-$rows = $result->fetch_all(MYSQLI_ASSOC);
 
-// var_dump($rows);
+$sqlkeyword = "SELECT name, description, price FROM product WHERE name LIKE '%$search%' OR description LIKE'%$search%' OR price LIKE '%$search%'";
+
+$resultkeyword = $conn->query($sqlkeyword); //連線
+$product_count = $resultkeyword->num_rows; //取得資料筆數 
+$rowskeyword = $resultkeyword->fetch_all(MYSQLI_ASSOC);
+var_dump($rowskeyword);
 
 ?>
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>商品搜尋</title>
+    <title>商品搜尋-依關鍵字</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -281,10 +283,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
                                 <?php if (empty($_GET["type"])) : ?>
-                                    <h2>商品總覽: 依價格篩選</h2>
+                                    <h2>商品總覽: 依關鍵字篩選</h2>
                                 <?php else : ?>
                                     <?php foreach ($rowstitle as $rowwww) : ?>
-                                        <h2> <?= $rowwww['type_name'] ?>: 依價格篩選</h2>
+                                        <h2> <?= $rowwww['type_name'] ?>: 依關鍵字篩選</h2>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </div>
@@ -303,32 +305,12 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbykey" style="display:none">
-                                        <form action="doFilter-keyword.php" method="post">
-                                            <div class="col-10 d-flex mt-4 keywordBar ">
-                                                <input type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字">
-                                                <button class="col-3 btn mx-2 filterBtn" type="submit">搜尋</button>
-                                            </div>
-                                        </form>
+                                    <?php require("keyword-filter.php"); ?>
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbydate" style="display:none">
-                                        <form action="FILTER-PAGE.php" method="post">
-                                            <div class="col-10 d-flex mt-4">
-                                                <div class="col-5 mx-1">
-                                                    <div class="dateF">上架日</div>
-                                                    <input type="date" class="form-control dateS" name="start-date">
-                                                </div>
-                                                <div class="col-auto mx-1 mt-3">
-                                                    <div class="">~</div>
-                                                </div>
-                                                <div class="col-5 mx-1">
-                                                    <div class="dateF">下架日</div>
-                                                    <input type="date" class="form-control dateS" name="end-date">
-                                                </div>
-                                                <button class=" col-auto btn mx-1 filterBtn" type="submit">搜尋</button>
-                                            </div>
-                                        </form>
+                                    <?php require("date-filter.php"); ?>
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
