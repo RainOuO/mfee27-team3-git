@@ -1,3 +1,20 @@
+<?php
+if (!isset($_GET['id'])) {
+    echo "沒有資料";
+    exit;
+}
+
+$id = $_GET["id"];
+
+require("./db-connect.php");
+require("./doproducts.php");
+
+
+
+?>
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -17,13 +34,12 @@
             selector: '#mytextarea'
         });
     </script>
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         .photo-window {
-            padding: 5px;
             text-align: center;
 
         }
-
 
         .filterBtn {
             color: #222934;
@@ -59,7 +75,6 @@
             width: 100%;
             object-fit: contain;
             overflow: hidden;
-
         }
 
         .slideshow {
@@ -78,40 +93,46 @@
             height: 150px;
         }
 
-        .photo1 img {
 
-            object-fit: contain;
-            border: 2px solid grey;
-
-        }
-/* 
-        網頁捲軸【寬度】 */
-        .slideshow::-webkit-scrollbar {
-            width: 5px;
-        }
-
-        /* 網頁捲軸【背景】顏色 */
-        .slideshow::-webkit-scrollbar-track {
-            background: rgba(0, 0, 0, 0.5);
-        }
-
-        /* 網頁捲軸【把手】顏色 */
-        .slideshow::-webkit-scrollbar-thumb {
-            background: #D5EEEE;
-            width: 5px;
-            border-radius: 15px;
-        }
-
-        /* 網頁捲軸【滑過時】把手的顏色 */
-        .slideshow::-webkit-scrollbar-thumb:hover {
-            background: #49586f;
-            height: 3px;
-            width: 3px;
-            border-radius: 10px;
-        }
 
         .photo-upload .photo-window {
             max-width: 100%;
+        }
+
+
+        .swiper {
+            width: 600px;
+            height: 160px;
+            /* background: #D5EEEE;
+            border: 5px solid #D5EEEE; */
+        }
+
+        .swiper-slide {
+            text-align: center;
+            font-size: 18px;
+            background: #fff;
+
+            /* Center slide text vertically */
+            display: -webkit-box;
+            display: -ms-flexbox;
+            display: -webkit-flex;
+            display: flex;
+            -webkit-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+            -webkit-box-align: center;
+            -ms-flex-align: center;
+            -webkit-align-items: center;
+            align-items: center;
+        }
+
+        .swiper-slide img {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            border: 1px solid lightgrey;
         }
     </style>
 </head>
@@ -245,7 +266,7 @@
                         </div>
                         <div class="d-flex justify-content-between align-items-center m-2">
                             <div class="title d-flex mt-2">
-                                <img src="./8666681_edit_icon.png" width="48" height="48" alt="">
+                                <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                                 <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
                             </div>
                             <div class="crudBox">
@@ -260,79 +281,81 @@
                             <div class="photobar d-flex flex-column col-5">
                                 <div class="photo-window d-flex flex-column  ">
                                     <div class="cover-photo m-3">
-                                        <img src="./dogsuit.jpg" alt="">
+                                        <img src="./IMAGES/doglogo.png" alt="">
                                     </div>
-                                    <div class="slideshow d-flex">
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dog2.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dog.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div class="photo1"> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
-                                        <div> <img class="photo1" src="./dogsuit.jpg" alt=""></div>
+                                    <div class="swiper mySwiper">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+
+                                        </div>
+                                        <div class="swiper-pagination"></div>
                                     </div>
                                 </div>
                                 <form action="doUpload.php" method="post" enctype="multipart/form-data">
                                     <div class="row photo-upload mt-3 d-flex justify-content-center">
                                         <div class=" d-flex col-6">
                                             <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">上傳封面照片</button>
+                                            <button class="btn filterBtn" type="submit">封面照片</button>
                                         </div>
                                         <div class="d-flex col-6">
                                             <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">上傳商品照片</button>
+                                            <button class="btn filterBtn" type="submit">商品照片</button>
                                         </div>
                                     </div>
                                 </form>
                             </div>
                             <div class="basic-setting col-6">
-                                <form action="doUpdate">
-                                    <label for="">商品名稱**</label>
-                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control">
-                                    <label for="">商品分類**</label>
-                                    <select name='category' class="form-control">
-                                        <option value='0'>旅遊票券</option>
-                                        <option value='1'>活動票券</option>
-                                        <option value='2'>餐廳票券</option>
-                                        <option value='3'>寵物周邊</option>
-                                        <option value='4'>寵物服飾</option>
-                                        <option value='5'>寵物食品</option>
-                                    </select>
-                                    <label for="">商品介紹</label>
-                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
-                                    <label for="">商品價格**</label>
-                                    <input type="text" name="price" placeholder="只能輸入大於0的數字" class="form-control">
-                                    <label for="">商品規格</label>
-                                    <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
-                                    <div class="d-flex mt-2">
-                                        <img src="./8666681_edit_icon.png" width="48" height="48" alt="">
-                                        <h3 class="pt-3">進階設定</h3>
-                                    </div>
-                                    <hr>
-                                    <label for="">上架時間</label>
-                                    <input type="datetime-local" name="spec" class="form-control">
-                                    <label for="">下架時間</label>
-                                    <input type="datetime-local" name="spec" class="form-control">
-                                    <label for="">優惠券方案使用</label><br>
-                                    <select name='dragdown' class="form-control">
-                                        <option value='0'>全站周年慶</option>
-                                        <option value='1'>父親節活動</option>
-                                        <option value='2'>兒童節寵愛牠</option>
-                                        <option value='4'>站內年中慶 全站三件打85折</option>
-                                        <option value='5'>由優惠券管理作連動</option>
-                                        <option value='6'>無</option>
-                                    </select>
-                                    <label for="">商品有效期限</label>
-                                    <input type="date" name="spec" placeholder="自由增建選項" class="form-control">
-                                    <label for="">商品庫存數</label>
-                                    <input type="text" name="spec" placeholder="只能輸入大於0的數字" class="form-control">
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                        <label class="form-check-label" for="flexRadioDefault1">
-                                            商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
-                                        </label>
-                                    </div>
-                                </form>
+                                <?php if ($productsCount1 > 0) :
+                                    $row = $result->fetch_assoc() ?>
+                                    <form action="doUpdate">
+                                        <label for="">商品名稱**</label>
+                                        <div type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="py-2"><?= $row['name'] ?> </div>
+                                        <label for="">商品分類**</label>
+                                        <div name='category' class=" py-2">
+                                            <?= $row['product_category'] ?>
+                                        </div>
+                                        <label for="">商品介紹</label>
+                                        <div type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="py-2"><?= $row['description'] ?></div>
+                                        <label for="">商品價格**</label>
+                                        <div type="text" name="price" placeholder="只能輸入大於0的數字" class="py-2">NTD: <?= $row['price'] ?></div>
+                                        <div class="d-flex mt-2">
+                                            <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
+                                            <h3 class="pt-3">進階設定</h3>
+                                        </div>
+                                        <hr>
+                                        <label for="">上架時間</label>
+                                        <div type="datetime-local" name="spec" class=""><?= $row['valid_time_start'] ?></div>
+                                            <label for="">下架時間</label>
+                                            <div type="datetime-local" name="spec" class=""><?= $row['valid_time_end'] ?></div>
+                                            <label for="">優惠券方案使用</label><br>
+                                            <select name='dragdown' class="form-control">
+                                                <option value='0'>全站周年慶</option>
+                                                <option value='1'>父親節活動</option>
+                                                <option value='2'>兒童節寵愛牠</option>
+                                                <option value='4'>站內年中慶 全站三件打85折</option>
+                                                <option value='5'>由優惠券管理作連動</option>
+                                                <option value='6'>無</option>
+                                            </select>
+                                            <label for="">資料創建時間</label>
+                                            <div type="date" name="spec" placeholder="自由增建選項" class=""><?= $row['create_time'] ?></div>
+                                            <label for="">商品庫存數</label>
+                                            <div type="text" name="spec" placeholder="只能輸入大於0的數字" class=""><?= $row['stock_quantity'] ?></div>
+                                            <!-- <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
+                                                </label>
+                                            </div> -->
+                                    </form>
+                                <?php else : ?>
+                                    無此筆資料
+                                <?php endif; ?>
                             </div>
                         </div>
                         <hr>
@@ -364,6 +387,20 @@
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper(".mySwiper", {
+            slidesPerView: 3,
+            spaceBetween: 30,
+            pagination: {
+                el: ".swiper-pagination",
+                clickable: true,
+            },
+        });
+    </script>
     <script>
         tinymce.init({
             selector: 'textarea',
