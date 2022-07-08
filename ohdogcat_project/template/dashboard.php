@@ -149,7 +149,7 @@
                         </a>
                     </div>
                     <hr class="flex-shrink-0">
-                    <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
+                    <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <?php require('./main.php'); ?>
                     </main>
                 </div>
