@@ -25,7 +25,8 @@ if($userExist>0){ //登入成功
         "id"=>$row["id"],
         "account"=>$row["account"],
         "name"=>$row["name"],
-        "password"=>$row["password"]
+        "password"=>$row["password"],
+        "store_right"=>$row["store_right"]
 
     ];
     unset($_SESSION["error"]);

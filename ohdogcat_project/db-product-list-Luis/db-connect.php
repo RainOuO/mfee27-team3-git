@@ -2,7 +2,7 @@
 //資料庫連線
 $servername = "localhost";
 $username = "admin";
-$password = "1234";
+$password = "0000";
 $dbname = "team3_project";
 
 $conn = new mysqli($servername, $username, $password , $dbname);

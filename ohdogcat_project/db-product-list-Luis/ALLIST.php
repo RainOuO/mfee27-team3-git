@@ -1,6 +1,6 @@
 <?php
-require("./doproducts.php");
-require("./doPricefilter.php");
+require("doproducts.php");
+require("doPricefilter.php");
 
 
 
@@ -165,7 +165,7 @@ require("./doPricefilter.php");
                                     </li>
                                     <li>
                                         <?php foreach ($rowsCate as $row) : ?>
-                                            <?php if ($type == $row["type_name"]) ?>
+                                            <?php if ($store_right == $row["type_name"]) ?>
                                             <a href="ALLIST.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?= $row['type_name'] ?></a>
                                         <?php endforeach; ?>
                                     </li>
@@ -259,7 +259,7 @@ require("./doPricefilter.php");
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
-                                <?php if (!isset($_GET["type"])) : ?>
+                                <?php if (!isset($_SESSION["user"]['store_right'])) : ?>
                                     <h2>商品總覽</h2>
                                 <?php else : ?>
                                     <?php foreach ($rowstitle as $rowwww) : ?>
@@ -361,25 +361,25 @@ require("./doPricefilter.php");
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php //把資料轉換成關聯式陣列
-                                        while ($row = $result->fetch_assoc()) : //從資料庫一次抽取單筆資料 用while迴圈顯示
-                                        ?>
-                                            <tr>
-                                                <td class="align-middle text-center"><?= $row["store_id"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["id"] ?></td>
-                                                <td class="align-middle text"><?= $row["product_category"] ?></td>
-                                                <td class="align-middle"><?= $row["name"] ?></td>
-                                                <td class="align-middle col-2"><?= $row["description"] ?></td>
-                                                <td>站內年中慶 全站三件打85折</td>
-                                                <td class="align-middle text-end"><?= $row["price"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["valid_time_start"] ?>~<br><?= $row["valid_time_end"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["valid"] ?></td>
-                                                <td class="align-middle text-center">
-                                                    <button type="button" class="btn detailBtn">查看</button>
-                                                </td>
-                                            </tr>
-                                        <?php endwhile; ?>
+                                    <?php foreach ($rowsA as $roww) : ?>
+                                        <tr>
+                                               <td class="align-middle text-center"><?= $roww["store_id"] ?></td>
+                                               <td class="align-middle text-center"><?= $roww["id"] ?></td>
+                                               <td class="align-middle text"><?= $roww["product_category"] ?></td>
+                                               <td class="align-middle"><?= $roww["name"] ?></td>
+                                               <td class="align-middle col-2"><?= $roww["description"] ?></td>
+                                               <td>站內年中慶 全站三件打85折</td>
+                                               <td class="align-middle text-end"><?= $roww["price"] ?></td>
+                                               <td class="align-middle text-center"><?= $roww["valid_time_start"] ?>~<br><?= $roww["valid_time_end"] ?></td>
+                                               <td class="align-middle text-center"><?= $roww["stock_quantity"] ?></td>
+                                               <td class="align-middle text-center"><?= $roww["valid"] ?></td>
+                                               <td class="align-middle text-center">
+                                                   <button type="button" class="btn detailBtn">查看</button>
+                                               </td>
+                                           </tr>
+                                        <?php endforeach; ?>
+
+                                        
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-center pt-3">
