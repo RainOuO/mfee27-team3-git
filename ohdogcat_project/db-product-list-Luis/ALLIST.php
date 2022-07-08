@@ -1,6 +1,35 @@
 <?php
 require("./doproducts.php");
 
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+$minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
+$maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : 9999;
+$startdate = isset($_GET["startdate"]) ? $_GET["startdate"] : "";
+$enddate = isset($_GET["enddate"]) && !empty($_GET["enddate"])? $_GET["enddate"] : "";
+
+// var_dump($startdate);
+// var_dump($enddate);
+
+// $sql = "SELECT * FROM product WHERE $sqlType price>= $minPrice and price <= $maxPrice "; //選取資料表
+
+$sql = "SELECT * FROM product WHERE 1";
+$sql .=  $type ? " and product_type = $type " : "";
+$sql .= $keyword ? " and (name LIKE '%$keyword%' OR description LIKE '%$keyword%')" : "";
+$sql .= $minPrice ? " and price >= $minPrice" : "";
+$sql .= $maxPrice ? " and price <= $maxPrice" : "";
+$sql .= $startdate ? " and (valid_time_start <= '$startdate' and valid_time_end >= '$startdate')" : "";
+$sql .= $enddate ? " or ('$startdate' <= valid_time_end and '$enddate' >= valid_time_end)" : "";
+// TO-DO: $sql .= 'order by price desc'
+// TO-DO: $sql .= 'LIMIT {$page}'
+echo $sql;
+
+// $sql = "SELECT product.*, catagory.name AS catagory_name FROM product
+// JOIN catagory ON product.catagory_id = catagory.id WHERE product.price >= $minPrice and price <= $maxPrice ";
+$result = $conn->query($sql); //連線
+// $rows = $result->fetch_all(MYSQLI_ASSOC);
+$product_count = $result->num_rows; //取得資料筆數 
+
 
 
 

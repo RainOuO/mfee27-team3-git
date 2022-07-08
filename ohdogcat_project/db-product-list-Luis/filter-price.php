@@ -1,6 +1,5 @@
 <?php
 require("./doproducts.php");
-require("./db-connect.php");
 
 if (isset($_GET["type"]) && !empty($_GET["type"])) {
     $type = $_GET["type"];
@@ -9,6 +8,13 @@ if (isset($_GET["type"]) && !empty($_GET["type"])) {
     $type = "";
     $sqlType = "";
 }
+
+$search = isset($_GET["search"]) ? $_GET["search"] : "";
+
+$startdate =$_GET["startdate"];
+$enddate =$_GET["enddate"];
+var_dump($startdate);
+var_dump($enddate);
 
 $minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
 $maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : 9999;

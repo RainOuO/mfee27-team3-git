@@ -29,13 +29,13 @@ require("./db-connect.php");
 
 //側欄
 $sqlCate =  "SELECT * FROM p_type WHERE valid=1";
-$resultCate = $conn->query($sqlCate); 
+$resultCate = $conn->query($sqlCate);
 $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
 $rowsCate1 = $resultCate->num_rows;
 
 //標題
 $sqltitle =  "SELECT * FROM p_type WHERE valid=1 AND id='$type'";
-$resulttitle = $conn->query($sqltitle); 
+$resulttitle = $conn->query($sqltitle);
 $rowstitle = $resulttitle->fetch_all(MYSQLI_ASSOC);
 
 
@@ -45,17 +45,17 @@ $resultAll = $conn->query($sqlAll); //連線資料庫取得所有資料庫的欄
 
 
 //帶入頁碼
-$perPage =10;
+$perPage = 10;
 $start = ($page - 1) * $perPage;
 //資料庫
-$sql = "SELECT * FROM product WHERE valid=1  $sqlTYPE $sqlSTORE LIMIT $start,10";// //選取資料庫的所有欄位資料
+$sql = "SELECT * FROM product WHERE valid=1  $sqlTYPE $sqlSTORE LIMIT $start,10"; // //選取資料庫的所有欄位資料
 
-$sql1="SELECT * FROM product WHERE valid=1  $sqlTYPE $sqlSTORE";
+$sql1 = "SELECT * FROM product WHERE valid=1  $sqlTYPE $sqlSTORE";
 $result1 = $conn->query($sql1);
 $productsCount1 = $result1->num_rows;
 
 
-$result = $conn->query($sql); 
+$result = $conn->query($sql);
 $productsCount = $result->num_rows;
 
 
