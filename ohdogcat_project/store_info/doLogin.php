@@ -8,11 +8,11 @@ if(!isset($_POST["account"])){
 }
 
 $account=$_POST["account"];
-// $password=$_POST["password"];
+$password=$_POST["password"];
 // $password=md5($password);
 // echo "$account, $password";
 
-$sql="SELECT * FROM store_info WHERE account='$account'";
+$sql="SELECT * FROM store_info WHERE account='$account' AND password='$password' ";
 
 $result=$conn->query($sql);
 $userExist=$result->num_rows;

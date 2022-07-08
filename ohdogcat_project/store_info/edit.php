@@ -7,44 +7,24 @@ if (!isset($_SESSION["user"])) {
 $id = $_SESSION["user"]['account'];
 // $id=$_SESSION["user"]['name'];
 // $id=$_SESSION["user"]['id'];
-
-
+// $password=$_SESSION["user"]["password"];
 require("db-connect.php");
 
-
-
-
-
-
-//寫join一定要寫的地方111111111111
-
-$sql = "SELECT store_info.*, category.name AS category_name FROM store_info
-    JOIN category ON store_info.store_right = category.id";
-
-
-$result = $conn->query($sql);
-$product_count = $result->num_rows;
-$rows = $result->fetch_all(MYSQLI_ASSOC);
-
-//寫join一定要寫的地方22222222222
-
-
-
-
-
-
-
-
-$sql = "SELECT * FROM store_info WHERE account='$id'";
+$sql = "SELECT * FROM store_info WHERE account='$id' ";
 $result = $conn->query($sql);
 $userCount = $result->num_rows;
+
+
+$sqll = "SELECT * FROM store_info WHERE  account='$id'";
+$results = $conn->query($sqll);
+$rowss = $results->fetch_all(MYSQLI_ASSOC);
 ?>
 
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>test3</title>
+    <title>Title</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -56,24 +36,115 @@ $userCount = $result->num_rows;
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
 
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.1.1/css/all.min.css">
     <style>
-        .ratio{
-            margin-right: 50px;
+        body {
+            position: relative;
         }
-        /* .btna{
-            position: fixed;
-            right: 0;
+
+        .iconpen {
+            margin-top: 5px;
+            margin-right: 8px;
+            width: 30px;
+            height: 40px;
         }
-        .btnaa{
+
+        .photoinputALL {
+            margin-top: 25px;
+            /* position: absolute; */
+            /* right: 35%; */
+            margin-left: 30px;
+            display: flex;
+            /* justify-content: right; */
+        }
+
+        .imgALL {
+            margin-right: 50PX;
+        }
+
+        .formmm {
+            width: 550px;
+            line-height: 63px;
+            font-size: 20px;
+            font-weight: 200;
+        }
+
+        .input1 {
+            margin-top: 15px;
+        }
+
+        .btn1 {
+            background-color: #49586f;
+            margin-top: 10px;
+            margin-right: 15px;
+            width: 130px;
+            height: 40px;
+            color: white;
+            border-radius: 5px;
+            padding: 8px 10px 20px 18px;
+        }
+
+        .btn1:hover {
+            background-color: #ffc845;
+            color: #000;
+        }
+
+        .btn2 {
+            padding: 8px 10px 20px 28px;
+            background-color: #D5EEEE;
+            margin-top: 10px;
+            width: 130px;
+            height: 40px;
+            border-radius: 5px;
+        }
+
+
+        .btn2:hover {
+            background-color: #ffc845;
+            color: #000;
+        }
+
+        .btn3 {
+            margin: 20px 0 0 0;
+            background-color: #FFC845;
+            width: 80px;
+            height: 38px;
+            border-radius: 5px;
+            line-height: 25px;
+        }
+
+        .btndiv {
             position: absolute;
-            top: 100px;
-            right: 0;
-        } */
-        .object-cover {
-            width: 350px;
-            height: 250px;
-            object-fit: cover;
+            right: 23%;
         }
+
+        .btn4 {
+            background-color: #FFC845;
+            width: 80px;
+            height: 50px;
+            border-radius: 5px;
+        }
+
+        .object-cover {
+            width: 550;
+            height: 500px;
+            object-fit: cover;
+            margin-left: 50px;
+            margin-right: 60px;
+        }
+
+        .btnphoto {
+            border-radius: 5px;
+            width: 100px;
+            height: 35px;
+            background-color: #FFC845;
+        }
+
+        .inputphoto {
+            width: 250px;
+            background-color: #D5EEEE;
+        }
+
 
         .toastify {
             background: url("./bg_dog-icon.png") 12px center / 50px no-repeat, url('./bg_toast-bg.png') no-repeat center center / cover, #fff !important;
@@ -83,7 +154,7 @@ $userCount = $result->num_rows;
 </head>
 
 <body>
-    <div class="lowest-background w-100 vh-100 d-flex  overflow-hidden ">
+    <div class="lowest-background w-100 vh-100 d-flex  overflow-hidden">
         <aside id="side-bar" class="side-wrap vh-100 d-flex flex-column">
             <div class="logo-box d-flex justify-content-center align-items-center py-2">
                 <a href="" class="fill-w d-block px-4">
@@ -191,7 +262,7 @@ $userCount = $result->num_rows;
                 </ul>
             </nav>
             <div class="menu-box mt-2 flex-shrink-0 logout">
-                <div class="menu-item"><a href="" class="menu-button no-accordion icon-logout">粗企玩</a></div>
+                <div class="menu-item"><a href="logout.php" class="menu-button no-accordion icon-logout">粗企玩</a></div>
             </div>
         </aside>
         <div class="content-wrap vh-100">
@@ -199,91 +270,96 @@ $userCount = $result->num_rows;
                 <div class="d-flex flex-column h-100">
                     <div class="content-header d-flex justify-content-end flex-shrink-0">
                         <a href="" class="d-flex justify-content-end align-items-center">
-                        <div class="user-name pe-4">汪汪先輩</div>
+                            <?php if (isset($_SESSION["user"])) : ?>
+                                <div class="user-name pe-4"> 歡迎 <?= $_SESSION["user"]["account"] ?></div>
+                            <?php endif; ?>
                             <div class="user-sticker rounded-3 overflow-hidden"><img src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
                         </a>
                     </div>
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
+                        <div class="d-flex bd-highlight mb-3">
+                            <span class="iconpen">
+                                <img src="./7968880_pen_pen tool_adobe illustrator tool_icon.svg" alt="">
+                            </span>
+                            <h2 class="me-auto  bd-highlight">商家設定</h2>
+                            <a href="user1.php" class=" btn1 bd-highlight">商家資訊總覽</a>
+                            <a href="editpassword.php" class=" btn2 bd-highlight">變更新密碼</a>
+                        </div>
+                        <hr>
+
+
+
                         <div class="d-flex">
-                        <h1>商家設定</h1>
-                        <div>
-                    <a href="dashboard.php" class="btn btn-outline-secondary btna">商家資訊總覽</a>
-                <a href="dashboard.php" class="btn btn-outline-secondary btnaa">資料編輯</a>
-                </div>
-                </div>
-        <hr>
+
+                            <div class="my-2 imgALL ">
+                                <?php foreach ($rowss as $rowa) : ?>
+                                    <img class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?> src="./user.jpg" alt="">
+                                <?php else : ?>
+                                    <img src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
+                                <?php endif; ?>
+                                <form class="photoinputALL" action="doUpdatephoto.php" method="post" enctype="multipart/form-data">
+                                    <input type="hidden" name="max_file_size" value="1024000">
+                                    <div class="mb-2">
+                                        <input class="form-control inputphoto mx-3" type="file" name="myFile">
+                                    </div>
+                                    <button class="btnphoto mx-2" type="submit">照片儲存</button>
+                                </form>
+                            <?php endforeach; ?>
+                            </div>
 
 
 
 
-
-                        <img class="object-cover" src="bg_dog-icon.png" alt="">
-
-
-
-
-
-
-
-                        <div class="container ">
                             <?php if ($userCount > 0) :
-                                $row = $result->fetch_assoc();
-                            ?>
-                                <!-- <div class="py-2">
-                <a class="btn btn-info" href="user.php">取消</a>
-            </div> -->
-                                <form action="doUpdate.php" method="POST">
+                                $row = $result->fetch_assoc(); ?>
+                                <form class="formmm" action="doUpdate.php" method="POST">
                                     <input name="id" type="hidden" value="<?= $row["id"] ?>">
                                     <table class="table">
 
                                         <tr>
                                             <th>店家名稱</th>
-                                            <td><?= $row["name"] ?></td>
+                                            <td><input type="text" name="name" class="form-control input1" value="<?= $row["name"] ?>"></td>
                                         </tr>
                                         <tr>
-                                            <th>account</th>
-                                            <td><?= $row["account"] ?></td>
+                                            <th>帳號</th>
+                                            <td class="input1"> <?= $row["account"] ?></td>
                                         </tr>
                                         <tr>
-                                            <th>password</th>
-                                            <td>********</td>
+                                            <th>密碼</th>
+                                            <td class="input1">*******</td>
                                         </tr>
                                         <tr>
-                                            <th>Phone</th>
-                                            <td><?= $row["phone"] ?></td>
+                                            <th>連絡電話</th>
+                                            <td><input type="tel" name="phone" class="form-control input1" value="<?= $row["phone"] ?>"></td>
                                         </tr>
                                         <tr>
                                             <th>Email</th>
-                                            <td><?= $row["email"] ?></td>
+                                            <td><input type="email" name="email" class="form-control input1" value="<?= $row["email"] ?>"></td>
                                         </tr>
-                                        <tr>
-                                            <th>區域</th>
-                                            <td><?= $row["area"] ?></td>
-                                        </tr>
-                                        <?php foreach ($rows as $row) : ?>
-                                        <?php endforeach; ?>
-                                        <th>店鋪權限</th>
                                         <td>
-                                            <class="form-control"><?= $row["category_name"] ?>
-                                        </td>
-                                        </tr>
-                                        <tr>
-                                            <th>地址</th>
-                                            <td><?= $row["address"] ?></td>
-                                        </tr>
+                                            <label class="title " for="livingn">區域:</label>
+                                            <select name="area">
+                                                <option>北部</option>
+                                                <option>中部</option>
+                                                <option>南部</option>
+                                            </select>
+                                            <!-- <th>地址</th> -->
+                                        <td><input type="text" name="address" class="form-control input1" value="<?= $row["address"] ?>"></td>
 
+                                        </td>
                                     </table>
-                                    <div class="py-2">
-                                        <!-- <button type="submit" class="btn btn-info" href="editttttt2222">儲存</button> -->
+                                    <div class="py-2 btndiv">
+                                        <!-- <button href="user1.php" type="submit" class="btn4 mx-2">取消</button> -->
+                                        <button type="submit" class="btn3 mx-2">儲存</button>
+
                                     </div>
                                 </form>
-
                             <?php else : ?>
                                 沒有該使用者
                             <?php endif; ?>
-                        </div>
 
+                        </div>
                     </main>
                 </div>
             </div>
@@ -296,9 +372,9 @@ $userCount = $result->num_rows;
     </script>
 
     <script>
-        if ('<?= $_SESSION['update'] ?>' == 'success') {
+        if ('<?= $_SESSION['updates'] ?>' == 'successs') {
             Toastify({
-                text: "更新成功",
+                text: "照片更新成功",
                 duration: 4000,
                 destination: "https://github.com/apvarun/toastify-js",
                 newWindow: true,
@@ -309,13 +385,13 @@ $userCount = $result->num_rows;
                 style: {
 
                     background: "linear-gradient(to right, rgb(255, 165, 0), #96c93d)",
-                    width: "150px",
-                    height: "50px",
+                    width: "160px",
+                    height: "80px",
                     padding: "15px  15px 5px 66px",
                 },
                 onClick: function() {} // Callback after click
             }).showToast();
-            <?php unset($_SESSION['update']) ?>
+            <?php unset($_SESSION['updates']) ?>
         }
     </script>
 </body>
