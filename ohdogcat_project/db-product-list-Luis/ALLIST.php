@@ -119,9 +119,10 @@ require("./doPricefilter.php");
             border: 2px solid #49586f;
             border-radius: 5px;
             color: #222934;
-
-            /* margin: 2px; */
-
+        }
+        .pageBtn:active {
+            color: #fff;
+            background-color: #49586f;
         }
 
         .pageBtn:hover {
@@ -314,10 +315,10 @@ require("./doPricefilter.php");
                                     <div id="searchbyprice" style="display:none">
                                         <form action="./FILTER-PAGE.php" method="post">
                                             <div class="col-9 d-flex mt-4 priceBar">
-                                                <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="minprice" value="<?php $minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
+                                                <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="minPrice" value="<?php $minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
                                                                                                                                             echo $minPrice ?>">
 
-                                                <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="maxprice" value="<?php $maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : 9999;
+                                                <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="maxPrice" value="<?php $maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : 9999;
                                                                                                                                             echo $maxPrice ?>">
                                                 <button class="col-auto btn ms-1 filterBtn" type="submit">搜尋</button>
                                             </div>
@@ -335,20 +336,21 @@ require("./doPricefilter.php");
                         <hr>
                         <div class="d-flex justify-content-end align-items-center">
                             <div class="countBox">
-                                <?php if ($productsCount > 0) : ?>
-                                    <h4 class="countBox">此頁為商品第<?= $starItem ?>-<?= $endItem ?>筆資料，共<?= $productsCount ?>筆商品資料</h4>
+                                <?php if ($productsCount1 > 0) : ?>
+                                    <h4 class="countBox">
+                                        現在為第<?= $page ?>頁，商品第<?= $starItem ?>-<?= $endItem ?>筆資料，共<?= $productsCount1 ?>筆商品資料</h4>
 
                                 <?php endif; ?>
                             </div>
                             <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='product-edit-new-swiper.php'">新增商品</button>
                         </div>
                         <div class="table-responsive">
-                            <?php if ($productsCount > 0) : ?>
+                            <?php if ($productsCount1 > 0) : ?>
                                 <table class="table table-sm">
                                     <thead>
                                         <tr>
                                             <th class="align-middle text-center">商家ID</th>
-                                            <th class="align-middle text-center">商品ID</th>
+                                            <th class="align-middle text-center">商品no.</th>
                                             <th class="align-middle">商品分類</th>
                                             <th>商品名稱</th>
                                             <th>商品描述</th>
@@ -386,7 +388,8 @@ require("./doPricefilter.php");
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination">
                                             <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                                                <li class="page-item"><a class="page-link" href="users.php?page=<?= $i ?>&type=<?=$type?>"><?= $i ?></a></li>
+
+                                                <li class="pagebtn<?php if ($i == $page) echo "active"; ?> "><a class="pageBtn" href="ALLIST.php?type=<?= $type ?>&page=<?= $i ?>"><?= $i ?></a></li>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>

@@ -5,7 +5,7 @@ if (isset($_GET["page"])) {
     $page = 1;
 }
 
-if (isset($_GET["type"])) {
+if (isset($_GET["type"]) && !empty($_GET["type"])) {
     $type = $_GET["type"];
     $sqlTYPE = "AND product_type = $type";
 } else {
@@ -53,16 +53,16 @@ $sql = "SELECT * FROM product WHERE valid=1 $sqlTYPE $sqlSTORE LIMIT $start,5";/
 $sql1="SELECT * FROM product WHERE valid=1 $sqlTYPE $sqlSTORE";
 $result1 = $conn->query($sql1);
 $productsCount1 = $result1->num_rows;
-var_dump($productsCount1);
 
-$result = $conn->query($sql); //連線資料庫取得所有資料庫的欄位資料放入result
+
+$result = $conn->query($sql); 
 $productsCount = $result->num_rows;
-var_dump($productsCount);
+
 
 $starItem = ($page - 1) * $perPage + 1; //開始的筆數
 $endItem = $page * $perPage; //結束的筆數
-if ($endItem > $productsCount) {
-    $endItem = $productsCount;
+if ($endItem > $productsCount1) {
+    $endItem = $productsCount1;
 };
 
 
