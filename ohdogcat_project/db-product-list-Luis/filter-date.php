@@ -4,11 +4,12 @@ require("./db-connect.php");
 
 if (isset($_GET["type"]) && !empty($_GET["type"])) {
     $type = $_GET["type"];
-    $sqlTYPE = "product_type = $type AND ";
+    $sqlType = "product_type = $type AND ";
 } else {
     $type = "";
-    $sqlTYPE = "";
+    $sqlType = "";
 }
+
 
 $startdate =$_GET["startdate"];
 $enddate =$_GET["enddate"];

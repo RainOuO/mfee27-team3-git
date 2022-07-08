@@ -1,4 +1,4 @@
-<form action="./filter-page.php" method="get">
+<form action="./filter-price.php" method="get">
     <div class="col-9 d-flex mt-4 priceBar">
         <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="minPrice" value="<?php $minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
                                                                                                     echo $minPrice;
