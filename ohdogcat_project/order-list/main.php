@@ -60,166 +60,14 @@ $_SESSION["order-list"] = $rows;
     <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasOrderList"
         aria-labelledby="offcanvasOrderListLabel">
         <div class="offcanvas-header">
-            <h5 class="offcanvas-title" id="offcanvasOrderListLabel">訂單序號：</h5>
+            <h5 class="offcanvas-title" id="offcanvasOrderListLabel">訂單序號：<span class="order-no"></span></h5>
             <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
         </div>
         <div class="offcanvas-body">
             <div class="row h-100">
-                <div id="orderDetail" class="col-md-4 h-100 scroll-bar">
-                    <div class="card mb-3 mx-auto" style="max-width: 720px; height: 110px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">商品名稱</h5>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="card-text"><small class="text-muted">單價：</small></p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="card-text"><small class="text-muted">數量：3</small></p>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 mx-auto" style="max-width: 720px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">商品名稱</h5>
-                                    <p class="card-text">敘述敘述敘述敘述敘述敘述敘述敘述</p>
-                                    <p class="card-text"><small class="text-muted">數量：3</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 mx-auto" style="max-width: 720px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">商品名稱</h5>
-                                    <p class="card-text">敘述敘述敘述敘述敘述敘述敘述敘述</p>
-                                    <p class="card-text"><small class="text-muted">數量：3</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 mx-auto" style="max-width: 720px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">商品名稱</h5>
-                                    <p class="card-text">敘述敘述敘述敘述敘述敘述敘述敘述</p>
-                                    <p class="card-text"><small class="text-muted">數量：3</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 mx-auto" style="max-width: 720px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">商品名稱</h5>
-                                    <p class="card-text">敘述敘述敘述敘述敘述敘述敘述敘述</p>
-                                    <p class="card-text"><small class="text-muted">數量：3</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 mx-auto" style="max-width: 720px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">商品名稱</h5>
-                                    <p class="card-text">敘述敘述敘述敘述敘述敘述敘述敘述</p>
-                                    <p class="card-text"><small class="text-muted">數量：3</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 mx-auto" style="max-width: 720px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">商品名稱</h5>
-                                    <p class="card-text">敘述敘述敘述敘述敘述敘述敘述敘述</p>
-                                    <p class="card-text"><small class="text-muted">數量：3</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card mb-3 mx-auto" style="max-width: 720px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <img src="" class="img-fluid rounded-start" alt="...">
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">商品名稱</h5>
-                                    <p class="card-text">敘述敘述敘述敘述敘述敘述敘述敘述</p>
-                                    <p class="card-text"><small class="text-muted">數量：3</small></p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="productList" class="col-md-4 h-100 scroll-bar">
                 </div>
-                <div class="container-fluid col-md-8">
-                    <div class="">
-                        <h4>詳細資料</h4>
-                        <hr>
-                        <div class="row">
-                            <div class="col-6">
-                                <div>
-                                    <h6 class="text-secondary">用戶暱稱</h6>
-                                    <p class="bg-light p-2 rounded-3">陳家豪</p>
-                                </div>
-                                <div>
-                                    <h6 class="text-secondary">商品總數</h6>
-                                    <p class="bg-light p-2 rounded-3">8</p>
-                                </div>
-                                <div>
-                                    <h6 class="text-secondary">總金額</h6>
-                                    <p class="bg-light p-2 rounded-3">8500 元</p>
-                                </div>
-                            </div>
-                            <div class="col-6">
-                                <div>
-                                    <h6 class="text-secondary">訂單成立時間</h6>
-                                    <p class="bg-light p-2 rounded-3">****/**/**</p>
-                                </div>
-                                <div>
-                                    <h6 class="text-secondary">優惠券序號</h6>
-                                    <p class="bg-light p-2 rounded-3">未使用優惠券</p>
-                                </div>
-                                <div>
-                                    <h6 class="text-secondary">訂單狀態</h6>
-                                    <p class="bg-light p-2 rounded-3 text-danger">未結單</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                <div id="orderInfo" class="container-fluid col-md-8">
                 </div>
             </div>
         </div>
@@ -250,35 +98,76 @@ $_SESSION["order-list"] = $rows;
                     }
                 })
                 .done(function (response) {
-                    let orderDetail = document.querySelector('#orderDetail');
+                    let productList = document.querySelector('#productList');
+                    let orderInfo = document.querySelector('#orderInfo');
+                    let orderNo = document.querySelector('.order-no');
                     let porductItem = '';
+                    let amount = 0;
                     for(let item of response.data.order_detail){
-                        porductItem += `<div class="card mb-3 mx-auto" style="max-width: 720px;">
-                        <div class="row g-0">
-                            <div class="col-md-4">
-                                <figure class="ratio ratio-4x3 m-0">
-                                    <img src="../images/${item.productImg}" class="img-fluid rounded-start fill-w object-fit" alt="...">
-                                </figure>
-                            </div>
-                            <div class="col-md-8">
-                                <div class="card-body">
-                                    <h5 class="card-title">${item.productName}</h5>
-                                    <div class="row">
-                                        <div class="col-6">
-                                            <p class="card-text"><small class="text-muted">單價：${formatNum(item.productPrice)}</small></p>
-                                        </div>
-                                        <div class="col-6">
-                                            <p class="card-text"><small class="text-muted">數量：${item.amount}</small></p>
+                        amount += Number(item.amount);
+                        porductItem += `
+                        <div class="card mb-3 mx-auto" style="max-width: 720px;">
+                            <div class="row g-0">
+                                <div class="col-md-4">
+                                    <figure class="ratio ratio-4x3 m-0">
+                                        <img src="../images/${item.productImg}" class="img-fluid rounded-start fill-w object-fit" alt="...">
+                                    </figure>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="card-body">
+                                        <h5 class="card-title">${item.productName}</h5>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <p class="card-text"><small class="text-muted">單價：${formatNum(item.productPrice)}</small></p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="card-text"><small class="text-muted">數量：${item.amount}</small></p>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>`
+                        </div>`
                     }
-                    orderDetail.innerHTML = porductItem;
+                    let order_info = `
+                        <h4>詳細資料</h4>
+                        <hr>
+                        <div class="row">
+                            <div class="col-6">
+                                <div>
+                                    <h6 class="text-secondary">用戶暱稱</h6>
+                                    <p class="bg-light p-2 rounded-3">${response.data.order_item.userName}</span></p>
+                                </div>
+                                <div>
+                                    <h6 class="text-secondary">商品總數</h6>
+                                    <p class="bg-light p-2 rounded-3">${amount}</span></p>
+                                </div>
+                                <div>
+                                    <h6 class="text-secondary">總金額</h6>
+                                    <p class="bg-light p-2 rounded-3">${formatNum(response.data.order_item.total)}</span> 元</p>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div>
+                                    <h6 class="text-secondary">訂單成立時間</h6>
+                                    <p class="bg-light p-2 rounded-3">${response.data.order_item.order_time}</span></p>
+                                </div>
+                                <div>
+                                    <h6 class="text-secondary">優惠券序號</h6>
+                                    <p class="bg-light p-2 rounded-3">${(response.data.order_item.coupon_id == 0)? '未使用優惠券':'商品優惠'}</span></p>
+                                </div>
+                                <div>
+                                    <h6 class="text-secondary">訂單狀態</h6>
+                                    <p class="bg-light p-2 rounded-3 ${(response.data.order_item.valid == 0)? 'text-danger':((response.data.order_item.status == 0)? 'text-danger':'text-success')}">${(response.data.order_item.valid == 0)? '訂單已取消':((response.data.order_item.status == 0)? '未結單':'已結單')}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <button type="button" class="btn btn-danger">取消訂單</button>
+                    `;
+                    orderNo.innerText = response.data.order_item.order_no;
+                    productList.innerHTML = porductItem;
+                    orderInfo.innerHTML = order_info;
                     console.log(response.data);
-
                 }).fail(function (jqXHR, textStatus) {
                     console.log("Request failed: " + textStatus);
                 });
