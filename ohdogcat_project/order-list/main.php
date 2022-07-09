@@ -162,7 +162,7 @@ $_SESSION["order-list"] = $rows;
                                 </div>
                             </div>
                         </div>
-                        <button type="button" class="btn btn-danger">取消訂單</button>
+                        <button type="button" id="orderCancel" class="btn btn-danger">取消訂單</button>
                     `;
                     orderNo.innerText = response.data.order_item.order_no;
                     productList.innerHTML = porductItem;
