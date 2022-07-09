@@ -37,18 +37,14 @@ if ($_FILES["myFile"]["error"] == 0) {
         if ($conn->query($sql) === TRUE) {
             session_start();
             $_SESSION["id"] = $id;
-        
+
             if (isset($_SESSION["id"])) {
                 $_SESSION['updates'] = 'successs';
                 header("location: edit.php");
-                
             }
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;
         }
-
-        // echo "upload success!";
-        // header("location: file-upload.php");
     } else {
         echo "upload fail!!";
     }
