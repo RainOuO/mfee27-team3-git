@@ -1,25 +1,8 @@
 <?php
-if (isset($_GET["page"])) {
-    $page = $_GET["page"];
-} else {
-    $page = 1;
-}
 
-if (isset($_GET["type"]) && !empty($_GET["type"])) {
-    $type = $_GET["type"];
-    $sqlTYPE = "AND product_type = $type";
-} else {
-    $type = "";
-    $sqlTYPE = "";
-}
+$page =isset($_GET["page"])?  $page = $_GET["page"]: 1;
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
 
-if (isset($_GET["store_id"])) {
-    $store_id = $_GET["store_id"];
-    $sqlSTORE = "AND store_id = $store_id";
-} else {
-    $store_id = "";
-    $sqlSTORE = "";
-}
 
 require("./db-connect.php");
 
@@ -39,39 +22,34 @@ $resulttitle = $conn->query($sqltitle);
 $rowstitle = $resulttitle->fetch_all(MYSQLI_ASSOC);
 
 
-$sqlAll = "SELECT * FROM product WHERE valid=1";
-$resultAll = $conn->query($sqlAll); //連線資料庫取得所有資料庫的欄位資料放入result
-// $productsCount = $resultAll->num_rows; //判斷資料欄數(筆數)放入userCount
+// $sqlAll = "SELECT * FROM product WHERE valid=1";
+// $resultAll = $conn->query($sqlAll); //連線資料庫取得所有資料庫的欄位資料放入result
+// // $productsCount = $resultAll->num_rows; //判斷資料欄數(筆數)放入userCount
 
 
 //帶入頁碼
-$perPage = 10;
-$start = ($page - 1) * $perPage;
-//資料庫
-$sql = "SELECT * FROM product WHERE valid=1  $sqlTYPE $sqlSTORE LIMIT $start,10"; // //選取資料庫的所有欄位資料
+// $perPage = 5;
+// $start = ($page - 1) * $perPage;
+// //資料庫
+// $sql = "SELECT * FROM product WHERE valid=1 LIMIT $start,5"; // //選取資料庫的所有欄位資料
 
-$sql1 = "SELECT * FROM product WHERE valid=1  $sqlTYPE $sqlSTORE";
-$result1 = $conn->query($sql1);
-$productsCount1 = $result1->num_rows;
-
-
-$result = $conn->query($sql);
-$productsCount = $result->num_rows;
+// $result = $conn->query($sql);
+// $productsCount = $result->num_rows;
 
 
-$starItem = ($page - 1) * $perPage + 1; //開始的筆數
-$endItem = $page * $perPage; //結束的筆數
-if ($endItem > $productsCount1) {
-    $endItem = $productsCount1;
-};
+// $starItem = ($page - 1) * $perPage + 1; //開始的筆數
+// $endItem = $page * $perPage; //結束的筆數
+// if ($endItem > $productsCount) {
+//     $endItem = $productsCount;
+// };
 
 
-$totalPage = 1;
-$quotient = floor($productsCount1 / $perPage);  //商數 取商數後無條件捨去floor
-$remainder = ($productsCount1 % $perPage); //餘數
+// $totalPage = 1;
+// $quotient = floor($productsCount / $perPage);  //商數 取商數後無條件捨去floor
+// $remainder = ($productsCount % $perPage); //餘數
 
-if ($remainder === 0) {
-    $totalPage = $quotient;
-} else {
-    $totalPage = $quotient + 1;
-}
+// if ($remainder === 0) {
+//     $totalPage = $quotient;
+// } else {
+//     $totalPage = $quotient + 1;
+// }

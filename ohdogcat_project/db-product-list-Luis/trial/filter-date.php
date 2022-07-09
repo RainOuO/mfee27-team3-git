@@ -1,36 +1,29 @@
 <?php
 require("./doproducts.php");
+require("./db-connect.php");
 
-$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
-$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
-$minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
-$maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : 9999;
-$startdate = isset($_GET["startdate"]) ? $_GET["startdate"] : "";
-$enddate = isset($_GET["enddate"]) && !empty($_GET["enddate"])? $_GET["enddate"] : "";
+if (isset($_GET["type"]) && !empty($_GET["type"])) {
+    $type = $_GET["type"];
+    $sqlType = "product_type = $type AND ";
+} else {
+    $type = "";
+    $sqlType = "";
+}
 
-// var_dump($startdate);
-// var_dump($enddate);
 
-// $sql = "SELECT * FROM product WHERE $sqlType price>= $minPrice and price <= $maxPrice "; //選取資料表
+$startdate = $_GET ["startdate"];
+$enddate = $_GET ["enddate"];
+var_dump($startdate);
+var_dump($enddate);
 
-$sql = "SELECT * FROM product WHERE 1";
-$sql .=  $type ? " and product_type = $type " : "";
-$sql .= $keyword ? " and (name LIKE '%$keyword%' OR description LIKE '%$keyword%')" : "";
-$sql .= $minPrice ? " and price >= $minPrice" : "";
-$sql .= $maxPrice ? " and price <= $maxPrice" : "";
-$sql .= $startdate ? " and (valid_time_start <= '$startdate' and valid_time_end >= '$startdate')" : "";
-$sql .= $enddate ? " or ('$startdate' <= valid_time_end and '$enddate' >= valid_time_end)" : "";
-// TO-DO: $sql .= 'order by price desc'
-// TO-DO: $sql .= 'LIMIT {$page}'
-echo $sql;
-
+// convert(varchar(16),'2010-09-20',120);
+$sql = "SELECT * FROM product WHERE $sqlTYPE valid_time_start) >=  convert(varchar(10),$startdate,111) 
+AND valid_time_end <= convert(varchar(10),$enddate,111)"; //選取資料表
 // $sql = "SELECT product.*, catagory.name AS catagory_name FROM product
 // JOIN catagory ON product.catagory_id = catagory.id WHERE product.price >= $minPrice and price <= $maxPrice ";
 $result = $conn->query($sql); //連線
-// $rows = $result->fetch_all(MYSQLI_ASSOC);
 $product_count = $result->num_rows; //取得資料筆數 
-
-
+$rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 ?>
@@ -38,7 +31,7 @@ $product_count = $result->num_rows; //取得資料筆數
 <html lang="en">
 
 <head>
-    <title>商品總覽</title>
+    <title>商品搜尋-依上架日</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -290,11 +283,11 @@ $product_count = $result->num_rows; //取得資料筆數
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
-                                <?php if (!isset($_GET["type"])) : ?>
-                                    <h2>商品總覽</h2>
+                                <?php if (empty($_GET["type"])) : ?>
+                                    <h2>商品總覽: 依上架日篩選</h2>
                                 <?php else : ?>
                                     <?php foreach ($rowstitle as $rowwww) : ?>
-                                        <h2> <?= $rowwww['type_name'] ?></h2>
+                                        <h2> <?= $rowwww['type_name'] ?>: 依上架日篩選</h2>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </div>
@@ -313,12 +306,12 @@ $product_count = $result->num_rows; //取得資料筆數
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbykey" style="display:none">
-                                    <?php require("keyword-filter.php"); ?>
+                                        <?php require("keyword-filter.php"); ?>
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbydate" style="display:none">
-                                    <?php require("date-filter.php"); ?>
+                                        <?php require("date-filter.php"); ?>
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
@@ -337,16 +330,16 @@ $product_count = $result->num_rows; //取得資料筆數
                         <hr>
                         <div class="d-flex justify-content-end align-items-center">
                             <div class="countBox">
-                                <?php if ($productsCount1 > 0) : ?>
+                                <?php if ($product_count > 0) : ?>
                                     <h4 class="countBox">
-                                        現在為第<?= $page ?>頁，商品第<?= $starItem ?>-<?= $endItem ?>筆資料，共<?= $productsCount1 ?>筆商品資料</h4>
+                                        篩選共<?= $product_count ?>筆商品資料</h4>
 
                                 <?php endif; ?>
                             </div>
-                            <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='product-edit-new-swiper.php'">新增商品</button>
+                            <!-- <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='product-edit-new-swiper.php'">新增商品</button> -->
                         </div>
                         <div class="table-responsive">
-                            <?php if ($productsCount1 > 0) : ?>
+                            <?php if ($product_count > 0) : ?>
                                 <table class="table table-sm">
                                     <thead>
                                         <tr>
@@ -364,9 +357,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php //把資料轉換成關聯式陣列
-                                        while ($row = $result->fetch_assoc()) : //從資料庫一次抽取單筆資料 用while迴圈顯示
-                                        ?>
+                                        <?php foreach ($rows as $row) : ?>
                                             <tr>
                                                 <td class="align-middle text-center"><?= $row["store_id"] ?></td>
                                                 <td class="align-middle text-center"><?= $row["id"] ?></td>
@@ -379,24 +370,23 @@ $product_count = $result->num_rows; //取得資料筆數
                                                 <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
                                                 <td class="align-middle text-center"><?= $row["valid"] ?></td>
                                                 <td class="align-middle text-center">
-                                                    <button type="button" class="btn detailBtn"><a href="product-detail.php?id=<?= $row["id"] ?>">查看</a></button>
+                                                    <button type="button" class="btn detailBtn">查看</button>
                                                 </td>
                                             </tr>
-                                        <?php endwhile; ?>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-center pt-3">
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination">
                                             <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-
                                                 <li class="pagebtn<?php if ($i == $page) echo "active"; ?> "><a class="pageBtn" href="ALLIST.php?type=<?= $type ?>&page=<?= $i ?>"><?= $i ?></a></li>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>
                                 </div>
                             <?php else : ?>
-                                目前沒有資料
+                                此篩選查無資料
                             <?php endif; ?>
                         </div>
 

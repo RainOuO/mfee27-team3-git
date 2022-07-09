@@ -1,4 +1,10 @@
 <?php
+
+
+$page = isset($_GET["page"]) ?  $page = $_GET["page"] : 1;
+$perPage = 10;
+$start = ($page - 1) * $perPage;
+
 if (!isset($_GET['id'])) {
     echo "沒有資料";
     exit;
@@ -8,9 +14,34 @@ $id = $_GET["id"];
 
 require("./db-connect.php");
 require("./doproducts.php");
-$sql2 = "SELECT * FROM product WHERE valid=1 AND id=$id $sqlTYPE $sqlSTORE";
+$sql2 = "SELECT * FROM product WHERE valid=1 AND id=$id";
 $result2 = $conn->query($sql2);
 
+
+$product_count = $result2->num_rows; //取得資料筆數 
+
+
+//頁碼
+
+$sqlALL = "SELECT * FROM product";
+$resultALL = $conn->query($sqlALL); //連線
+$productPage_count = $resultALL->num_rows; //秀頁碼
+
+$starItem = ($page - 1) * $perPage + 1; //開始的筆數
+$endItem = $page * $perPage; //結束的筆數
+if ($endItem > $productPage_count) {
+    $endItem = $productPage_count;
+};
+
+$totalPage = 1;
+$quotient = floor($productPage_count / $perPage);  //商數 取商數後無條件捨去floor
+$remainder = ($productPage_count % $perPage); //餘數
+
+if ($remainder === 0) {
+    $totalPage = $quotient;
+} else {
+    $totalPage = $quotient + 1;
+}
 
 ?>
 
@@ -261,7 +292,7 @@ $result2 = $conn->query($sql2);
                     </div>
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 p-4">
-                        <?php if ($productsCount1 > 0) : ?>
+                        <?php if ($product_count > 0) : ?>
                             <div class="border-bottom pb-2">
                                 <h2>商品內容管理</h2>
                             </div>
@@ -272,7 +303,7 @@ $result2 = $conn->query($sql2);
                                 </div>
                                 <div class="crudBox">
                                     <button type="button" class="btn filterBtn mx-1">編輯</button>
-                                    <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='product-edit-new-swiper.php'">返回總表</button>
+                                    <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='AllProductList.php'">返回總表</button>
                                 </div>
                             </div>
                             <hr>
@@ -311,7 +342,7 @@ $result2 = $conn->query($sql2);
                                     </form>
                                 </div>
                                 <div class="basic-setting col-6">
-                                    <?php if ($productsCount1 > 0) :
+                                    <?php if ($product_count > 0) :
                                         $row = $result2->fetch_assoc() ?>
                                         <form action="doUpdate">
                                             <label for="">商品名稱**</label>

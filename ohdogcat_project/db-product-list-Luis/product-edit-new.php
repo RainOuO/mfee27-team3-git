@@ -1,7 +1,7 @@
 <?php 
 require("./db-connect.php");
 require("./doproducts.php");
-$sql2 = "SELECT * FROM product WHERE valid=1 $sqlTYPE $sqlSTORE";
+$sql2 = "SELECT * FROM product WHERE valid=1";
 $result2 = $conn->query($sql2);
 
 
@@ -305,7 +305,7 @@ $result2 = $conn->query($sql2);
                                 </form>
                             </div>
                             <div class="basic-setting col-6">
-                                <?php if ($productsCount1 > 0) :
+                                <?php if ($product_count > 0) :
                                     $row = $result2->fetch_assoc() ?>
                                     <form action="doUpdate">
                                         <label for="">商品名稱**</label>

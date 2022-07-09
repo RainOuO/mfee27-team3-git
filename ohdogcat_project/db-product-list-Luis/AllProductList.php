@@ -1,29 +1,103 @@
 <?php
 require("./doproducts.php");
-require("./db-connect.php");
 
-if (isset($_GET["type"]) && !empty($_GET["type"])) {
-    $type = $_GET["type"];
-    $sqlType = "product_type = $type AND ";
-} else {
-    $type = "";
-    $sqlType = "";
+// session_start();
+
+$page = isset($_GET["page"]) ?  $page = $_GET["page"] : 1;
+$perPage = 10;
+$start = ($page - 1) * $perPage;
+
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
+$keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
+$minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
+$maxPrice = isset($_GET["maxPrice"]) ? $_GET["maxPrice"] : "";
+$startDate = isset($_GET["startDate"]) ? $_GET["startDate"] : "";
+$endDate = isset($_GET["endDate"]) && !empty($_GET["endDate"]) ? $_GET["endDate"] : "";
+// if ($startDate > $endDate) {
+//     echo "date select error";
+//     exit;
+// }
+// if ($minPrice > $maxPrice) {
+//     echo "date select error";
+//     exit;
+// }
+
+$ordertype = isset($_GET["order"]) ? $_GET["order"] : 1;
+switch ($ordertype) {
+    case 1:
+        $ordertype = "price ASC";
+        break;
+    case 2:
+        $ordertype = "price DESC";
+        break;
+    case 3:
+        $ordertype = "valid_time_start ASC";
+        break;
+    case 4:
+        $ordertype = "valid_time_start DESC";
+        break;
+    default:
+        $ordertype = "id ASC";
 }
 
 
-$startdate =$_GET["startdate"];
-$enddate =$_GET["enddate"];
-var_dump($startdate);
-var_dump($enddate);
+// var_dump($startdate);
+// var_dump($enddate);
 
-// convert(varchar(16),'2010-09-20',120);
-$sql = "SELECT * FROM product WHERE $sqlTYPE valid_time_start) >=  convert(varchar(10),$startdate,111) 
-AND valid_time_end <= convert(varchar(10),$enddate,111)"; //選取資料表
+// $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+$sql = "SELECT * FROM product WHERE 1";
+$sql .=  $type ? " and product_type = $type " : "";
+$sql .= $keyword ? " and (name LIKE '%$keyword%' OR description LIKE '%$keyword%')" : "";
+$sql .= $minPrice ? " and price >= $minPrice" : "";
+$sql .= $maxPrice ? " and price <= $maxPrice" : "";
+$sql .= $startDate ? " and (valid_time_start <= '$startDate' and valid_time_end >= '$startDate')" : "";
+$sql .= $endDate ? " or ('$startDate' <= valid_time_end and '$endDate' >= valid_time_end)" : "";
+$sql .= $ordertype ? " ORDER BY $ordertype" : "";
+
+// $sql .= $priceOrderASC ? "and ORDER by price ASC" : "";
+// $sql .= $priceOrderDESC ? "or ORDER by price DESC" : "";
+// $sql .= $launchOrderASC ? "and ORDER by valid_time_start ASC" : "";
+// $sql .= $launchOrderDESC ? "or ORDER by valid_time_start DESC" : "";
+
+$sql .= " LIMIT $start ,10"; //顯示用
+
+
+
+
+// TO-DO: $sql .= 'order by price desc'
+// TO-DO: $sql .= 'LIMIT {$page}'LIMIT $start,5"
+
+echo $sql;
+
 // $sql = "SELECT product.*, catagory.name AS catagory_name FROM product
 // JOIN catagory ON product.catagory_id = catagory.id WHERE product.price >= $minPrice and price <= $maxPrice ";
 $result = $conn->query($sql); //連線
+// $rows = $result->fetch_all(MYSQLI_ASSOC);
 $product_count = $result->num_rows; //取得資料筆數 
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+//頁碼
+
+$sqlALL = "SELECT * FROM product";
+$resultALL = $conn->query($sqlALL); //連線
+$productPage_count = $resultALL->num_rows; //秀頁碼
+
+$starItem = ($page - 1) * $perPage + 1; //開始的筆數
+$endItem = $page * $perPage; //結束的筆數
+if ($endItem > $productPage_count) {
+    $endItem = $productPage_count;
+};
+
+$totalPage = 1;
+$quotient = floor($productPage_count / $perPage);  //商數 取商數後無條件捨去floor
+$remainder = ($productPage_count % $perPage); //餘數
+
+if ($remainder === 0) {
+    $totalPage = $quotient;
+} else {
+    $totalPage = $quotient + 1;
+}
+
 
 
 ?>
@@ -31,7 +105,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 <html lang="en">
 
 <head>
-    <title>商品搜尋-依上架日</title>
+    <title>商品總覽</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -185,12 +259,12 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 <ul class="list-unstyled">
                                     <li>
 
-                                        <a href="ALLIST.php" class="menu-link">商品總覽</a>
+                                        <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
                                         <?php foreach ($rowsCate as $row) : ?>
                                             <?php if ($type == $row["type_name"]) ?>
-                                            <a href="ALLIST.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?= $row['type_name'] ?></a>
+                                            <a href="AllProductList.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?= $row['type_name'] ?></a>
                                         <?php endforeach; ?>
                                     </li>
                                 </ul>
@@ -283,17 +357,17 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
                         <div class="d-flex justify-content-between align-items-center border-bottom">
                             <div class=" pb-2">
-                                <?php if (empty($_GET["type"])) : ?>
-                                    <h2>商品總覽: 依上架日篩選</h2>
+                                <?php if (!isset($_GET["type"])) : ?>
+                                    <h2>商品總覽</h2>
                                 <?php else : ?>
-                                    <?php foreach ($rowstitle as $rowwww) : ?>
-                                        <h2> <?= $rowwww['type_name'] ?>: 依上架日篩選</h2>
+                                    <?php foreach ($rowstitle as $rows) : ?>
+                                        <h2> <?= $rows['type_name'] ?></h2>
                                     <?php endforeach; ?>
                                 <?php endif; ?>
                             </div>
                         </div>
-                        <div class="d-flex justify-content-between row pb-1 pe-3">
-                            <div class="d-flex justify-content-start col-7">
+                        <div class="d-flex row pb-1 pe-3">
+                            <div class="d-flex justify-content-start col-4">
                                 <div class="dropdown mt-3 d-flex align-items-center ">
                                     <button class="btn dropdown-toggle btn-lg m-2 filterBtn" type="button" id="dropdownMenuButton1" data-bs-toggle="dropdown" aria-expanded="false">
                                         篩選條件
@@ -306,37 +380,66 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbykey" style="display:none">
-                                    <?php require("keyword-filter.php"); ?>
+                                        <form action="AllProductList.php" method="get">
+                                            <div class="col-10 d-flex mt-4 keywordBar ">
+                                                <input type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字">
+                                                <button class="col-3 btn mx-2 filterBtn" type="submit">搜尋</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbydate" style="display:none">
-                                    <?php require("date-filter.php"); ?>
+                                        <form action="AllProductList.php" method="get">
+                                            <div class="col-10 d-flex mt-4">
+                                                <div class="col-5 mx-1">
+                                                    <div class="dateF">上架日</div>
+                                                    <input type="date" class="form-control dateS" name="startDate" required>
+                                                </div>
+                                                <div class="col-auto mx-1 mt-3">
+                                                    <div class="">~</div>
+                                                </div>
+                                                <div class="col-5 mx-1">
+                                                    <div class="dateF">下架日</div>
+                                                    <input type="date" class="form-control dateS" name="endDate" required>
+                                                </div>
+                                                <button class=" col-auto btn mx-1 filterBtn" type="submit">搜尋</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                                 <div class="filters ms-2">
                                     <div id="searchbyprice" style="display:none">
-                                        <?php require("price-filter.php"); ?>
+                                        <form action="AllProductList.php" method="get">
+                                            <div class="col-9 d-flex mt-4 priceBar">
+                                                <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="minPrice" value="" required>
+
+
+                                                <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="maxPrice" value="" required>
+                                                <button class="col-auto btn ms-1 filterBtn" type="submit">搜尋</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-5 row d-flex justify-content-end btn-group align-items-center mt-4">
-                                <a href="" class="orderBtn col-2 ">單價↑</a>
-                                <a href="" class="orderBtn col-2 ">單價↓</a>
-                                <a href="" class="orderBtn col-2 ">上架時間↑</a>
-                                <a href="" class="orderBtn col-2 ">上架時間↓</a>
+                            <div class="col-3 row d-flex justify-content-end btn-group align-items-center">
+                                <div><a href="AllProductList.php?page=<?= $page ?>&type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=1" class="orderBtn <?php if ($order == 1) echo "active" ?>" name="priceOrder ASC">單價↑</a></div>
+                                <div><a href="AllProductList.php?page=<?= $page ?>&type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=2" class="orderBtn <?php if ($order == 2) echo "active" ?>" name="priceOrder DESC">單價↓</a></div>
+                                <div><a href="AllProductList.php?page=<?= $page ?>&type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=3" class="orderBtn <?php if ($order == 3) echo "active" ?>" name="launchOrder ASC">上架時間↑</a></div>
+                                <div><a href="AllProductList.php?page=<?= $page ?>&type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=4" class="orderBtn <?php if ($order == 4) echo "active" ?>" name="launchOrder DESC">上架時間↓</a></div>
                             </div>
+
                         </div>
                         <hr>
                         <div class="d-flex justify-content-end align-items-center">
                             <div class="countBox">
                                 <?php if ($product_count > 0) : ?>
                                     <h4 class="countBox">
-                                        篩選共<?= $product_count ?>筆商品資料</h4>
+                                        現在為第<?= $page ?>頁，商品第<?= $starItem ?>-<?= $endItem ?>筆資料，共<?= $productPage_count ?>筆商品資料</h4>
 
                                 <?php endif; ?>
                             </div>
-                            <!-- <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='product-edit-new-swiper.php'">新增商品</button> -->
+                            <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='product-edit-new.php'">新增商品</button>
                         </div>
                         <div class="table-responsive">
                             <?php if ($product_count > 0) : ?>
@@ -357,7 +460,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php foreach ($rows as $row) : ?>
+                                        <?php //把資料轉換成關聯式陣列
+                                        while ($row = $result->fetch_assoc()) : //從資料庫一次抽取單筆資料 用while迴圈顯示
+                                        ?>
                                             <tr>
                                                 <td class="align-middle text-center"><?= $row["store_id"] ?></td>
                                                 <td class="align-middle text-center"><?= $row["id"] ?></td>
@@ -370,23 +475,23 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                                 <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
                                                 <td class="align-middle text-center"><?= $row["valid"] ?></td>
                                                 <td class="align-middle text-center">
-                                                    <button type="button" class="btn detailBtn">查看</button>
+                                                    <button type="button" class="btn detailBtn"><a href="product-detail.php?id=<?= $row["id"] ?>">查看</a></button>
                                                 </td>
                                             </tr>
-                                        <?php endforeach; ?>
+                                        <?php endwhile; ?>
                                     </tbody>
                                 </table>
                                 <div class="d-flex justify-content-center pt-3">
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination">
                                             <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                                                <li class="pagebtn<?php if ($i == $page) echo "active"; ?> "><a class="pageBtn" href="ALLIST.php?type=<?= $type ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                                                <li class="pagebtn "><a class="<?php if ($i == $page) echo "active"; ?> " href="AllProductList.php?type=<?= $type ?>&page=<?= $i ?>"><?= $i ?></a></li>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>
                                 </div>
                             <?php else : ?>
-                                此篩選查無資料
+                                目前沒有資料
                             <?php endif; ?>
                         </div>
 
