@@ -57,7 +57,7 @@ $_SESSION["order-list"] = $rows;
     </table>
 
     <!-- offcanvas -->
-    <div class="offcanvas offcanvas-end show" tabindex="-1" id="offcanvasOrderList"
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasOrderList"
         aria-labelledby="offcanvasOrderListLabel">
         <div class="offcanvas-header">
             <h5 class="offcanvas-title" id="offcanvasOrderListLabel">訂單序號：<span class="order-no"></span></h5>
@@ -68,6 +68,7 @@ $_SESSION["order-list"] = $rows;
                 <div id="productList" class="col-md-4 h-100 scroll-bar">
                 </div>
                 <div id="orderInfo" class="container-fluid col-md-8">
+                    <button type="button" id="orderCancelBtn" class="btn btn-danger">取消訂單</button>
                 </div>
             </div>
         </div>
@@ -84,6 +85,12 @@ $_SESSION["order-list"] = $rows;
     let store_id = <?= $store_id ?>;
     let offcanvas = document.querySelector('#offcanvasOrderList');
     let detailBtn = document.querySelectorAll('.detailBtn');
+    let orderCancelBtn = document.querySelector('#orderCancelBtn');
+
+    orderCancelBtn.addEventListener('click',() => {
+        console.log(123);
+    });
+    
     
     for (let i = 0; i < detailBtn.length; i++) {
         detailBtn[i].addEventListener('click', function () {
@@ -162,12 +169,51 @@ $_SESSION["order-list"] = $rows;
                                 </div>
                             </div>
                         </div>
-                        <button type="button" id="orderCancel" class="btn btn-danger">取消訂單</button>
+                        <button type="button" id="orderCancelBtn" class="btn btn-danger" data-cancel-id="${response.data.order_item.id}">取消訂單</button>
                     `;
+                    
+                    
                     orderNo.innerText = response.data.order_item.order_no;
                     productList.innerHTML = porductItem;
                     orderInfo.innerHTML = order_info;
+                    orderCancelBtn = document.querySelector('#orderCancelBtn');
+                    orderCancelBtn.addEventListener('click',function() {
+                        let cancelId = this.dataset.cancelId;
+                        console.log(cancelId);
+                        Swal.fire({
+                            title: '確定取消訂單?',
+                            text: '取消後的訂單將無法被回復',
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#3085d6',
+                            cancelButtonColor: '#d33',
+                            cancelButtonText:'取消',
+                            confirmButtonText: '確定'
+                            }).then((result) => {
+                            if (result.isConfirmed) {
+                                $.ajax({
+                                    method: "POST",
+                                    url: `../api/order-item-info.php`,
+                                    dataType: "json",
+                                    data: {
+                                        id: cancelId
+                                    }
+                                }).done(function (response) {
+
+                                }).fail(function (jqXHR, textStatus) {
+                                    console.log("Request failed: " + textStatus);
+                                });
+                                Swal.fire(
+                                '成功',
+                                '該筆訂單已被取消',
+                                'success',
+                                '關閉'
+                                )
+                            }
+                            })
+                    });
                     console.log(response.data);
+                    
                 }).fail(function (jqXHR, textStatus) {
                     console.log("Request failed: " + textStatus);
                 });
@@ -205,4 +251,6 @@ $_SESSION["order-list"] = $rows;
             return(str)
         }
     }
+
+    
 </script>
