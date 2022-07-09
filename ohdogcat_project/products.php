@@ -32,9 +32,12 @@ $productStore_count = $resultStore->num_rows;
 $rowsStore = ($productStore_count>0)? $resultStore->fetch_all(MYSQLI_ASSOC):'';
 $storeName = array_column($rowsStore, 'name', 'id');
 $product_num = 0;
-foreach($_SESSION['cart'] as $item){
-    $product_num = $product_num + count($item['product']);
+if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
+    foreach($_SESSION['cart'] as $item){
+        $product_num = $product_num + count($item['product']);
+    }
 }
+
 
 
 // 判斷分類

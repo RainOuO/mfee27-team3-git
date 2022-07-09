@@ -1,9 +1,3 @@
-<?php
-header("Cache-Control: no-store, no-cache, must-revalidate, max-age=0");
-header("Cache-Control: post-check=0, pre-check=0", false);
-header("Pragma: no-cache");
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -166,7 +160,7 @@ header("Pragma: no-cache");
                     <div class="button-area">
                         <?php require('./filter-section.php')?>
                     </div>
-                    <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
+                    <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 scroll-bar">
                         <?php require($main)?>
                     </main>
                     <div class="content-footer flex-shrink-1">

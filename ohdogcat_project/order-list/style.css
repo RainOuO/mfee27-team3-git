@@ -1,4 +1,3 @@
-
 * {
     -webkit-user-drag: none;
     font-family: 'Noto Sans TC', sans-serif;
@@ -82,5 +81,17 @@
 td {
     vertical-align: center!important;
     padding: 12px 0!important;
+}
+
+
+
+/* offcanvas */
+.offcanvas {
+    --bs-offcanvas-width: 80%;
+    max-width: 1600px;
+}
+
+#orderDetail {
+    overflow-y: scroll;
 }
 
