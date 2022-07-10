@@ -10,12 +10,13 @@ if ($_FILES["MainFile"]["error"] == 0) {
         $fileName = $_FILES["MainFile"]["name"]; //第一個myFile值是input 裡面的name 後面name是規定語法 取得他檔案名稱
         $sql = "UPDATE  product  SET  main_photo='$fileName'  WHERE id='$id'";
         if ($conn->query($sql) === TRUE) {
-            session_start();
-            $_SESSION["id"] = $id;
+            // session_start();
+            // $_SESSION["id"] = $id;
 
             if (isset($_SESSION["id"])) {
                 $_SESSION['updates'] = 'successs';
-                header("location:bbbbbbbproduct-edit-new-swiper.php");
+                echo "更新照片成功";
+                // header("location:bbbbbbbproduct-edit-new-swiper.php");
             }
         } else {
             echo "Error: " . $sql . "<br>" . $conn->error;

@@ -1,4 +1,6 @@
 <?php 
+            session_start();
+
 // $sql="SELECT *FROM images";
 // $result = $conn->query($sql);
 // $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -18,13 +20,16 @@ if($_FILES["myFile"]["error"]==0){
         $fileName=$_FILES["myFile"]["name"];
         // $now=date('Y-m-d H:i:s');
 
-        $sql="INSERT INTO images (image) VALUES ('$fileName') ";
+        // $sql="INSERT INTO images (image) VALUES ('$fileName') ";
+        $userid =$_SESSION["userid"]['idd'];
+        $sessionimagename=$_SESSION["name"]["images"];
+        $sql="INSERT INTO images (image, userid )VALUES ('$sessionimagename', '$userid')";
+
 
         if ($conn->query($sql) === TRUE) {
             
-            session_start();
+            // session_start();
             $ids = $_SESSION["user"]['id'];
-
             $_SESSION["userid"]["idd"] = $ids;
             $_SESSION["name"]["images"] =$fileName;
             // header("location:bbbbbbbproduct-edit-new-swiper.php");

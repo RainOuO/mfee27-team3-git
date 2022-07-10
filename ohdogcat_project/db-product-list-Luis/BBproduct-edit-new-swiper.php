@@ -3,24 +3,44 @@ session_start();
 if (!isset($_SESSION["user"])) {
     // header("location:login.php");
 }
-$id = $_SESSION["user"]['store_right'];
+$userstore_right = $_SESSION["user"]['store_right'];
 require("db-connect.php");
-
-$sqll = "SELECT * FROM product WHERE product_type='$id'";
+///////////////2022 7 10 8:45分改了 $userstore_right 原本是$id 
+$sqll = "SELECT * FROM product WHERE store_id='$userstore_right'";
 $results = $conn->query($sqll);
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
 
 
-//join 資料表的照片近來
+////////////// session檔名
+// $_SESSION["name"]["images"];
+// $sessionimagename=$_SESSION["name"]["images"];
+// echo($sessionimagename);
+// echo"<br>";
+/////
 
-$sqla="SELECT * FROM images 
-WHERE image='iu.jpg'";
-$resulta = $conn->query($sqla);
-$productphoto = $resulta->num_rows;
+///////// 讀取session userid 
+// $userid =$_SESSION["userid"]['idd'];
+// echo($userid);
+// echo "<br>";
+/////////////
+
+// $sqla="SELECT * FROM images WHERE userid='$userid'";
+// $sqla="UPDATE images SET userid = '$userid' WHERE id = 17";
+// $sqla="INSERT INTO images (image, userid )VALUES ('$sessionimagename', '$userid')";
+// $resulta = $conn->query($sqla);
+// $productphoto = $resulta->num_rows;
 // $rowa=$resulta->fetch_all(MYSQLI_ASSOC);
+
+//join 資料表的照片近來
+// $sqls="SELECT product.*,images.image FROM product JOIN images ON product.sub_photo=userid
+// WHERE store_id='$id'";
+// $resultas = $conn->query($sqls);
+// $productphoto = $resultas->num_rows;
+// $Imgaesrow=$resultas->fetch_assoc();
 // var_dump($resulta);
-// var_dump($productphoto);
-// var_dump($resulta);
+// echo($sqla);
+// var_dump($Imgaesrow);
+
 
 
 //主要的
@@ -286,7 +306,7 @@ $productphoto = $resulta->num_rows;
                 </ul>
             </nav>
             <div class="menu-box mt-2 flex-shrink-0 logout">
-                <div class="menu-item"><a href="" class="menu-button no-accordion icon-logout">粗企玩</a></div>
+                <div class="menu-item"><a href="#" class="menu-button no-accordion icon-logout">粗企玩</a></div>
             </div>
         </aside>
         <div class="content-wrap vh-100">
@@ -322,116 +342,60 @@ $productphoto = $resulta->num_rows;
                                 <div class="photo-window d-flex flex-column  ">
                                     <div class="cover-photo m-3">
                                     <!-- 商品封面照片開始 -->
-                                    <?php foreach ($rowss as $rowa) : ?>
-                                    <img class="object-cover" <?php if (isset($rowa["main_photo"]) == null) : ?> src="./user.jpg" alt="">
+
+                                    
+                                    <img class="object-cover" <?php if ($rowss[0]["main_photo"] == '') : ?>
+                                        img src="./user.jpg" alt="">
                                 <?php else : ?>
-                                    <img src="../images/dashboard/<?= $rowa["main_photo"] ?>" alt="">
+                                    <img src="../images/dashboard/<?= $rowss[0]["main_photo"] ?>" alt="">
                                 <?php endif; ?>
-                                        <?php endforeach; ?>
                                         <!-- 商品照片開始 -->
                                     </div>
                                     <div class="swiper mySwiper">
                                         <div class="swiper-wrapper">
-
-                                      
-
-                                          
-                                        <?php foreach ($rowss as $rowp) : ?>
-                                            <img class="object-cover" 
-                                            <?php if (isset($rowp["sub_photo"]) == null) : ?> src="./user.jpg" alt="">
-                                                
+                                            <?php if ($rowss[0]["sub_photo"] == '') : ?> 
+                                                <img class="object-cover"src="./user.jpg" alt="">
                                         <?php else : ?>
 
-                                            <?php  $rowp["sub_photo"] ;
-                                            $rowphoto=explode(",",$rowp["sub_photo"]); //explode去除逗號
-
+                                            <?php  
+                                            $rowphoto=explode(",",$rowss[0]["sub_photo"]); //explode去除逗號
+                                            array_pop($rowphoto);
                                             foreach($rowphoto as $rowaa){
-                                                echo "<img src='../images/dashboard/$rowaa' alt=''>";}?>
-                                        <?php endif; ?>
-
-                                            <?php endforeach; ?>
-
-                                            <!-- 第三張商品圖片 -->
-                                              
-                                            <!-- 第四張商品圖片 -->
-                                           
-                                            <!-- 第五張商品圖片 -->
-
+                                                
+                                                echo "<div class='swiper-slide photo1'><img src='../images/dashboard/$rowaa'/></div>";
+                                                }?>
+                                            <?php endif; ?>
                                             
-
-                                       
-
-
-
-
-
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-
                                         </div>
                                         <div class="swiper-pagination"></div>
                                     </div>
                                 </div>
 
+                                                <!-- 封面照片上傳 -->
+                                <form  
+                                action="allupdate.php" method="post" enctype="multipart/form-data">
+                                <div class="row photo-upload mt-3 d-flex justify-content-center">
+                                <div class="mb-2">
+                                <input class="form-control  mx-3" type="file" name="myFile">
+                                </div>
+                                <!-- <button class="btnphoto mx-2" type="submit">上傳封面照片</button> -->
 
-                                <form  action="UpdateMainphoto.php" method="post" enctype="multipart/form-data">
-                                    <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                        <div class="mb-2">
-                                            <input class="form-control  mx-3" type="file" name="MainFile">
-                                        </div>
-                                        <button class="btnphoto mx-2" type="submit">上傳封面照片</button>
-                                </form>
-
-<!-- 
-                                <form  action="Upphoto.php" method="post" enctype="multipart/form-data">
-                                    <div class="mb-2">
-                                        <input class="form-control  mx-3" type="file" name="myFile">
-                                    </div>
-                                    <button class="btnphoto mx-2" type="submit">商品照片</button>
-                            </div>
-                            </form> -->
-
-
-
+                                                    <!-- 商品照片上傳 -->
                             
-                            <form  action="Upphoto.php" method="post" enctype="multipart/form-data">
+                            <form  action="allupdate.php" method="post" enctype="multipart/form-data">
                                     <div class="mb-2">
-                                        <input class="form-control  mx-3" type="file" name="myFile">
+                                        <input class="form-control  mx-3" type="file" name="photoFile">
                                     </div>
-                                    <button class="btnphoto mx-2" type="submit">商品照片</button>
-                            </div>
-                            </form>
+                                    <!-- <button class="btnphoto mx-2" type="submit">商品照片</button> -->
 
-
-
-
-
-
-
-                            <!-- <form action="doUpload.php" method="post" enctype="multipart/form-data">
-                                    <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                        
-                                        <div class=" d-flex col-6">
-                                            <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">封面照片</button>
-                                        </div>
-                                        <div class="d-flex col-6">
-                                            <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">商品照片</button>
-                                        </div>
-                                    </div>
-                                </form> -->
+                                </div>
                         </div>
                         <div class="basic-setting col-6">
-                            <form action="doUpdate">
+                            <form action="allupdate.php" method="POST">
                                 <label for="">商品名稱**</label>
-                                <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control">
+                                <input type="text"  name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control">
                                 <label for="">商品分類**</label>
-                                <select name='category' class="form-control">
+                                <select name='product_type' class="form-control">
                                     <option value='0'>旅遊票券</option>
                                     <option value='1'>活動票券</option>
                                     <option value='2'>餐廳票券</option>
@@ -440,20 +404,21 @@ $productphoto = $resulta->num_rows;
                                     <option value='5'>寵物食品</option>
                                 </select>
                                 <label for="">商品介紹</label>
-                                <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
+                                <input type="text" name="description" placeholder="最多輸入50字元，至少10個字" class="form-control">
                                 <label for="">商品價格**</label>
                                 <input type="text" name="price" placeholder="只能輸入大於0的數字" class="form-control">
+                                
                                 <label for="">商品規格</label>
-                                <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
+                                <input type="text" name="#" placeholder="自由增建選項" class="form-control">
                                 <div class="d-flex mt-2">
                                     <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                                     <h3 class="pt-3">進階設定</h3>
                                 </div>
                                 <hr>
                                 <label for="">上架時間</label>
-                                <input type="datetime-local" name="spec" class="form-control">
+                                <input type="datetime-local" name="valid_time_start" class="form-control">
                                 <label for="">下架時間</label>
-                                <input type="datetime-local" name="spec" class="form-control">
+                                <input type="datetime-local" name="valid_time_end" class="form-control">
                                 <label for="">優惠券方案使用</label><br>
                                 <select name='dragdown' class="form-control">
                                     <option value='0'>全站周年慶</option>
@@ -466,17 +431,23 @@ $productphoto = $resulta->num_rows;
                                 <label for="">商品有效期限</label>
                                 <input type="date" name="spec" placeholder="自由增建選項" class="form-control">
                                 <label for="">商品庫存數</label>
-                                <input type="text" name="spec" placeholder="只能輸入大於0的數字" class="form-control">
+                                <input type="text" name="stock_quantity" placeholder="只能輸入大於0的數字" class="form-control">
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                     <label class="form-check-label" for="flexRadioDefault1">
                                         商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
                                     </label>
                                 </div>
+                                <button type="submit">送出</button>
+                                
                             </form>
                         </div>
                 </div>
                 <hr>
+
+
+
+                <!-- 文案編輯部分 暫時不管 -->
                 <form method="post">
                     <div class="text-end mb-1 d-flex justify-content-between">
                         <h3>商品文案編輯頁面</h3> <button class="btnry" type="submit">儲存草稿</button>

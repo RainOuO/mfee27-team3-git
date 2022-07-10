@@ -12,40 +12,34 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
 
 
 ////////////// session檔名
-$_SESSION["name"]["images"];
-$sessionimagename=$_SESSION["name"]["images"];
-echo($sessionimagename);
-echo"<br>";
+// $_SESSION["name"]["images"];
+// $sessionimagename=$_SESSION["name"]["images"];
+// echo($sessionimagename);
+// echo"<br>";
 /////
 
 ///////// 讀取session userid 
-$userid =$_SESSION["userid"]['idd'];
-echo($userid);
+// $userid =$_SESSION["userid"]['idd'];
+// echo($userid);
+// echo "<br>";
 /////////////
 
-//join 資料表的照片近來
 // $sqla="SELECT * FROM images WHERE userid='$userid'";
 // $sqla="UPDATE images SET userid = '$userid' WHERE id = 17";
-$sqla="INSERT INTO images (image, userid )VALUES ('$sessionimagename', '$userid')";
-$resulta = $conn->query($sqla);
+// $sqla="INSERT INTO images (image, userid )VALUES ('$sessionimagename', '$userid')";
+// $resulta = $conn->query($sqla);
 // $productphoto = $resulta->num_rows;
 // $rowa=$resulta->fetch_all(MYSQLI_ASSOC);
-// echo $productphoto;
-echo "<br>";
-// var_dump($productphoto);
-echo "<br>";
-// print_r($productphoto);
-// var_dump($resulta);
-// var_dump($productphoto);
-// var_dump($resulta);
-$sqla="SELECT product.*,images.userid FROM product JOIN images ON product.sub_photo=userid
-WHERE store_id='$id'";
-$resultas = $conn->query($sqla);
-$productphoto = $resultas->num_rows;
-// $rowa=$resultas->fetch_all(MYSQLI_ASSOC);
+
+//join 資料表的照片近來
+// $sqls="SELECT product.*,images.image FROM product JOIN images ON product.sub_photo=userid
+// WHERE store_id='$id'";
+// $resultas = $conn->query($sqls);
+// $productphoto = $resultas->num_rows;
+// $Imgaesrow=$resultas->fetch_assoc();
 // var_dump($resulta);
 // echo($sqla);
-var_dump($productphoto);
+// var_dump($Imgaesrow);
 
 
 
@@ -312,7 +306,7 @@ var_dump($productphoto);
                 </ul>
             </nav>
             <div class="menu-box mt-2 flex-shrink-0 logout">
-                <div class="menu-item"><a href="" class="menu-button no-accordion icon-logout">粗企玩</a></div>
+                <div class="menu-item"><a href="#" class="menu-button no-accordion icon-logout">粗企玩</a></div>
             </div>
         </aside>
         <div class="content-wrap vh-100">
@@ -365,7 +359,9 @@ var_dump($productphoto);
 
                                             <?php  
                                             $rowphoto=explode(",",$rowss[0]["sub_photo"]); //explode去除逗號
+                                            array_pop($rowphoto);
                                             foreach($rowphoto as $rowaa){
+                                                
                                                 echo "<div class='swiper-slide photo1'><img src='../images/dashboard/$rowaa'/></div>";
                                                 }?>
                                             <?php endif; ?>
@@ -401,7 +397,7 @@ var_dump($productphoto);
 
 
                             
-                            <form  action="phoooooooooo.php" method="post" enctype="multipart/form-data">
+                            <form  action="pho111.php" method="post" enctype="multipart/form-data">
                                     <div class="mb-2">
                                         <input class="form-control  mx-3" type="file" name="myFile">
                                     </div>
