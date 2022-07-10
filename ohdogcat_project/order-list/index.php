@@ -28,6 +28,7 @@ $resultAllCount = $resultAll->num_rows;
 $perPage = 10;
 $start = ($page-1) * $perPage;
 
+// WHERE ((account LIKE '%$search%') OR (userName LIKE '%$search%') OR (email LIKE '%$search%') OR (phone LIKE '%$search%')) AND valid = 1;";
 
 $sql = "SELECT * FROM order_product WHERE store_id = $store_id $sqlStatus
 ORDER BY $sort $order
@@ -102,7 +103,7 @@ require('../template/dashboard.php');
     let goFilter = document.querySelectorAll('.go-filter');
     goFilter[0].addEventListener('click', ()=>{
         let keyword = document.querySelector('#keyword').value;
-        location.href = 
+        location.href = `?status=<?=$status?>&order=<?=$order?>&sort=<?=$sort?>&search=${keyword}&page=<?=$page?>`;
     });
     goFilter[1].addEventListener('click', ()=>{
 
