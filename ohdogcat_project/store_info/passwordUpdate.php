@@ -10,10 +10,6 @@ $id = $_POST["id"];
 $password = $_POST["password"];
 $newpassword= $_POST["newpassword"];
 $repassword=$_POST["repassword"];
-
-
-
-
 $sql="SELECT * FROM store_info WHERE id='$id' AND password='$password' ";
 
 

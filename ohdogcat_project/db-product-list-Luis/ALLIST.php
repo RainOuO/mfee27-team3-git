@@ -2,8 +2,6 @@
 require("doproducts.php");
 require("doPricefilter.php");
 
-
-
 ?>
 <!doctype html>
 <html lang="en">

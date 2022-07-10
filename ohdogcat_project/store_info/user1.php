@@ -1,73 +1,56 @@
 <?php
-
 session_start();
 if (!isset($_SESSION["user"])) {
     header("location:login.php");
 }
+//session 商家登入帳號
 $id = $_SESSION["user"]['account'];
-// $id=$_SESSION["user"]['name'];
-// $id=$_SESSION["user"]['id'];
-
-
+///////////假設他是商家id
+// $store_id= 3;
+$storeid = $_SESSION["user"]['store_right']; ///////////////假設他是商家id
 require("db-connect.php");
 
-
-
-
-
-
-//寫join一定要寫的地方111111111111
-
-$sql = "SELECT store_info.*, category.name AS category_name FROM store_info
-    JOIN category ON store_info.store_right = category.id";
-
+/////////////// join到type 商家權限名稱 
+$sql = "SELECT id, type_name FROM p_type";
 
 $result = $conn->query($sql);
 $product_count = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-
-//寫join一定要寫的地方22222222222
-
-
+$store_type = array_column($rows, 'type_name', 'id');
+////////////////////////// 撈商家登入帳號 可以改
 
 $sql = "SELECT * FROM store_info WHERE account='$id'";
 $result = $conn->query($sql);
 $userCount = $result->num_rows;
-
-
-
-/////////////////////////////
-
-
-$sqll = "SELECT * FROM store_info WHERE  account='$id'";
-$results = $conn->query($sqll);
+//////////////   撈商家使用者資料
+$results = $conn->query($sql);
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
 ?>
-
-
 <!doctype html>
 <html lang="en">
-
 <head>
     <title>test3</title>
-    <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
-    <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
-    
-
     <style>
         .userfrom{
-            background-color: #f5f6f7;
-            width: 950px;
+            /* background-color: #f5f6f7; */
+            width: 650px;
             line-height: 45px;
-            font-size: 22px;
+            font-size: 20px;
+            font-weight: 200;
+
+        }
+        .iconpen {
+            margin-top: 5px;
+            margin-right: 8px;
+            width: 30px;
+            height: 40px;
         }
        .btn1{
         background-color: #49586f;
@@ -77,14 +60,22 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
         height: 40px;
         color: white;
         border-radius: 5px;
-        padding: 8px 10px 20px 18px;
+        /* padding: 8px 10px 20px 18px; */
+        text-align: center;
+            justify-content: center;
+            align-items: center;
+            display: flex;
        }
        .btn1:hover{
         background-color: #ffc845;
         color: #000;
        }
        .btn2{
-        padding: 8px 10px 20px 18px;
+        /* padding: 8px 10px 20px 18px; */
+        text-align: center;
+            justify-content: center;
+            align-items: center;
+            display: flex;
         background-color: #D5EEEE;
         margin-top: 10px;
         width: 130px;
@@ -95,20 +86,18 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
         background-color: #ffc845;
         color: #000;
        }
-       .me-auto{
-        margin-top: 10px;
-        font-size: 30px;
-       }
+
         .object-cover {
             width: 550;
-            height: 500px;
+            height: 450px;
             object-fit: cover;
+            margin-right: 80px;
             margin-left: 50px;
-            margin-right: 60px;
+            
         }
 
         .toastify {
-            background: url("./bg_dog-icon.png") 12px center / 50px no-repeat, url('./bg_toast-bg.png') no-repeat center center / cover, #fff !important;
+            background: url("./test/bg_dog-icon.png") 12px center / 50px no-repeat, url('./test/bg_toast-bg.png') no-repeat center center / cover, #fff !important;
             color: #000;
         }
     </style>
@@ -239,20 +228,20 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                     </div>
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
-
-
-
-
                         <div class="d-flex bd-highlight mb-3">
-                            <h1 class="me-auto mx-5 bd-highlight">商家設定</h1>
+                        <span class="iconpen">
+                                <img src="./test/7968880_pen_pen tool_adobe illustrator tool_icon.svg" alt="">
+                            </span>
+                            <h2 class="me-auto  bd-highlight">商家設定</h2>
                             <a href="#" class=" btn1 bd-highlight">商家資訊總覽</a>
                             <a href="edit.php" class=" btn2 bd-highlight">更新會員資料</a>
                         </div>
 
                         <hr>
-                        <div class="d-flex my-5 photo">
+                        <div class="d-flex my-4 photo">
                             <?php foreach ($rowss as $rowa) : ?>
-                                <img class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?> src="./user.jpg" alt="">
+                                <img class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?> 
+                                    src="./image/3669480_account_circle_ic_icon.svg" alt="">
                             <?php else : ?>
                                 <img src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
                             <?php endif; ?>
@@ -289,11 +278,10 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                                             <th>區域</th>
                                             <td><?= $row["area"] ?></td>
                                         </tr>
-                                        <?php foreach ($rows as $row) : ?>
-                                        <?php endforeach; ?>
+                                       
                                         <th>店鋪權限</th>
                                         <td>
-                                            <class="form-control"><?= $row["category_name"] ?>
+                                            <class="form-control"><?=$store_type[$row["store_right"]] ?>
                                         </td>
                                         </tr>
                                         <tr>
