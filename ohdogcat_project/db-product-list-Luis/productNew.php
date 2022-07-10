@@ -311,18 +311,23 @@ $storeID = "";
                                     <label for="">商品名稱**</label>
                                     <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" required>
                                     <label for="">商品分類**</label>
-                                    <select name='category' class="form-control"required>
-                                              
-                                        <option value='1'>活動票券</option>
-                                        <option value='2'>餐廳票券</option>
+                                    <select name='category' class="form-control" required>
+                                        <?php
+                                        // $sql = "SELECT id, name FROM production_class";
+                                        // // $result = $conn->query($sql);
+                                        // $result = $conn->query($sql);?>
+
+                                            <option value= 1 >12</option>
+                                    
+                                        <!-- <option value='2'>餐廳票券</option>
                                         <option value='3'>寵物周邊</option>
                                         <option value='4'>寵物服飾</option>
-                                        <option value='5'>寵物食品</option>
+                                        <option value='5'>寵物食品</option> -->
                                     </select>
                                     <label for="">商品簡述</label>
-                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control"required>
+                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" required>
                                     <label for="">商品價格**</label>
-                                    <input type="text" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control"required>
+                                    <input type="number" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control" required>
                                     <!-- <label for="">商品規格</label>
                                     <input type="text" name="spec" placeholder="自由增建選項" class="form-control"required> -->
                                     <div class="d-flex mt-2">
@@ -331,11 +336,11 @@ $storeID = "";
                                     </div>
                                     <hr>
                                     <label for="">上架時間</label>
-                                    <input type="datetime-local" name="valid_start" class="form-control"required>
+                                    <input type="datetime-local" name="valid_start" class="form-control" required>
                                     <label for="">下架時間</label>
-                                    <input type="datetime-local" name="valid_end" class="form-control"required>
+                                    <input type="datetime-local" name="valid_end" class="form-control" required>
                                     <label for="">優惠券方案使用</label><br>
-                                    <select name='coupon' class="form-control"required>
+                                    <select name='coupon' class="form-control" required>
                                         <option value='0'>全站周年慶</option>
                                         <option value='1'>父親節活動</option>
                                         <option value='2'>兒童節寵愛牠</option>

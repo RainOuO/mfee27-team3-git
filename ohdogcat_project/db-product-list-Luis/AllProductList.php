@@ -1,7 +1,10 @@
 <?php
 require("./doproducts.php");
+require("./db-connect.php");
 
-// session_start();
+session_start();
+
+
 // 判斷帶入的參數
 $page = isset($_GET["page"]) ?  $page = $_GET["page"] : 1;
 $perPage = 10;
@@ -402,10 +405,10 @@ $result = $conn->query($sql);
                                     <div id="searchbyprice" style="display:none">
                                         <form action="allProductList.php" method="get">
                                             <div class="col-9 d-flex mt-4 priceBar">
-                                                <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="minPrice" value="" required>
+                                                <input type="number" class="form-control mx-1" placeholder="價格min" name="minPrice" value="" required>
 
 
-                                                <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="maxPrice" value="" required>
+                                                <input type="number" class="form-control mx-1" placeholder="~價格max" name="maxPrice" value="" required>
                                                 <input type="hidden" name="type" value="<?= $type ?>" />
                                                 <button class="col-auto btn ms-1 filterBtn" type="submit">搜尋</button>
                                             </div>
@@ -429,15 +432,15 @@ $result = $conn->query($sql);
 
                                 <?php endif; ?>
                             </div>
-                            <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='productEditNew.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">新增商品</button>
+                            <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='productNew.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">新增商品</button>
                         </div>
                         <div class="table-responsive">
                             <?php if ($product_count > 0) : ?>
                                 <table class="table table-sm">
                                     <thead>
                                         <tr>
-                                            <th class="align-middle text-center">商家ID</th>
-                                            <th class="align-middle text-center">商品no.</th>
+                                            <!-- <th class="align-middle text-center">商家ID</th> -->
+                                            <th class="align-middle text-center">商品No.</th>
                                             <th class="align-middle">商品分類</th>
                                             <th>商品名稱</th>
                                             <th>商品簡述</th>
@@ -445,7 +448,7 @@ $result = $conn->query($sql);
                                             <th class="align-middle text-end">單價</th>
                                             <th class="align-middle text-center">上架區間</th>
                                             <th class="align-middle text-center">庫存</th>
-                                            <th class="align-middle text-center">啟用</th>
+                                            <!-- <th class="align-middle text-center">啟用</th> -->
                                             <th class="align-middle text-center">編修</th>
                                         </tr>
                                     </thead>
@@ -454,16 +457,18 @@ $result = $conn->query($sql);
                                         while ($row = $result->fetch_assoc()) : //從資料庫一次抽取單筆資料 用while迴圈顯示
                                         ?>
                                             <tr>
-                                                <td class="align-middle text-center"><?= $row["store_id"] ?></td>
+                                                <!-- <td class="align-middle text-center"><?= $row["store_id"] ?></td> -->
                                                 <td class="align-middle text-center"><?= $row["id"] ?></td>
                                                 <td class="align-middle text"><?= $row["product_category"] ?></td>
-                                                <td class="align-middle"><?= $row["name"] ?></td>
-                                                <td class="align-middle col-3"><?= $row["intro"] ?></td>
+                                                <td class="align-middle col-2" ><?= $row["name"] ?></td>
+                                                <td class="align-middle col-2"><?= $row["intro"] ?></td>
                                                 <td class="align-middle"><?= $row["coupon_id"] ?></td>
                                                 <td class="align-middle text-end"><?= $row["price"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["valid_time_start"] ?>~<br><?= $row["valid_time_end"] ?></td>
+                                                <td class="align-middle text-center">
+                                                    <?= date("Y-m-d ", strtotime($row["valid_time_start"])) ?><br>
+                                                    <?= date("Y-m-d ", strtotime($row["valid_time_end"])) ?></td>
                                                 <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
-                                                <td class="align-middle text-center"><?= $row["valid"] ?></td>
+                                                <!-- <td class="align-middle text-center"><?= $row["valid"] ?></td> -->
                                                 <td class="align-middle text-center">
                                                     <button type="button" class="btn detailBtn" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">查看</button>
                                                 </td>
@@ -475,7 +480,7 @@ $result = $conn->query($sql);
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination">
                                             <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                                                <li class="pagebtn" ><a class="<?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?=$ordertype?>"><?= $i ?></a></li>
+                                                <a class="pagebtn <?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?= $ordertype ?>"><?= $i ?></a>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>

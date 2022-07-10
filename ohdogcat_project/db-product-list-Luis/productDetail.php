@@ -326,9 +326,9 @@ $product_count = $result->num_rows; //取得資料筆數
                                             <!-- TO-DO 連動category -->
                                         </div>
                                         <label for="">商品簡述</label>
-                                        <div type="text" name="intro" class="py-2"><?= $row['description'] ?></div>
+                                        <div type="text" name="intro" class="py-2"><?= $row['intro'] ?></div>
                                         <label for="">商品價格**</label>
-                                        <div type="text" name="price" class="py-2">NTD: <?= $row['price'] ?></div>
+                                        <div type="number" name="price" class="py-2">NTD: <?= $row['price'] ?></div>
                                         <div class="d-flex mt-2">
                                             <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                                             <h3 class="pt-3">進階設定</h3>
@@ -360,7 +360,7 @@ $product_count = $result->num_rows; //取得資料筆數
                             <hr>
                             <form action="">
                                 <label for="">商品文案編輯頁面</label>
-                                <textarea class="form-control" rows="10" placeholder="請輸入文案" maxlength="500" readonly><?= $row['description'] ?></textarea>
+                                <textarea class="form-control"style="resize:none" rows="10" placeholder="請輸入文案" maxlength="500" readonly><?= $row['description'] ?></textarea>
                             </form>
                             <!-- <form method="post">
                                 <div class="text-end mb-1 d-flex justify-content-between">
@@ -375,7 +375,7 @@ $product_count = $result->num_rows; //取得資料筆數
                         <div class="d-flex justify-content-end">
                             <div class="crudBox">
                                 <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id ?>'">編輯</button>
-                                <button type="button" class="btn filterBtn mx-1"  onclick="window.location.href='doDelete.php?id=<?= $row['id']?>'">刪除</button>
+                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id']?>'">刪除</button>
                                 <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
                             </div>
                         </div>

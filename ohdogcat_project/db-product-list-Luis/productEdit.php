@@ -304,18 +304,21 @@ $product_count = $result->num_rows; //取得資料筆數
                                             </div>
                                         </div>
 
-                                        <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                            <div class=" d-flex col-6">
-                                                <input class="form-control" type="file" name="main_photo">
-                                                <!-- <button class="btn filterBtn" type="">封面照片</button> -->
-                                            </div>
-                                            <div class="d-flex col-6">
-                                                <input class="form-control" type="file" name="sub_photo">
-                                                <!-- <button class="btn filterBtn" type="">商品照片</button> -->
-                                            </div>
+                                        <div class="  mt-3 ">
+                                            <form action="" enctype="multipart/form-data" class="d-flex justify-content-center photo-upload">
+                                                <div class=" d-flex ">
+                                                    <input class="form-control" type="file" name="main_photo" accept="image/gif, image/jpeg, image/png">
+                                                    <!-- <button class="btn filterBtn" type="">封面照片</button> -->
+                                                </div>
+                                                <div class="d-flex ">
+                                                    <input class="form-control" type="file" name="sub_photo" accept="image/gif, image/jpeg, image/png">
+                                                    <!-- <button class="btn filterBtn" type="">商品照片</button> -->
+                                                </div>
+                                            </form>
                                         </div>
-
                                     </div>
+
+
 
                                     <div class="basic-setting col-6">
 
@@ -332,10 +335,10 @@ $product_count = $result->num_rows; //取得資料筆數
                                             <option value='4'>寵物服飾</option>
                                             <option value='5'>寵物食品</option>
                                         </select>
-                                        <label for="">商品簡述</label>
-                                        <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" value="<?= $row['description'] ?>" required>
+                                        <label for="">商品簡述**</label>
+                                        <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" value="<?= $row['intro'] ?>" required>
                                         <label for="">商品價格**</label>
-                                        <input type="text" name="price" placeholder="只能輸入大於0的數字" class="form-control" value="<?= $row['price'] ?>" required>
+                                        <input type="number" name="price" placeholder="只能輸入大於0的數字" class="form-control" value="<?= $row['price'] ?>" required>
                                         <!--
                                         <label for="">商品規格</label>
                                         <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
@@ -345,11 +348,11 @@ $product_count = $result->num_rows; //取得資料筆數
                                             <h3 class="pt-3">進階設定</h3>
                                         </div>
                                         <hr>
-                                        <label for="">上架時間</label>
+                                        <label for="">上架時間**</label>
                                         <input type="datetime-local" name="valid_start" class="form-control" value="<?= $row['valid_time_start'] ?>" required>
-                                        <label for="">下架時間</label>
+                                        <label for="">下架時間**</label>
                                         <input type="datetime-local" name="valid_end" class="form-control" value="<?= $row['valid_time_end'] ?>" required>
-                                        <label for="">優惠券方案使用</label><br>
+                                        <label for="">優惠券方案使用**</label><br>
                                         <select name='coupon' class="form-control">
                                             <!-- TO-DO 連動coupon -->
                                             <option value='0'>全站周年慶</option>
@@ -373,34 +376,30 @@ $product_count = $result->num_rows; //取得資料筆數
                                         </div> -->
 
                                     </div>
-                                </div>
-                                <hr>
-
-                                <label for="">商品文案編輯頁面</label>
-                                <textarea class="form-control" rows="10" placeholder="請輸入文案" maxlength="500" name="description"><?= $row['description'] ?></textarea>
-
-                                <!-- <form method="post">
-                            <div class="text-end mb-1 d-flex justify-content-between">
-                                <h3>商品文案編輯頁面</h3> <button class="btnry" type="submit">儲存草稿</button>
-                            </div>
-                            <textarea id="mytextarea" name="product">歡迎編輯 請勿上傳不雅文字</textarea></form> -->
-
-                                <hr>
-
-                                <div class="d-flex justify-content-end">
-                                    <div class="crudBox">
-                                        <button type="submit" class="btn filterBtn mx-1">儲存</button>
-                                        <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
+                                   
+                                    <div>
+                                        <label for="">商品文案編輯頁面</label>
+                                        <textarea class="form-control" rows="10" placeholder="請輸入文案" maxlength="500" name="description"><?= $row['description'] ?></textarea>
                                     </div>
                                 </div>
-                            </form>
-                        <?php else : ?>
-                            無此筆資料
-                        <?php endif; ?>
-                    </main>
                 </div>
+
+                <hr>
+
+                <div class="d-flex justify-content-end">
+                    <div class="crudBox">
+                        <button type="submit" class="btn filterBtn mx-1">儲存</button>
+                        <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
+                    </div>
+                </div>
+                </form>
+            <?php else : ?>
+                無此筆資料
+            <?php endif; ?>
+            </main>
             </div>
         </div>
+    </div>
     </div>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
