@@ -1,261 +1,126 @@
-<div class="d-flex justify-content-between align-items-center border-bottom">
-    <div class=" pb-2">
-        <h1>商品總覽</h1>
-    </div>
-    <div class="pe-1" role="">
-        <input type="button" class="btn catBtn my-3" value="商品總覽" onclick="window.location.href='backtoALLIST.php'">
-        <input type="button" class="btn catBtn my-3" value="旅遊票券列表" onclick="window.location.href='travellist.php'">
-        <input type="button" class="btn catBtn my-3" value="餐廳票券列表" onclick="window.location.href='restaurantlist.php'">
-        <input type="button" class="btn catBtn my-3" value="活動票券列表" onclick="window.location.href='campaignlist.php'">
-        <input type="button" class="btn catBtn my-3" value="實體商品列表" onclick="window.location.href='productlist.php'">
+<?php
+require("../../db-connect.php");
 
-    </div>
-</div>
-<div class="d-flex justify-content-between row pb-1 pe-3">
-    <div class="d-flex justify-content-start col-7">
-        <div class="dropdown mt-3 d-flex align-items-center ">
-            <button class="btn dropdown-toggle btn-lg m-2 filterBtn" type="button" id="dropdownMenuButton1"
-                data-bs-toggle="dropdown" aria-expanded="false">
-                篩選條件
-            </button>
-            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                <li><a class="dropdown-item" id="keyFilter">關鍵字查詢</a></li>
-                <li><a class="dropdown-item" id="dateFilter">上架區間查詢</a></li>
-                <li><a class="dropdown-item" id="priceFilter">價格區間查詢</a></li>
-            </ul>
-        </div>
-        <div class="filters ms-2">
-            <div id="searchbykey" style="display:none">
-                <form action="doFilter-keyword.php" method="post">
-                    <div class="col-10 d-flex mt-4 keywordBar ">
-                        <input type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字">
-                        <button class="col-3 btn mx-2 filterBtn" type="submit">搜尋</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="filters ms-2">
-            <div id="searchbydate" style="display:none">
-                <form action="doFilter-date.php" method="post">
-                    <div class="col-10 d-flex mt-4">
-                        <div class="col-5 mx-1">
-                            <div class="dateF">上架日</div>
-                            <input type="date" class="form-control dateS" name="start-date">
-                        </div>
-                        <div class="col-auto mx-1 mt-3">
-                            <div class="">~</div>
-                        </div>
-                        <div class="col-5 mx-1">
-                            <div class="dateF">下架日</div>
-                            <input type="date" class="form-control dateS" name="end-date">
-                        </div>
-                        <button class=" col-auto btn mx-1 filterBtn" type="submit">搜尋</button>
-                    </div>
-                </form>
-            </div>
-        </div>
-        <div class="filters ms-2">
-            <div id="searchbyprice" style="display:none">
-                <form action="doFilter-price.php" method="post">
-                    <div class="col-9 d-flex mt-4 priceBar">
-                        <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="min-price">
-                        <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="max-price">
-                        <button class="col-auto btn ms-1 filterBtn" type="submit">搜尋</button>
-                    </div>
-                </form>
-            </div>
+
+$sql = "SELECT * FROM letter";
+$result = $conn -> query($sql);
+$letterCount = $result -> num_rows;
+$rows = $result -> fetch_all(MYSQLI_ASSOC);
+
+// $sqlUserId = "SELECT user_id, content, MAX(time)  FROM letter GROUP BY user_id";
+// $resultUserId = $conn -> query($sqlUserId);
+// $UserIdCount = $resultUserId -> num_rows;
+// $rowsUserId = $resultUserId -> fetch_all(MYSQLI_ASSOC);
+
+
+// 取得重複 user_id 裡，時間最新(大)的資料
+$sqlUserId = "SELECT * FROM letter letter_1 where time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) order by time";
+$resultUserId = $conn -> query($sqlUserId);
+$UserIdCount = $resultUserId -> num_rows;
+$rowsUserId = $resultUserId -> fetch_all(MYSQLI_ASSOC);
+
+var_dump($resultUserId);
+
+// var_dump($UserIdCount);
+
+
+
+?>
+<div class="main-content p-4">
+    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+        <h1>信件匣</h1>
+        <div class="" role="">
+            <input type="button" class="btn catBtn my-3 rounded-0" value="系統信件列表" onclick="window.location.href=''">
+            <input type="button" class="btn catBtn my-3 rounded-0" value="顧客信件列表" onclick="window.location.href=''">
         </div>
     </div>
-    <div class="col-5 row d-flex justify-content-end btn-group align-items-center mt-4">
-        <a href="" class="orderBtn  col-2 ">單價↑</i></a>
-        <a href="" class="orderBtn col-2 ">單價↓</i></a>
-        <a href="" class="orderBtn  col-2 ">上架時間↑</i></a>
-        <a href="" class="orderBtn  col-2 ">上架時間↓</i></a>
+    <div class="row mt-3 g-3 justify-content-start">
+        <div class="col-2">
+            <button type="button" class="btn searchBtn">篩選條件 ▸</button>
+        </div>
+        <div class="col-2">
+            <input type="text" class="form-control" placeholder="請輸入關鍵字">
+        </div>
+        <div class="col-2">
+            <button type="button" class="btn searchBtn">搜尋</button>
+        </div>
+        <div class="col-6 d-flex justify-content-end align-items-center mt-3">
+            <a href="" class="orderBtn col-2">編號↑</a>
+            <a href="" class="orderBtn col-2">編號↓</a>
+            <a href="" class="orderBtn col-3">建立時間↑</a>
+            <a href="" class="orderBtn col-3">建立時間↓</a>
+        </div>
     </div>
-</div>
-<hr>
-<div class="d-flex justify-content-end align-items-center">
-    <div class="countBox">
-        <h4 class="countBox">以下商品共: 00筆</h4>
+    <hr>
+    <div class="d-flex justify-content-end align-items-center">
+        <div class="countBox">
+            <h4 class="countBox">以下訊息共: <?= $UserIdCount; ?>筆</h4>
+        </div>
     </div>
-    <button class="btn filterBtn me-1 ms-3 my-3">新增商品</button>
-</div>
-<div class="table-responsive">
-    <table class="table table-sm">
-        <thead>
-            <tr>
-                <th class="align-middle text-center">票券ID</th>
-                <th class="align-middle">商品分類</th>
-                <th>商品名稱</th>
-                <th>商品描述</th>
-                <th>優惠方案</th>
-                <th class="align-middle text-end">單價</th>
-                <th class="align-middle text-center">上架區間</th>
-                <th class="align-middle text-center">庫存</th>
-                <th class="align-middle text-center">啟用</th>
-                <th class="align-middle text-center">編修</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td class="align-middle text-center">001</td>
-                <td class="align-middle text">寵物周邊>寵物服飾>小型犬></td>
-                <td class="align-middle">狗狗救生衣</td>
-                <td class="align-middle">商品描述...</td>
-                <td>站內年中慶 全站三件打85折</td>
-                <td class="align-middle text-end">379</td>
-                <td class="align-middle text-center">22/07/05~22/07/31</td>
-                <td class="align-middle text-center">20</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">002</td>
-                <td class="align-middle ">寵物周邊>寵物服飾>貓</td>
-                <td class="align-middle">貓咪造型衣服</td>
-                <td class="align-middle">商品描述...</td>
-                <td>站內年中慶 全站三件打85折</td>
-                <td class="align-middle text-end">3790</td>
-                <td class="align-middle text-center">22/07/15~22/09/30</td>
-                <td class="align-middle text-center">11</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">003</td>
-                <td class="align-middle ">寵物周邊>寵物清潔></td>
-                <td class="align-middle">潔牙骨</td>
-                <td class="align-middle">商品描述...</td>
-                <td>兒童節寵愛牠</td>
-                <td class="align-middle text-end">2000</td>
-                <td class="align-middle text-center">22/07/01~22/08/30</td>
-                <td class="align-middle text-center">9</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">004</td>
-                <td class="align-middle ">寵物周邊>寵物清潔></td>
-                <td class="align-middle">貓砂</td>
-                <td class="align-middle">商品描述...</td>
-                <td>站內年中慶 全站三件打85折</td>
-                <td class="align-middle text-end">1900</td>
-                <td class="align-middle text-center">22/07/05~22/08/05</td>
-                <td class="align-middle text-center">5</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">005</td>
-                <td class="align-middle ">寵物周邊>寵物食品>貓食</td>
-                <td class="align-middle">貓咪零嘴</td>
-                <td class="align-middle">商品描述...</td>
-                <td>兒童節寵愛牠</td>
-                <td class="align-middle text-end">1780</td>
-                <td class="align-middle text-center">22/07/10~22/08/18</td>
-                <td class="align-middle text-center">7</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">006</td>
-                <td class="align-middle ">寵物周邊>寵物食品>搔癢棒</td>
-                <td class="align-middle">貓咪玩具</td>
-                <td class="align-middle">商品描述...</td>
-                <td>兒童節寵愛牠</td>
-                <td class="align-middle text-end">350</td>
-                <td class="align-middle text-center">22/08/10~22/08/18</td>
-                <td class="align-middle text-center">15</td>
-                <td class="align-middle text-center">0</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">007</td>
-                <td class="align-middle ">寵物周邊>寵物食品>狗食</td>
-                <td class="align-middle">狗狗罐頭</td>
-                <td class="align-middle">商品描述...</td>
-                <td>父親節優惠</td>
-                <td class="align-middle text-end">350</td>
-                <td class="align-middle text-center">22/07/15~22/09/18</td>
-                <td class="align-middle text-center">7</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">008</td>
-                <td class="align-middle ">寵物周邊>寵物服飾>貓</td>
-                <td class="align-middle">貓圍巾</td>
-                <td class="align-middle">商品描述...</td>
-                <td>站內年中慶 全站三件打85折</td>
-                <td class="align-middle text-end">300</td>
-                <td class="align-middle text-center">22/07/10~22/08/18</td>
-                <td class="align-middle text-center">6</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">009</td>
-                <td class="align-middle ">寵物周邊>寵物食品>貓食</td>
-                <td class="align-middle">貓咪零嘴</td>
-                <td class="align-middle">商品描述...</td>
-                <td>618周年慶 滿千送百</td>
-                <td class="align-middle text-end">1050</td>
-                <td class="align-middle text-center">22/07/10~22/08/18</td>
-                <td class="align-middle text-center">2</td>
-                <td class="align-middle text-center">1</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-            <tr>
-                <td class="align-middle text-center">010</td>
-                <td class="align-middle">寵物周邊>護具>狗></td>
-                <td class="align-middle">狗狗項圈</td>
-                <td class="align-middle">商品描述...</td>
-                <td>毛孩親一夏優惠活動 滿300折扣...</td>
-                <td class="align-middle text-end">790</td>
-                <td class="align-middle text-center">22/07/10~22/08/18</td>
-                <td class="align-middle text-center">售完</td>
-                <td class="align-middle text-center">0</td>
-                <td class="align-middle text-center">
-                    <button type="button" class="btn detailBtn">查看</button>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-    <div class="d-flex justify-content-center pt-3">
-        <nav aria-label="Page navigation example ">
-            <ul class="pagination">
-                <li class=" ">
-                    <a class="pageBtn" href="#" aria-label="Previous">
-                        <span aria-hidden="true">&laquo;</span>
-                    </a>
-                </li>
-                <li class=""><a class="pageBtn" href="#">1</a></li>
-                <li class=""><a class="pageBtn" href="#">2</a></li>
-                <li class=""><a class="pageBtn" href="#">3</a></li>
-                <li class="">
-                    <a class=" pageBtn" href="#" aria-label="Next">
-                        <span aria-hidden="true">&raquo;</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
+    <!-- <h2>Second title</h2> -->
+    <div class="table-responsive">
+        <table class="table table-sm justify-content-between align-items-center">
+            <thead>
+                <tr>
+                    <th class="align-middle text-center">聯絡人</th>
+                    <th class="align-middle text-center">內容</th>
+                    <th class="align-middle text-center">建立時間</th>
+                    <th class="align-middle text-center">狀態</th>
+                    <th class="align-middle text-center">編修</th>
+                </tr>
+            </thead>
+            <tbody>
+                <?php foreach ($rowsUserId as $row) : ?>
+                    <tr>
+                        <td class="align-middle text-center"><?= $row['user_id']; ?></td>
+                        <td class="align-middle text-start"><?= $row['content']; ?></td>
+                        <td class="align-middle text-center"><?= $row['time']; ?></td>
+                        <td class="align-middle text-center">已回覆</td>
+                        <td><a class="btn catBtn" href="./doReply_test.php?user_id=<?=$row['user_id']?>">回覆</a></td>
+                    </tr>
+                <?php endforeach; ?>
+                <!-- <tr> -->
+                    <!-- <td class="align-middle text-center">Amber</td> -->
+                    <!-- <td class="align-middle text-center">親，我有問題</td> -->
+                    <!-- <td class="align-middle text-center">00/00/00</td> -->
+                    <!-- <td class="align-middle text-center">已回覆</td> -->
+                    <!-- <td class="align-middle text-center">回覆</td> -->
+                <!-- </tr> -->
+                <!-- <tr> -->
+                    <!-- <td class="align-middle text-center">Cyril</td> -->
+                    <!-- <td class="align-middle text-center">親，我有問題</td> -->
+                    <!-- <td class="align-middle text-center">00/00/00</td> -->
+                    <!-- <td class="align-middle text-center">未回覆</td> -->
+                    <!-- <td class="align-middle text-center">回覆</td> -->
+                <!-- </tr> -->
+                <!-- <tr> -->
+                    <!-- <td class="align-middle text-center">Chris</td> -->
+                    <!-- <td class="align-middle text-center">親，我有問題</td> -->
+                    <!-- <td class="align-middle text-center">00/00/00</td> -->
+                    <!-- <td class="align-middle text-center">未回覆</td> -->
+                    <!-- <td class="align-middle text-center">回覆</td> -->
+                <!-- </tr> -->
+                <!-- <tr> -->
+                    <!-- <td class="align-middle text-center">Alice</td> -->
+                    <!-- <td class="align-middle text-center">親，我有問題</td> -->
+                    <!-- <td class="align-middle text-center">00/00/00</td> -->
+                    <!-- <td class="align-middle text-center">已回覆</td> -->
+                    <!-- <td class="align-middle text-center">回覆</td> -->
+                <!-- </tr> -->
+                <!-- <tr> -->
+                    <!-- <td class="align-middle text-center">Josh</td> -->
+                    <!-- <td class="align-middle text-center">親，我有問題</td> -->
+                    <!-- <td class="align-middle text-center">00/00/00</td> -->
+                    <!-- <td class="align-middle text-center">未回覆</td> -->
+                    <!-- <td class="align-middle text-center">回覆</td> -->
+                <!-- </tr> -->
+                <!-- <tr> -->
+                    <!-- <td class="align-middle text-center">Pikachu</td> -->
+                    <!-- <td class="align-middle text-center">親，我有問題</td> --> 
+                    <!-- <td class="align-middle text-center">00/00/00</td> -->
+                    <!-- <td class="align-middle text-center">已回覆</td> -->
+                    <!-- <td class="align-middle text-center">回覆</td> -->
+                <!-- </tr> -->
+            </tbody>
+        </table>
     </div>
-</div>
