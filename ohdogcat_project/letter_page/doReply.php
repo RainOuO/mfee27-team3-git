@@ -1,5 +1,5 @@
 <?php
-if(!isset($_GET['user_id'])){
+if (!isset($_GET['user_id'])) {
     echo "沒有參數";
     exit;
 }
@@ -24,7 +24,6 @@ if (isset($_POST['message'])) {
     $resultMessage = $conn->query($sqlMessage);
     header("location:doReply_test.php");
 }
-
 ?>
 <!doctype html>
 <html lang="en">

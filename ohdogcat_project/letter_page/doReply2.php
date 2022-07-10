@@ -1,3 +1,31 @@
+<?php
+if (!isset($_GET['user_id'])) {
+    echo "沒有參數";
+    exit;
+}
+$user_id = $_GET['user_id'];
+
+require("../../db-connect.php");
+session_start();
+// if (!isset($_SESSION["4user"])) {
+//     header("location: login.php");
+// }
+
+$sql = "SELECT * FROM letter where user_id = '$user_id'";
+$result = $conn->query($sql);
+$letterCount = $result->num_rows;
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+
+
+if (isset($_POST['message'])) {
+    echo $user_id;
+    $message = $_POST['message'];
+    $now = date("Y-m-d H:i:s");
+    $sqlMessage = "INSERT INTO letter (content, time)  VALUES ('$message', '$now')";
+    $resultMessage = $conn->query($sqlMessage);
+    header("location:doReply2?user_id=$user_id.php");
+}
+?>
 <!doctype html>
 <html lang="en">
 
@@ -6,15 +34,11 @@
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    <meta http-equiv="pragma" content="no-cache">
-    <meta http-equiv="expires" content="0">
-    <meta http-equiv="cache-control" content="no-cache">
 
     <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
-
     <link rel="stylesheet" href="<?= $css ?>">
 
 </head>
@@ -132,26 +156,52 @@
             </div>
         </aside>
         <div class="content-wrap vh-100">
-            <div class="container-fluid h-100 py-3 overflow-hidden">
+            <div class="container-fluid h-100 py-4 overflow-hidden">
                 <div class="d-flex flex-column h-100">
-                    <div class="content-header d-flex justify-content-end mb-3">
-                        <div class="d-flex flex-shrink-1 w-100 align-items-center">
-                            <?php require('./header.php') ?>
-                        </div>
-                        <a href="" class="d-flex justify-content-end align-items-center flex-shrink-0">
+                    <div class="content-header d-flex justify-content-end flex-shrink-0">
+                        <a href="" class="d-flex justify-content-end align-items-center">
                             <div class="user-name pe-4">汪汪先輩</div>
                             <div class="user-sticker rounded-3 overflow-hidden"><img src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
                         </a>
                     </div>
-                    <div class="button-area">
-                        <?php require('./filter-section.php') ?>
-                    </div>
-                    <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 scroll-bar">
-                        <?php require($main) ?>
+                    <hr class="flex-shrink-0">
+                    <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
+                        <div class="main-content p-4 position-relative">
+                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
+                                <h1>回覆</h1>
+                                <?= $letterCount ?>
+                            </div>
+                            <?php foreach ($rows as $row) : ?>
+                                <div class="card mb-3" style="max-width: auto;">
+                                    <div class="row g-0">
+                                        <div class="col-md-1">
+                                            <img class="stickers" src="tray_large.webp" class="img-fluid rounded-start" alt="...">
+                                        </div>
+                                        <div class="col-md-1">
+                                            <?= $row['user_id'] . "<br>" . $row['time'] ?>
+                                        </div>
+                                        <div class="col-md-auto">
+                                            <div class="card-body">
+                                                <p class="card-text"><?= $row['content'] ?></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            <?php endforeach; ?>
+                            <div class="bottom-area">
+                                <hr>
+                                <form action="doReply2.php" method="post">
+                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
+                                    <div class="row mt-2 g-2 justify-content-end">
+                                        <div class="col-2">
+                                            <button class="btn searchBtn" type="button">返回</button>
+                                            <button class="btn searchBtn" type="submit">送出</button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
                     </main>
-                    <div class="content-footer flex-shrink-1">
-                        <?php require('./footer.php') ?>
-                    </div>
                 </div>
             </div>
         </div>
@@ -162,42 +212,6 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
     <script src="<?= $js ?>"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
-<main class="main-content p-4 position-relative">
-    <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-        <h1>回覆</h1>
-        <?= $letterCount ?>
-    </div>
-    <?php foreach ($rows as $row) : ?>
-        <div class="card mb-3" style="max-width: auto;">
-            <div class="row g-0">
-                <div class="col-md-1">
-                    <img class="stickers" src="tray_large.webp" class="img-fluid rounded-start" alt="...">
-                </div>
-                <div class="col-md-1">
-                    <?= $row['user_id'] . "<br>" . $row['time'] ?>
-                </div>
-                <div class="col-md-auto">
-                    <div class="card-body">
-                        <p class="card-text"><?= $row['content'] ?></p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    <?php endforeach; ?>
-    <div class="bottom-area">
-        <hr>
-        <form action="doReply_test.php" method="post">
-            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
-            <div class="row mt-2 g-2 justify-content-end">
-                <div class="col-2">
-                    <button class="btn searchBtn" type="button">返回</button>
-                    <button class="btn searchBtn" type="submit">送出</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</main>
 
 </html>
