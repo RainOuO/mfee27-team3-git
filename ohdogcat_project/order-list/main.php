@@ -16,7 +16,6 @@
         </thead>
         <tbody>
             <?php  for($i=0; $i<count($rows); $i++):?>
-                
             <tr class="<?= ($rows[$i]['status'] == 0)? 'text-secondary text-opacity-50':''; ?>">
                 <td class="align-middle"><?= $rows[$i]['order_no'] ?></td>
                 <td class="align-middle text-truncate"><?= $userName[$rows[$i]['user_id']] ?></td>
@@ -57,7 +56,7 @@
         </div>
     </div>
     <?php else: ?>
-    <h3>目前尚無訂單</h3>
+    <h3>無資料</h3>
     <?php endif; ?>
 
 </div>

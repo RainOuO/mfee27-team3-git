@@ -25,7 +25,7 @@ if( $conn->query($sql) === TRUE ){
                 "bg" => 'bg-danger',
                 "text" => 'text-danger'
             ];
-            $rowOrderItem['status_text'] = "未結單";
+            $rowOrderItem['status_text'] = "未確認";
             break;
         case 2:
             $rowOrderItem['status_css'] = [

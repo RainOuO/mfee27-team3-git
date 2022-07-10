@@ -15,18 +15,21 @@ session_start();
 // $categoryRows = ($categoryCount>0)? $resultCategory->fetch_all(MYSQLI_ASSOC):'';
 
 $sql = "SELECT * FROM product";
+$conn->query("SET NAMES UTF8");
 $result = $conn->query($sql);
 $product_count = $result->num_rows;
 $rows = ($product_count>0)? $result->fetch_all(MYSQLI_ASSOC):'';
 
 
 $sqlClass = "SELECT * FROM product_class";
+$conn->query("SET NAMES UTF8");
 $resultClass = $conn->query($sqlClass);
 $productClass_count = $resultClass->num_rows;
 $rowsClass = ($productClass_count>0)? $resultClass->fetch_all(MYSQLI_ASSOC):'';
 $productClass = array_column($rowsClass, 'name', 'id');
 
 $sqlStore = "SELECT id, name FROM store_info";
+$conn->query("SET NAMES UTF8");
 $resultStore = $conn->query($sqlStore);
 $productStore_count = $resultStore->num_rows;
 $rowsStore = ($productStore_count>0)? $resultStore->fetch_all(MYSQLI_ASSOC):'';

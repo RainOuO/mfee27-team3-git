@@ -14,12 +14,10 @@
         </div>
         <div class="filters ms-2" id="searchbykey" style="display:block">
             <div>
-                <form action="doFilter.php" method="post">
-                    <div class="col-10 d-flex keywordBar ">
-                        <input id="keyword" type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字">
-                        <button class="col-3 btn mx-2 filterBtn go-filter" type="button">搜尋</button>
-                    </div>
-                </form>
+                <div class="col-10 d-flex keywordBar ">
+                    <input id="keyword" type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字" value="<?=$search?>">
+                    <button class="col-3 btn mx-2 filterBtn go-filter" type="button">搜尋</button>
+                </div>
             </div>
         </div>
         <div class="filters ms-2" id="searchbydate" style="display:none">
