@@ -194,7 +194,7 @@ if (isset($_POST['message'])) {
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
                                     <div class="row mt-2 g-2 justify-content-end">
                                         <div class="col-2">
-                                            <button class="btn searchBtn" type="button">返回</button>
+                                            <a class="btn catBtn" href="index.php">返回</a>
                                             <button class="btn searchBtn" type="submit">送出</button>
                                         </div>
                                     </div>
