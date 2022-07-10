@@ -1,8 +1,9 @@
 <?php
+
 require("./db-connect.php");
-require("./doProducts.php");
-$sql2 = "SELECT * FROM product WHERE valid=1";
-$result2 = $conn->query($sql2);
+
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
+$storeID = "";
 
 
 ?>
@@ -22,11 +23,11 @@ $result2 = $conn->query($sql2);
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
     <script src="https://cdn.tiny.cloud/1/ay2w3c7mo5uqcc06wa6n04dowpis8ayyklz2btqenk5c9kp8/tinymce/6/tinymce.min.js" referrerpolicy="origin"></script>
-    <script>
+    <!-- <script>
         tinymce.init({
             selector: '#mytextarea'
         });
-    </script>
+    </script> -->
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         .photo-window {
@@ -263,82 +264,78 @@ $result2 = $conn->query($sql2);
                         <div class="border-bottom pb-2">
                             <h2>商品內容管理</h2>
                         </div>
-                        <div class="d-flex justify-content-between align-items-center m-2">
-                            <div class="title d-flex mt-2">
-                                <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
-                                <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
-                            </div>
-                            <div class="crudBox">
-                                <button type="button" class="btn filterBtn mx-1">儲存</button>
-                                <button type="button" class="btn filterBtn mx-1">複製</button>
-                                <button type="button" class="btn filterBtn mx-1">清空</button>
-                                <button type="button" class="btn filterBtn ms-1">取消</button>
-                            </div>
-                        </div>
-                        <hr>
-                        <div class="row d-flex justify-content-center">
-                            <div class="photobar d-flex flex-column col-5">
-                                <div class="photo-window d-flex flex-column  ">
-                                    <div class="cover-photo m-3">
-                                        <img src="./IMAGES/doglogo.png" alt="">
-                                    </div>
-                                    <div class="swiper mySwiper">
-                                        <div class="swiper-wrapper">
-                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-
-                                        </div>
-                                        <div class="swiper-pagination"></div>
-                                    </div>
+                        <form action="doCreateNew.php" method="post">
+                            <div class="d-flex justify-content-between align-items-center m-2">
+                                <div class="title d-flex mt-2">
+                                    <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
+                                    <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
                                 </div>
-                                <form action="doUpload.php" method="post" enctype="multipart/form-data">
+                                <div class="crudBox">
+                                    <button type="submit" class="btn filterBtn mx-1">儲存</button>
+                                    <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">取消新增</button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row d-flex justify-content-center">
+                                <div class="photobar d-flex flex-column col-5">
+                                    <div class="photo-window d-flex flex-column  ">
+                                        <div class="cover-photo m-3">
+                                            <img src="./IMAGES/doglogo.png" alt="">
+                                        </div>
+                                        <div class="swiper mySwiper">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                            </div>
+                                            <div class="swiper-pagination"></div>
+                                        </div>
+                                    </div>
+
                                     <div class="row photo-upload mt-3 d-flex justify-content-center">
                                         <div class=" d-flex col-6">
-                                            <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">封面照片</button>
+                                            <input class="form-control" type="file" name="main_photo">
+                                            <!-- <button class="btn filterBtn" type="">封面照片</button> -->
                                         </div>
                                         <div class="d-flex col-6">
-                                            <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">商品照片</button>
+                                            <input class="form-control" type="file" name="sub_photo">
+                                            <!-- <button class="btn filterBtn" type="">商品照片</button> -->
                                         </div>
                                     </div>
-                                </form>
-                            </div>
-                            <div class="basic-setting col-6">
-                                <form action="doUpdate">
+
+                                </div>
+                                <div class="basic-setting col-6">
+
                                     <label for="">商品名稱**</label>
-                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="">
+                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" required>
                                     <label for="">商品分類**</label>
-                                    <select name='category' class="form-control">
-                                        <option value='0'>旅遊票券</option>
+                                    <select name='category' class="form-control"required>
+                                              
                                         <option value='1'>活動票券</option>
                                         <option value='2'>餐廳票券</option>
                                         <option value='3'>寵物周邊</option>
                                         <option value='4'>寵物服飾</option>
                                         <option value='5'>寵物食品</option>
                                     </select>
-                                    <label for="">商品介紹</label>
-                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
+                                    <label for="">商品簡述</label>
+                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control"required>
                                     <label for="">商品價格**</label>
-                                    <input type="text" name="price" placeholder="只能輸入大於0的數字" class="form-control">
-                                    <label for="">商品規格</label>
-                                    <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
+                                    <input type="text" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control"required>
+                                    <!-- <label for="">商品規格</label>
+                                    <input type="text" name="spec" placeholder="自由增建選項" class="form-control"required> -->
                                     <div class="d-flex mt-2">
                                         <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                                         <h3 class="pt-3">進階設定</h3>
                                     </div>
                                     <hr>
                                     <label for="">上架時間</label>
-                                    <input type="datetime-local" name="spec" class="form-control">
+                                    <input type="datetime-local" name="valid_start" class="form-control"required>
                                     <label for="">下架時間</label>
-                                    <input type="datetime-local" name="spec" class="form-control">
+                                    <input type="datetime-local" name="valid_end" class="form-control"required>
                                     <label for="">優惠券方案使用</label><br>
-                                    <select name='dragdown' class="form-control">
+                                    <select name='coupon' class="form-control"required>
                                         <option value='0'>全站周年慶</option>
                                         <option value='1'>父親節活動</option>
                                         <option value='2'>兒童節寵愛牠</option>
@@ -346,35 +343,35 @@ $result2 = $conn->query($sql2);
                                         <option value='5'>由優惠券管理作連動</option>
                                         <option value='6'>無</option>
                                     </select>
-                                    <label for="">商品有效期限</label>
-                                    <input type="date" name="spec" placeholder="自由增建選項" class="form-control">
+                                    <!-- <label for="">商品更新時間</label>
+                                    <input type="date" name="create_time" placeholder="自由增建選項" class="form-control" hidden> -->
                                     <label for="">商品庫存數</label>
-                                    <input type="text" name="spec" placeholder="只能輸入大於0的數字" class="form-control">
-                                    <div class="form-check">
+                                    <input type="number" name="stock" placeholder="只能輸入大於0的數字" class="form-control">
+                                    <!-- <div class="form-check">
                                         <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
                                         <label class="form-check-label" for="flexRadioDefault1">
                                             商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
                                         </label>
-                                    </div>
-                                </form>
+                                    </div> -->
+
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <form method="post">
+                            <hr>
+                            <label for="">商品文案編輯頁面</label>
+                            <textarea class="form-control" rows="10" placeholder="請輸入文案" maxlength="500" name="description"></textarea>
+                            <!-- <form method="post">
                             <div class="text-end mb-1 d-flex justify-content-between">
                                 <h3>商品文案編輯頁面</h3> <button class="btnry" type="submit">儲存草稿</button>
                             </div>
-                            <textarea id="mytextarea" name="product">歡迎編輯 請勿上傳不雅文字</textarea>
-                        </form>
-                        <hr>
-                        <div class="d-flex justify-content-end">
-                            <div class="crudBox">
-                                <button type="button" class="btn filterBtn mx-1">儲存</button>
-                                <button type="button" class="btn filterBtn mx-1">複製</button>
-                                <button type="button" class="btn filterBtn mx-1">清空</button>
-                                <button type="button" class="btn filterBtn ms-1">取消</button>
+                            <textarea id="mytextarea" name="product">歡迎編輯 請勿上傳不雅文字</textarea></form> -->
+                            <hr>
+                            <div class="d-flex justify-content-end">
+                                <div class="crudBox">
+                                    <button type="submit" class="btn filterBtn mx-1">儲存</button>
+                                    <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">取消新增</button>
+                                </div>
                             </div>
-                        </div>
+                        </form>
                     </main>
                 </div>
             </div>
@@ -402,7 +399,7 @@ $result2 = $conn->query($sql2);
             },
         });
     </script>
-    <script>
+    <!-- <script>
         tinymce.init({
             selector: 'textarea',
             plugins: 'a11ychecker advcode casechange export formatpainter image editimage linkchecker autolink lists checklist media mediaembed pageembed permanentpen powerpaste table advtable tableofcontents tinycomments tinymcespellchecker',
@@ -411,7 +408,7 @@ $result2 = $conn->query($sql2);
             tinycomments_mode: 'embedded',
             tinycomments_author: 'Author name',
         });
-    </script>
+    </script> -->
 </body>
 
 </html>

@@ -18,7 +18,7 @@ if (isset($_GET["startDate"]) && isset($_GET["endDate"])) {
     $startDate = "";
     $endDate = "";
 };
-// $endDate = isset($_GET["endDate"]) && !empty($_GET["endDate"]) ? $_GET["endDate"] : "";
+
 //TO-DO: 未來加入 store_id(從 session 拿) 判斷商家
 //$storeID= isset($_GET["store_id"]) ? $_GET["store_id"] : "";
 $storeID = "";
@@ -40,9 +40,9 @@ switch ($ordertype) {
     case 5:
         $ordertype = "id ASC";
 }
-echo $endDate;
+
 //依條件取得商品
-$sql = "SELECT * FROM product WHERE 1";
+$sql = "SELECT * FROM product WHERE valid= 1";
 $sql .= $storeID ? " and store_id = $storeID" : "";
 $sql .= $type ? " and product_type = $type " : "";
 $sql .= $keyword ? " and (name LIKE '%$keyword%' OR description LIKE '%$keyword%' OR )" : "";
@@ -440,7 +440,7 @@ $result = $conn->query($sql);
                                             <th class="align-middle text-center">商品no.</th>
                                             <th class="align-middle">商品分類</th>
                                             <th>商品名稱</th>
-                                            <th>商品描述</th>
+                                            <th>商品簡述</th>
                                             <th>優惠方案</th>
                                             <th class="align-middle text-end">單價</th>
                                             <th class="align-middle text-center">上架區間</th>
@@ -458,7 +458,7 @@ $result = $conn->query($sql);
                                                 <td class="align-middle text-center"><?= $row["id"] ?></td>
                                                 <td class="align-middle text"><?= $row["product_category"] ?></td>
                                                 <td class="align-middle"><?= $row["name"] ?></td>
-                                                <td class="align-middle col-3"><?= $row["description"] ?></td>
+                                                <td class="align-middle col-3"><?= $row["intro"] ?></td>
                                                 <td class="align-middle"><?= $row["coupon_id"] ?></td>
                                                 <td class="align-middle text-end"><?= $row["price"] ?></td>
                                                 <td class="align-middle text-center"><?= $row["valid_time_start"] ?>~<br><?= $row["valid_time_end"] ?></td>
@@ -475,7 +475,7 @@ $result = $conn->query($sql);
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination">
                                             <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                                                <li class="pagebtn" ><a class="<?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>"><?= $i ?></a></li>
+                                                <li class="pagebtn" ><a class="<?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?=$ordertype?>"><?= $i ?></a></li>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>
