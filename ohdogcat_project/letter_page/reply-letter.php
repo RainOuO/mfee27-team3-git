@@ -1,8 +1,9 @@
 <?php
-if (!isset($_GET['user_id'])) {
-    echo "沒有參數";
-    exit;
-}
+// if (!isset($_POST['user_id']) and !isset($_POST['message'])) {
+//     echo "沒有參數";
+//     exit;
+// }
+session_start();
 $user_id = $_GET['user_id'];
 
 require("../../db-connect.php");
@@ -16,15 +17,14 @@ $result = $conn->query($sql);
 $letterCount = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-
-if (isset($_POST['message'])) {
-    echo $user_id;
-    $message = $_POST['message'];
-    $now = date("Y-m-d H:i:s");
-    $sqlMessage = "INSERT INTO letter (content, time)  VALUES ('$message', '$now')";
-    $resultMessage = $conn->query($sqlMessage);
-    header("location:doReply2?user_id=$user_id.php");
-}
+// if (isset($_POST['message'])) {
+//     $message = $_POST['message'];
+//     $now = date("Y-m-d H:i:s");
+//     $sqlMessage = "INSERT INTO letter (content, time, user_id)  VALUES ('$message', '$now', '$user_id')";
+//     $resultMessage = $conn->query($sqlMessage);
+//     header("Refresh:1");
+//     header("Location:doReply2.php");
+// }
 ?>
 <!doctype html>
 <html lang="en">
@@ -190,12 +190,13 @@ if (isset($_POST['message'])) {
                             <?php endforeach; ?>
                             <div class="bottom-area">
                                 <hr>
-                                <form action="doReply2.php" method="post">
+                                <form action="doReply.php" method="post">
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
                                     <div class="row mt-2 g-2 justify-content-end">
                                         <div class="col-2">
+                                            <input type="hidden" name="user_id" value="<?= $user_id ?>">
                                             <a class="btn catBtn" href="index.php">返回</a>
-                                            <button class="btn searchBtn" type="submit">送出</button>
+                                            <button class="btn catBtn" type="submit">送出</button>
                                         </div>
                                     </div>
                                 </form>

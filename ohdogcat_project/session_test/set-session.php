@@ -7,9 +7,11 @@
     // echo $_SESSION["name"];
 
     $user = [
-        "id" => 1,
-        "name" => "Joe",
-        "email" => "joe@test.com"
+        // "id" => 1,  
+        // "name" => "Joe",
+        "user_id" => 1,
+        "store_id" => 2,
+        
     ];
     
     $_SESSION["user"] = $user;
