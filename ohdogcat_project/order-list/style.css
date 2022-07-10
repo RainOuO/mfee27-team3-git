@@ -28,10 +28,6 @@
     background-color: #49586f;
 }
 
-.keywordBar,
-.priceBar {
-    height: 48px;
-}
 
 .countBox {
     line-height: 37px;
@@ -74,15 +70,13 @@
     font-size: 0.8rem;
 }
 
-.dateS {
-    height: 30px;
-}
 
 td {
     vertical-align: center!important;
     padding: 12px 0!important;
 }
 
+table{table-layout:fixed;word-break:break-all;}
 
 
 /* offcanvas */
@@ -91,7 +85,7 @@ td {
     max-width: 1600px;
 }
 
-#orderDetail {
+#productList {
     overflow-y: scroll;
 }
 

@@ -34,6 +34,18 @@ a {
     transition: all .3s;
 }
 
+/* pagination style */
+.current-active {
+    color: #adadad;
+    cursor: default;
+}
+
+.current-active:active, .current-active:focus, .current-active:hover {
+    box-shadow: none;
+    color: #adadad;
+    background-color: #fff;
+}
+
 /* basic background */
 .lowest-background {
     background: url("../../images/dashboard/bg_cat-feet.svg") left 116% / 440px no-repeat, linear-gradient(178deg, rgb(212, 237, 237) 0%, rgba(212, 237, 237, 0.7) 540px, rgba(255, 255, 255, 0.6) 720px, rgb(255, 170, 107) 100%) no-repeat

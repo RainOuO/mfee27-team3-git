@@ -1,5 +1,5 @@
 <hr class="m-0">
-<div class="d-flex justify-content-between align-items-center my-3">
+<div class="d-flex justify-content-between align-items-center my-3 py-3">
     <div class="d-flex justify-content-start flex-shrink-0">
         <div class="dropdown d-flex align-items-center ">
             <button class="btn dropdown-toggle filterBtn h-100" type="button" id="dropdownMenuButton1"
@@ -14,56 +14,53 @@
         </div>
         <div class="filters ms-2" id="searchbykey" style="display:block">
             <div>
-                <form action="doFilter-keyword.php" method="post">
+                <form action="doFilter.php" method="post">
                     <div class="col-10 d-flex keywordBar ">
-                        <input type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字">
-                        <button class="col-3 btn mx-2 filterBtn" type="submit">搜尋</button>
+                        <input id="keyword" type="text" class="col-9 form-control " name="keyword" placeholder="輸入關鍵字">
+                        <button class="col-3 btn mx-2 filterBtn go-filter" type="button">搜尋</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="filters ms-2" id="searchbydate" style="display:none">
             <div>
-                <form action="doFilter-date.php" method="post">
-                    <div class="col-10 d-flex">
+                <form action="doFilter.php" method="post">
+                    <div class="col-10 d-flex align-items-center">
                         <div class="col-5 mx-1">
-                            <div class="dateF">上架日</div>
-                            <input type="date" class="form-control dateS" name="start-date">
+                            <input type="date" class="form-control dateS date-range" name="start-date">
                         </div>
-                        <div class="col-auto mx-1 mt-3">
-                            <div class="">~</div>
-                        </div>
+                        ~
                         <div class="col-5 mx-1">
-                            <div class="dateF">下架日</div>
-                            <input type="date" class="form-control dateS" name="end-date">
+                            <input type="date" class="form-control dateS date-range" name="end-date">
                         </div>
-                        <button class=" col-auto btn mx-1 filterBtn " type="submit">搜尋</button>
+                        <button class=" col-auto btn mx-1 filterBtn go-filter" type="button">搜尋</button>
                     </div>
                 </form>
             </div>
         </div>
         <div class="filters ms-2" id="searchbyprice" style="display:none">
             <div>
-                <form action="doFilter-price.php" method="post">
-                    <div class="col-9 d-flex priceBar">
-                        <input type="number" class="form-control mx-1" placeholder="價格最小值~" name="min-price">
-                        <input type="number" class="form-control mx-1" placeholder="~價格最大值" name="max-price">
-                        <button class="col-auto btn ms-1 filterBtn" type="submit">搜尋</button>
+                <form action="doFilter.php" method="post">
+                    <div class="col-9 d-flex align-items-center">
+                        <input type="number" class="form-control mx-1 price-range" placeholder="價格最小值" name="min-price">
+                        ~
+                        <input type="number" class="form-control mx-1 price-range" placeholder="價格最大值" name="max-price">
+                        <button class="col-auto btn ms-1 filterBtn go-filter" type="button">搜尋</button>
                     </div>
                 </form>
             </div>
         </div>
     </div>
     <div class="d-flex justify-content-end btn-group align-items-center flex-shrink-1 w-100 pe-3">
-        <a href="" class="orderBtn">單價↑</i></a>
-        <a href="" class="orderBtn">單價↓</i></a>
-        <a href="" class="orderBtn">上架時間↑</i></a>
-        <a href="" class="orderBtn">上架時間↓</i></a>
+        <a href="?status=<?=$status?>&order=DESC&sort=total&search=<?=$search?>&page=<?=$page?>" class="orderBtn">總價↑</i></a>
+        <a href="?status=<?=$status?>&order=ASC&sort=total&search=<?=$search?>&page=<?=$page?>" class="orderBtn">總價↓</i></a>
+        <a href="?status=<?=$status?>&order=DESC&sort=order_time&search=<?=$search?>&page=<?=$page?>" class="orderBtn">下單時間↑</i></a>
+        <a href="?status=<?=$status?>&order=ASC&sort=order_time&search=<?=$search?>&page=<?=$page?>" class="orderBtn">下單時間↓</i></a>
     </div>
     <div class=" flex-shrink-0 d-flex align-items-center">
         <div class="countBox">
-            <h4 class="countBox">以下商品共: 00筆</h4>
+            <h4 class="countBox">共 <?= $resultAllCount ?> 筆資料，此頁顯示第 <?= $startItem ?> 筆 ~ 第 <?= $endItem ?> 筆</h4>
         </div>
-        <button class="btn filterBtn ms-4">新增商品</button>
     </div>
 </div>
+

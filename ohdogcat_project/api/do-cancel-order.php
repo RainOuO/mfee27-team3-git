@@ -2,35 +2,64 @@
 require('../db-connect.php');
 session_start();
 
-$order_id = $_POST['order_id'];
+$order_id = $_POST['id'];
 $index = $_POST['index'];
 
-$sql = "SELECT * FROM order_product_detail WHERE order_id = $order_id";
-$result = $conn->query($sql);
-$result_count = $result->num_rows;
-$rows = ($result_count>0)? $result->fetch_all(MYSQLI_ASSOC):'';
+$sql = "UPDATE order_product SET status = 0 WHERE id = $order_id";
+if( $conn->query($sql) === TRUE ){
+    $sqlOrderItem = "SELECT status FROM order_product WHERE id = $order_id";
+    $resultOrderItem = $conn->query($sqlOrderItem);
+    $resultOrderItem_count = $resultOrderItem->num_rows;
+    $rowOrderItem = ($resultOrderItem_count>0)? $resultOrderItem->fetch_assoc():'';
+    $rowOrderItem['index'] = intval($index);
+    switch($rowOrderItem['status']) {
+        case 0:
+            $rowOrderItem['status_css'] = [
+                "bg" => 'bg-secondary opacity-25',
+                "text" => 'text-secondary'
+            ];
+            $rowOrderItem['status_text'] = "已取消";
+            break;
+        case 1:
+            $rowOrderItem['status_css'] = [
+                "bg" => 'bg-danger',
+                "text" => 'text-danger'
+            ];
+            $rowOrderItem['status_text'] = "未結單";
+            break;
+        case 2:
+            $rowOrderItem['status_css'] = [
+                "bg" => 'bg-warning',
+                "text" => 'text-warning'
+            ];
+            $rowOrderItem['status_text'] = "處理中";
+            break;
+        case 3:
+            $rowOrderItem['status_css'] = [
+                "bg" => 'bg-success',
+                "text" => 'text-success'
+            ];
+            $rowOrderItem['status_text'] = "已結單";
+            break;
+    };
+    $data = [
+        "data" => [
+            "success" => true,
+            "statusChange" => $rowOrderItem
+        ]
+    ];
+}else{
+    $data = [
+        "data" => [
+            "success" => false,
+            "message" => "Error: " . $sql . "<br>" . $conn->error
+        ]
+    ];
+}
 
-$sqlProduct = "SELECT id, name, price, main_photo FROM product";
-$resultProduct = $conn->query($sqlProduct);
-$resultProduct_count = $resultProduct->num_rows;
-$rowsProduct = ($resultProduct_count>0)? $resultProduct->fetch_all(MYSQLI_ASSOC):'';
-$productName = array_column($rowsProduct, 'name', 'id');
-$productPrice = array_column($rowsProduct, 'price', 'id');
-$productImg =  array_column($rowsProduct, 'main_photo', 'id');
-
-for($i=0; $i<count($rows); $i++){
-    $rows[$i]['productName'] = $productName[$rows[$i]['product_id']];
-    $rows[$i]['productPrice'] = $productPrice[$rows[$i]['product_id']];
-    $rows[$i]['productImg'] = $productImg[$rows[$i]['product_id']];
-};
 
 
-$data = [
-    "data" => [
-        "order_item" => $_SESSION["order-list"][$index],
-        "order_detail" => $rows
-    ]
-];
+
 
 echo json_encode($data);
 ?>
