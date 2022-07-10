@@ -1,5 +1,5 @@
 <?php
-require("./doproducts.php");
+require("doproducts.php");
 
 // session_start();
 
@@ -98,7 +98,16 @@ if ($remainder === 0) {
     $totalPage = $quotient + 1;
 }
 
+//撈權限id
+$store_right = $_SESSION["user"]['store_right'];
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
 
+////撈權限id
+//////側欄開始
+$sqlCate =  "SELECT * FROM p_type WHERE id='$store_right'";
+$resultCate = $conn->query($sqlCate); 
+$rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
+$rowsCate1 = $resultCate->num_rows;
 
 ?>
 <!doctype html>
@@ -337,7 +346,7 @@ if ($remainder === 0) {
                             </div>
                         </div>
                     </li>
-                    <li class="menu-item"><a href="" class="menu-button icon-setting no-accordion">商家設定</a></li>
+                    <li class="menu-item"><a href="user1.php" class="menu-button icon-setting no-accordion">商家設定</a></li>
                 </ul>
             </nav>
             <div class="menu-box mt-2 flex-shrink-0 logout">
@@ -349,7 +358,9 @@ if ($remainder === 0) {
                 <div class="d-flex flex-column h-100">
                     <div class="content-header d-flex justify-content-end flex-shrink-0">
                         <a href="" class="d-flex justify-content-end align-items-center">
-                            <div class="user-name pe-4">汪汪先輩</div>
+                        <?php if (isset($_SESSION["user"])) : ?>
+                                <div class="user-name pe-4"> 歡迎 <?= $_SESSION["user"]["account"] ?></div>
+                            <?php endif; ?>
                             <div class="user-sticker rounded-3 overflow-hidden"><img src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
                         </a>
                     </div>

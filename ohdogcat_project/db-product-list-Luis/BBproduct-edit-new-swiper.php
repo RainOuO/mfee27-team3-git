@@ -3,6 +3,8 @@ session_start();
 if (!isset($_SESSION["user"])) {
     // header("location:login.php");
 }
+$storeid=$_SESSION["user"]['storeid'];
+var_dump($storeid);
 $userstore_right = $_SESSION["user"]['store_right'];
 require("db-connect.php");
 ///////////////2022 7 10 8:45分改了 $userstore_right 原本是$id 
@@ -24,54 +26,6 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
 // echo "<br>";
 /////////////
 
-// $sqla="SELECT * FROM images WHERE userid='$userid'";
-// $sqla="UPDATE images SET userid = '$userid' WHERE id = 17";
-// $sqla="INSERT INTO images (image, userid )VALUES ('$sessionimagename', '$userid')";
-// $resulta = $conn->query($sqla);
-// $productphoto = $resulta->num_rows;
-// $rowa=$resulta->fetch_all(MYSQLI_ASSOC);
-
-//join 資料表的照片近來
-// $sqls="SELECT product.*,images.image FROM product JOIN images ON product.sub_photo=userid
-// WHERE store_id='$id'";
-// $resultas = $conn->query($sqls);
-// $productphoto = $resultas->num_rows;
-// $Imgaesrow=$resultas->fetch_assoc();
-// var_dump($resulta);
-// echo($sqla);
-// var_dump($Imgaesrow);
-
-
-
-//主要的
-// $sqla="SELECT product.*,images.id FROM product JOIN images ON product.sub_photo=images.id  
-// WHERE product_type='$id'";
-// $resulta = $conn->query($sqla);
-// $productphoto = $resulta->num_rows;
-// $rowa=$resulta->fetch_all(MYSQLI_ASSOC);
-// // var_dump($resulta);
-// // echo($sqla);
-// var_dump($rowa);
-
-
-
-
-
-
-
-
-
-// $sql = "SELECT product. *,category.name AS category_name FROM product
-// JOIN category ON product.category_id = category.id ";
- // AS 重新命名意思  
- //從product撈資料 JOIN引入category資料table 它資料庫內的category.id 等於
-// 和product.category_id 一起JOIN到category product在撈出來
-
-// SELECT A.*, B.* FROM A
-	// JOIN B ON A.a_id = B.id
-
-// SELECT 顯示欄位... FROM 資料表A  [INNER] JOIN資料表B
-// ON A相關欄位 = 資料表 B.相關欄位
 
 ?>
 <!doctype html>
@@ -345,7 +299,7 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
 
                                     
                                     <img class="object-cover" <?php if ($rowss[0]["main_photo"] == '') : ?>
-                                        img src="./user.jpg" alt="">
+                                        img src="./IMAGES/3669480_account_circle_ic_icon.svg" alt="">
                                 <?php else : ?>
                                     <img src="../images/dashboard/<?= $rowss[0]["main_photo"] ?>" alt="">
                                 <?php endif; ?>

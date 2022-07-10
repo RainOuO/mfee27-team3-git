@@ -1,79 +1,71 @@
 <?php
-session_start();
-if (!isset($_SESSION["user"])) {
-    // header("location:login.php");
-}
-$id = $_SESSION["user"]['store_right'];
-require("db-connect.php");
+// session_start();
+// $id = $_SESSION["user"]['id'];
 
-$sqll = "SELECT * FROM product WHERE store_id='$id'";
+$page = isset($_GET["page"]) ?  $page = $_GET["page"] : 1;
+$perPage = 10;
+$start = ($page - 1) * $perPage;
+
+// if (!isset($_GET['id'])) {
+//     echo "沒有資料";
+//     exit;
+// }
+
+// $id = $_GET["id"];
+
+require("db-connect.php");
+require("doproducts.php");
+$sql2 = "SELECT * FROM product WHERE valid=1 ";
+///////////////我把指定get id=$id取消了 22:00更改 記得改回來
+$result2 = $conn->query($sql2);
+
+
+$product_count = $result2->num_rows; //取得資料筆數 
+
+
+//頁碼
+
+$sqlALL = "SELECT * FROM product";
+$resultALL = $conn->query($sqlALL); //連線
+$productPage_count = $resultALL->num_rows; //秀頁碼
+
+$starItem = ($page - 1) * $perPage + 1; //開始的筆數
+$endItem = $page * $perPage; //結束的筆數
+if ($endItem > $productPage_count) {
+    $endItem = $productPage_count;
+};
+
+$totalPage = 1;
+$quotient = floor($productPage_count / $perPage);  //商數 取商數後無條件捨去floor
+$remainder = ($productPage_count % $perPage); //餘數
+
+if ($remainder === 0) {
+    $totalPage = $quotient;
+} else {
+    $totalPage = $quotient + 1;
+}
+//撈權限id
+$store_right = $_SESSION["user"]['store_right'];
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
+
+////撈權限id
+//////側欄開始
+$sqlCate =  "SELECT * FROM p_type WHERE id='$store_right'";
+$resultCate = $conn->query($sqlCate); 
+$rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
+$rowsCate1 = $resultCate->num_rows;
+
+///////////////從資料庫撈圖商品圖片
+$userstore_right = $_SESSION["user"]['store_right'];
+require("db-connect.php");
+///////////////2022 7 10 8:45分改了 $userstore_right 原本是$id 
+$sqll = "SELECT * FROM product WHERE store_id='$userstore_right'";
 $results = $conn->query($sqll);
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
-
-
-////////////// session檔名
-// $_SESSION["name"]["images"];
-// $sessionimagename=$_SESSION["name"]["images"];
-// echo($sessionimagename);
-// echo"<br>";
-/////
-
-///////// 讀取session userid 
-// $userid =$_SESSION["userid"]['idd'];
-// echo($userid);
-// echo "<br>";
-/////////////
-
-// $sqla="SELECT * FROM images WHERE userid='$userid'";
-// $sqla="UPDATE images SET userid = '$userid' WHERE id = 17";
-// $sqla="INSERT INTO images (image, userid )VALUES ('$sessionimagename', '$userid')";
-// $resulta = $conn->query($sqla);
-// $productphoto = $resulta->num_rows;
-// $rowa=$resulta->fetch_all(MYSQLI_ASSOC);
-
-//join 資料表的照片近來
-// $sqls="SELECT product.*,images.image FROM product JOIN images ON product.sub_photo=userid
-// WHERE store_id='$id'";
-// $resultas = $conn->query($sqls);
-// $productphoto = $resultas->num_rows;
-// $Imgaesrow=$resultas->fetch_assoc();
-// var_dump($resulta);
-// echo($sqla);
-// var_dump($Imgaesrow);
-
-
-
-//主要的
-// $sqla="SELECT product.*,images.id FROM product JOIN images ON product.sub_photo=images.id  
-// WHERE product_type='$id'";
-// $resulta = $conn->query($sqla);
-// $productphoto = $resulta->num_rows;
-// $rowa=$resulta->fetch_all(MYSQLI_ASSOC);
-// // var_dump($resulta);
-// // echo($sqla);
-// var_dump($rowa);
-
-
-
-
-
-
-
-
-
-// $sql = "SELECT product. *,category.name AS category_name FROM product
-// JOIN category ON product.category_id = category.id ";
- // AS 重新命名意思  
- //從product撈資料 JOIN引入category資料table 它資料庫內的category.id 等於
-// 和product.category_id 一起JOIN到category product在撈出來
-
-// SELECT A.*, B.* FROM A
-	// JOIN B ON A.a_id = B.id
-
-// SELECT 顯示欄位... FROM 資料表A  [INNER] JOIN資料表B
-// ON A相關欄位 = 資料表 B.相關欄位
-
 ?>
+
+
+
 <!doctype html>
 <html lang="en">
 
@@ -134,7 +126,6 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
             width: 100%;
             object-fit: contain;
             overflow: hidden;
-
         }
 
         .slideshow {
@@ -218,19 +209,14 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="" class="menu-link">商品總覽</a>
+
+                                        <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link">旅館票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">餐廳票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">活動票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">實體商品列表</a>
+                                        <?php foreach ($rowsCate as $row) : ?>
+                                            <?php if ($type == $row["type_name"]) ?>
+                                            <a href="AllProductList.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?= $row['type_name'] ?></a>
+                                        <?php endforeach; ?>
                                     </li>
                                 </ul>
                             </div>
@@ -302,11 +288,11 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                             </div>
                         </div>
                     </li>
-                    <li class="menu-item"><a href="" class="menu-button icon-setting no-accordion">商家設定</a></li>
+                    <li class="menu-item"><a href="user1.php" class="menu-button icon-setting no-accordion">商家設定</a></li>
                 </ul>
             </nav>
             <div class="menu-box mt-2 flex-shrink-0 logout">
-                <div class="menu-item"><a href="#" class="menu-button no-accordion icon-logout">粗企玩</a></div>
+                <div class="menu-item"><a href="" class="menu-button no-accordion icon-logout">粗企玩</a></div>
             </div>
         </aside>
         <div class="content-wrap vh-100">
@@ -314,187 +300,139 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                 <div class="d-flex flex-column h-100">
                     <div class="content-header d-flex justify-content-end flex-shrink-0">
                         <a href="" class="d-flex justify-content-end align-items-center">
-                            <div class="user-name pe-4">汪汪先輩</div>
+                        <?php if (isset($_SESSION["user"])) : ?>
+                                <div class="user-name pe-4"> 歡迎 <?= $_SESSION["user"]["account"] ?></div>
+                            <?php endif; ?>
                             <div class="user-sticker rounded-3 overflow-hidden"><img src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
                         </a>
                     </div>
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 p-4">
-
-                        <div class="border-bottom pb-2">
-                            <h2>商品內容管理</h2>
-                        </div>
-                        <div class="d-flex justify-content-between align-items-center m-2">
-                            <div class="title d-flex mt-2">
-                                <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
-                                <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
+                        <?php if ($product_count > 0) : ?>
+                            <div class="border-bottom pb-2">
+                                <h2>商品內容管理</h2>
                             </div>
-                            <div class="crudBox">
-                                <button type="button" class="btn filterBtn mx-1">儲存</button>
-                                <button type="button" class="btn filterBtn mx-1">複製</button>
-                                <button type="button" class="btn filterBtn mx-1">清空</button>
-                                <button type="button" class="btn filterBtn ms-1">取消</button>
+                            <div class="d-flex justify-content-between align-items-center m-2">
+                                <div class="title d-flex mt-2">
+                                    <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
+                                    <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
+                                </div>
+                                <div class="crudBox">
+                                    <button type="button" class="btn filterBtn mx-1">編輯</button>
+                                    <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='AllProductList.php'">返回總表</button>
+                                </div>
                             </div>
-                        </div>
-                        <hr>
-                        <div class="row d-flex justify-content-center">
-                            <div class="photobar d-flex flex-column col-5">
-                                <div class="photo-window d-flex flex-column  ">
-                                    <div class="cover-photo m-3">
-                                    <!-- 商品封面照片開始 -->
+                            <hr>
 
-                                    
-                                    <img class="object-cover" <?php if ($rowss[0]["main_photo"] == '') : ?>
-                                        img src="./user.jpg" alt="">
+                            <div class="row d-flex justify-content-center">
+                                <div class="photobar d-flex flex-column col-5">
+                                    <div class="photo-window d-flex flex-column  ">
+                                        <div class="cover-photo m-3">
+                                            <!-- 商家封面開始 -->
+                                            <img class="object-cover" <?php if ($rowss[0]["main_photo"] == '') : ?>
+                                        img src="./IMAGES/3669480_account_circle_ic_icon.svg" alt="">
                                 <?php else : ?>
                                     <img src="../images/dashboard/<?= $rowss[0]["main_photo"] ?>" alt="">
                                 <?php endif; ?>
                                         <!-- 商品照片開始 -->
                                     </div>
-                                    <div class="swiper mySwiper">
+                                    <div class="swiper mySwiper ">
                                         <div class="swiper-wrapper">
                                             <?php if ($rowss[0]["sub_photo"] == '') : ?> 
-                                                <img class="object-cover"src="./user.jpg" alt="">
+                                                <img class="object-cover"src="./IMAGES/doglogo.png"alt="">
                                         <?php else : ?>
-
                                             <?php  
                                             $rowphoto=explode(",",$rowss[0]["sub_photo"]); //explode去除逗號
                                             array_pop($rowphoto);
                                             foreach($rowphoto as $rowaa){
-                                                
-                                                echo "<div class='swiper-slide photo1'><img src='../images/dashboard/$rowaa'/></div>";
+                                                echo "<div class='swiper-slide photo1'><img src='../IMAGES/dashboard/$rowaa'/></div>";
                                                 }?>
                                             <?php endif; ?>
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
-                                            <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
                                             <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
                                             <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div> -->
                                         </div>
                                         <div class="swiper-pagination"></div>
                                     </div>
                                 </div>
-
-
-                                <form  action="UpdateMainphoto.php" method="post" enctype="multipart/form-data">
-                                    <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                        <div class="mb-2">
-                                            <input class="form-control  mx-3" type="file" name="MainFile">
+                                    <form action="photoUpdate.php" method="post" enctype="multipart/form-data">
+                                        <div class="row photo-upload mt-3 d-flex justify-content-center">
+                                            <div class=" d-flex col-6">
+                                                <input class="form-control" type="file" name="myFile">
+                                                <button class="btn filterBtn" type="submit">封面照片</button>
+                                            </div>
+                                            <div class="d-flex col-6">
+                                                <input class="form-control" type="file" name="photoFile">
+                                                <button class="btn filterBtn" type="submit">商品照片</button>
+                                            </div>
                                         </div>
-                                        <button class="btnphoto mx-2" type="submit">上傳封面照片</button>
-                                </form>
-
-<!-- 
-                                <form  action="Upphoto.php" method="post" enctype="multipart/form-data">
-                                    <div class="mb-2">
-                                        <input class="form-control  mx-3" type="file" name="myFile">
-                                    </div>
-                                    <button class="btnphoto mx-2" type="submit">商品照片</button>
-                            </div>
-                            </form> -->
-
-
-
-                            
-                            <form  action="pho111.php" method="post" enctype="multipart/form-data">
-                                    <div class="mb-2">
-                                        <input class="form-control  mx-3" type="file" name="myFile">
-                                    </div>
-                                    <button class="btnphoto mx-2" type="submit">商品照片</button>
-                            </div>
-                            </form>
-
-
-
-
-
-
-
-                            <!-- <form action="doUpload.php" method="post" enctype="multipart/form-data">
-                                    <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                        
-                                        <div class=" d-flex col-6">
-                                            <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">封面照片</button>
-                                        </div>
-                                        <div class="d-flex col-6">
-                                            <input class="form-control" type="file" name="myFile">
-                                            <button class="btn filterBtn" type="submit">商品照片</button>
-                                        </div>
-                                    </div>
-                                </form> -->
-                        </div>
-                        <div class="basic-setting col-6">
-                            <form action="doUpdate">
-                                <label for="">商品名稱**</label>
-                                <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control">
-                                <label for="">商品分類**</label>
-                                <select name='category' class="form-control">
-                                    <option value='0'>旅遊票券</option>
-                                    <option value='1'>活動票券</option>
-                                    <option value='2'>餐廳票券</option>
-                                    <option value='3'>寵物周邊</option>
-                                    <option value='4'>寵物服飾</option>
-                                    <option value='5'>寵物食品</option>
-                                </select>
-                                <label for="">商品介紹</label>
-                                <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
-                                <label for="">商品價格**</label>
-                                <input type="text" name="price" placeholder="只能輸入大於0的數字" class="form-control">
-                                <label for="">商品規格</label>
-                                <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
-                                <div class="d-flex mt-2">
-                                    <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
-                                    <h3 class="pt-3">進階設定</h3>
+                                    </form>
                                 </div>
-                                <hr>
-                                <label for="">上架時間</label>
-                                <input type="datetime-local" name="spec" class="form-control">
-                                <label for="">下架時間</label>
-                                <input type="datetime-local" name="spec" class="form-control">
-                                <label for="">優惠券方案使用</label><br>
-                                <select name='dragdown' class="form-control">
-                                    <option value='0'>全站周年慶</option>
-                                    <option value='1'>父親節活動</option>
-                                    <option value='2'>兒童節寵愛牠</option>
-                                    <option value='4'>站內年中慶 全站三件打85折</option>
-                                    <option value='5'>由優惠券管理作連動</option>
-                                    <option value='6'>無</option>
-                                </select>
-                                <label for="">商品有效期限</label>
-                                <input type="date" name="spec" placeholder="自由增建選項" class="form-control">
-                                <label for="">商品庫存數</label>
-                                <input type="text" name="spec" placeholder="只能輸入大於0的數字" class="form-control">
-                                <div class="form-check">
-                                    <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
-                                    <label class="form-check-label" for="flexRadioDefault1">
-                                        商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
-                                    </label>
+                                <div class="basic-setting col-6">
+                                    <?php if ($product_count > 0) :
+                                        $row = $result2->fetch_assoc() ?>
+                                        <form action="doUpdate">
+                                            <label for="">商品名稱**</label>
+                                            <div type="text" name="name" class="py-2"><?= $row['name'] ?> </div>
+                                            <label for="">商品分類**</label>
+                                            <div name='category' class=" py-2">
+                                                <?= $row['product_category'] ?>
+                                            </div>
+                                            <label for="">商品簡介</label>
+                                            <div type="text" name="intro" class="py-2"><?= $row['description'] ?></div>
+                                            <label for="">商品價格**</label>
+                                            <div type="text" name="price" class="py-2">NTD: <?= $row['price'] ?></div>
+                                            <div class="d-flex mt-2">
+                                                <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
+                                                <h3 class="pt-3">進階設定</h3>
+                                            </div>
+                                            <hr>
+                                            <label for="">上架時間</label>
+                                            <div type="datetime-local" name="spec" class=""><?= $row['valid_time_start'] ?></div>
+                                            <label for="">下架時間</label>
+                                            <div type="datetime-local" name="spec" class=""><?= $row['valid_time_end'] ?></div>
+                                            <label for="">優惠券方案使用</label><br>
+                                            <select name='dragdown' class="form-control">
+                                                <option value='0'>全站周年慶</option>
+                                                <option value='1'>父親節活動</option>
+                                                <option value='2'>兒童節寵愛牠</option>
+                                                <option value='4'>站內年中慶 全站三件打85折</option>
+                                                <option value='5'>由優惠券管理作連動</option>
+                                                <option value='6'>無</option>
+                                            </select>
+                                            <label for="">資料創建時間</label>
+                                            <div type="date" name="spec" class=""><?= $row['create_time'] ?></div>
+                                            <label for="">商品庫存數</label>
+                                            <div type="text" name="spec" class=""><?= $row['stock_quantity'] ?></div>
+                                            <!-- <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                                                <label class="form-check-label" for="flexRadioDefault1">
+                                                    商品售罄提醒 <span style="color: red">**系統會在庫存數量小於10的時候發送站內信提醒**</span>
+                                                </label>
+                                            </div> -->
+                                        </form>
+                                    <?php else : ?>
+                                        無此筆資料
+                                    <?php endif; ?>
                                 </div>
+                            </div>
+                            <hr>
+                            <form method="post">
+                                <div class="text-end mb-1 d-flex justify-content-between">
+                                    <h3>商品文案編輯頁面</h3> <button class="btnry" type="submit">儲存草稿</button>
+                                </div>
+                                <textarea id="mytextarea" name="product">歡迎編輯 請勿上傳不雅文字</textarea>
                             </form>
-                        </div>
+                            <hr>
+                            <div class="d-flex justify-content-end">
+                                <div class="crudBox">
+                                    <button type="button" class="btn filterBtn mx-1"><a href="product-edit-new-swiper.php?id=<?= $row['id'] ?>">編輯</a>編輯</button>
+                                    <button type="button" class="btn filterBtn ms-1">返回總表</button>
+                                </div>
+                            </div>
+                    </main>
                 </div>
-                <hr>
-                <form method="post">
-                    <div class="text-end mb-1 d-flex justify-content-between">
-                        <h3>商品文案編輯頁面</h3> <button class="btnry" type="submit">儲存草稿</button>
-                    </div>
-                    <textarea id="mytextarea" name="product">歡迎編輯 請勿上傳不雅文字</textarea>
-                </form>
-                <hr>
-                <div class="d-flex justify-content-end">
-                    <div class="crudBox">
-                        <button type="button" class="btn filterBtn mx-1">儲存</button>
-                        <button type="button" class="btn filterBtn mx-1">複製</button>
-                        <button type="button" class="btn filterBtn mx-1">清空</button>
-                        <button type="button" class="btn filterBtn ms-1">取消</button>
-                    </div>
-                </div>
-                </main>
             </div>
         </div>
-    </div>
     </div>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
@@ -529,5 +467,8 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
         });
     </script>
 </body>
+<?php else : ?>
+    目前沒有資料
+<?php endif; ?>
 
 </html>

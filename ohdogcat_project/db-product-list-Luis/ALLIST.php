@@ -1,6 +1,6 @@
 <?php
 require("doproducts.php");
-require("doPricefilter.php");
+// require("doPricefilter.php");
 
 ?>
 <!doctype html>

@@ -24,8 +24,22 @@ VALUES ('$name' ,'$description' ,'$price','$valid_time_start','$valid_time_end',
 ,'$fileNamephoto')";
 
 if ($conn->query($sqlaa) === TRUE) {
-    echo "新資料圖片成功";
-    echo"<br>";}}}}}
+    // echo "新資料圖片成功";
+    // echo"<br>";
+    header("location: BBproduct-edit-new-swiper.php.php");
+
+}}}}};
+
+    $sqlaas="INSERT INTO product 
+(name , description ,price,valid_time_start,valid_time_end,stock_quantity) 
+VALUES ('$name' ,'$description' ,'$price','$valid_time_start','$valid_time_end','$stock_quantity')";
+
+if ($conn->query($sqlaas) === TRUE) {
+    // echo "新資料成功";
+    // echo"<br>";}
+    header("location: BBproduct-edit-new-swiper.php.php");
+}
+
 
 
 
@@ -88,14 +102,14 @@ if ($conn->query($sqlaa) === TRUE) {
 /////////////////////////新增圖片
 
 
-if($_FILES["myFile"]["error"]==0){
-    if(move_uploaded_file($_FILES["myFile"]["tmp_name"], "../images/dashboard/".$_FILES["myFile"]["name"])){
-        $fileName=$_FILES["myFile"]["name"];
-        $sqla="INSERT INTO product (main_photo) VALUES ('$fileName')";
-        if ($conn->query($sqla) === TRUE) {
-            echo "新圖片成功";
-        } else {
-            echo "Error: " . $sql . "<br>" . $conn->error;
-        }
-    }}
+// if($_FILES["myFile"]["error"]==0){
+//     if(move_uploaded_file($_FILES["myFile"]["tmp_name"], "../images/dashboard/".$_FILES["myFile"]["name"])){
+//         $fileName=$_FILES["myFile"]["name"];
+//         $sqla="INSERT INTO product (main_photo) VALUES ('$fileName')";
+//         if ($conn->query($sqla) === TRUE) {
+//             echo "新圖片成功";
+//         } else {
+//             echo "Error: " . $sql . "<br>" . $conn->error;
+//         }
+//     }}
 ?>

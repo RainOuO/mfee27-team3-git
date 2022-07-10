@@ -25,9 +25,21 @@ $userCount = $result->num_rows;
 //////////////   撈商家使用者資料
 $results = $conn->query($sql);
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
+
+//撈權限id
+$store_right = $_SESSION["user"]['store_right'];
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
+
+////撈權限id
+//////側欄開始
+$sqlCate =  "SELECT * FROM p_type WHERE id='$store_right'";
+$resultCate = $conn->query($sqlCate); 
+$rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
+$rowsCate1 = $resultCate->num_rows;
 ?>
 <!doctype html>
 <html lang="en">
+
 <head>
     <title>test3</title>
     <meta charset="utf-8">
@@ -38,7 +50,7 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <style>
-        .userfrom{
+        .userfrom {
             /* background-color: #f5f6f7; */
             width: 650px;
             line-height: 45px;
@@ -46,46 +58,51 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
             font-weight: 200;
 
         }
+
         .iconpen {
             margin-top: 5px;
             margin-right: 8px;
             width: 30px;
             height: 40px;
         }
-       .btn1{
-        background-color: #49586f;
-        margin-top: 10px;
-        margin-right: 15px;
-        width: 130px;
-        height: 40px;
-        color: white;
-        border-radius: 5px;
-        /* padding: 8px 10px 20px 18px; */
-        text-align: center;
+
+        .btn1 {
+            background-color: #49586f;
+            margin-top: 10px;
+            margin-right: 15px;
+            width: 130px;
+            height: 40px;
+            color: white;
+            border-radius: 5px;
+            /* padding: 8px 10px 20px 18px; */
+            text-align: center;
             justify-content: center;
             align-items: center;
             display: flex;
-       }
-       .btn1:hover{
-        background-color: #ffc845;
-        color: #000;
-       }
-       .btn2{
-        /* padding: 8px 10px 20px 18px; */
-        text-align: center;
+        }
+
+        .btn1:hover {
+            background-color: #ffc845;
+            color: #000;
+        }
+
+        .btn2 {
+            /* padding: 8px 10px 20px 18px; */
+            text-align: center;
             justify-content: center;
             align-items: center;
             display: flex;
-        background-color: #D5EEEE;
-        margin-top: 10px;
-        width: 130px;
-        height: 40px;
-        border-radius: 5px;
-       }
-       .btn2:hover{
-        background-color: #ffc845;
-        color: #000;
-       }
+            background-color: #D5EEEE;
+            margin-top: 10px;
+            width: 130px;
+            height: 40px;
+            border-radius: 5px;
+        }
+
+        .btn2:hover {
+            background-color: #ffc845;
+            color: #000;
+        }
 
         .object-cover {
             width: 550;
@@ -93,7 +110,7 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
             object-fit: cover;
             margin-right: 80px;
             margin-left: 50px;
-            
+
         }
 
         .toastify {
@@ -117,26 +134,21 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                 <ul class="list-unstyled accordion" id="menu-accordion">
                     <li class="menu-item"><a href="" class="menu-button icon-home no-accordion">首頁</a></li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-products accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="true" aria-controls="collapseProducts">商品管理
+                        <button href="#" class="menu-button icon-products accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="true" aria-controls="collapseProducts">商品管理
                             <div class="status-mark"></div>
                         </button>
                         <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="ALLIST.php" class="menu-link">商品總覽</a>
+
+                                        <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link">旅館票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">餐廳票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">活動票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">實體商品列表</a>
+                                        <?php foreach ($rowsCate as $row) : ?>
+                                            <?php if ($type == $row["type_name"]) ?>
+                                            <a href="AllProductList.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?= $row['type_name'] ?></a>
+                                        <?php endforeach; ?>
                                     </li>
                                 </ul>
                             </div>
@@ -229,7 +241,7 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
                         <div class="d-flex bd-highlight mb-3">
-                        <span class="iconpen">
+                            <span class="iconpen">
                                 <img src="./test/7968880_pen_pen tool_adobe illustrator tool_icon.svg" alt="">
                             </span>
                             <h2 class="me-auto  bd-highlight">商家設定</h2>
@@ -240,8 +252,7 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                         <hr>
                         <div class="d-flex my-4 photo">
                             <?php foreach ($rowss as $rowa) : ?>
-                                <img class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?> 
-                                    src="./image/3669480_account_circle_ic_icon.svg" alt="">
+                                <img class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?> src="./IMAGES/3669480_account_circle_ic_icon.svg" alt="">
                             <?php else : ?>
                                 <img src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
                             <?php endif; ?>
@@ -278,10 +289,10 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                                             <th>區域</th>
                                             <td><?= $row["area"] ?></td>
                                         </tr>
-                                       
+
                                         <th>店鋪權限</th>
                                         <td>
-                                            <class="form-control"><?=$store_type[$row["store_right"]] ?>
+                                            <class="form-control"><?= $store_type[$row["store_right"]] ?>
                                         </td>
                                         </tr>
                                         <tr>
