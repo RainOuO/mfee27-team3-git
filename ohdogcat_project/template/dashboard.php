@@ -150,7 +150,7 @@
                     </div>
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
-                        <?php require('../login/main.php'); ?>
+                        <?php require('../login-index/main.php'); ?>
                     </main>
                 </div>
             </div>
@@ -163,6 +163,7 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
         integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
+
 </body>
 
 </html>
