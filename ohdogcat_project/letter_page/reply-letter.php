@@ -6,8 +6,10 @@
 session_start();
 $user_id = $_GET['user_id'];
 
+var_dump($user_id);
+
 require("../../db-connect.php");
-session_start();
+
 // if (!isset($_SESSION["4user"])) {
 //     header("location: login.php");
 // }
@@ -191,10 +193,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                             <div class="bottom-area">
                                 <hr>
                                 <form action="doReply.php" method="post">
+                                    <?= $user_id ?>
+                                    <input name="user_id" type="hidden" value="<?= $user_id ?>">
                                     <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
                                     <div class="row mt-2 g-2 justify-content-end">
                                         <div class="col-2">
-                                            <input type="hidden" name="user_id" value="<?= $user_id ?>">
                                             <a class="btn catBtn" href="index.php">返回</a>
                                             <button class="btn catBtn" type="submit">送出</button>
                                         </div>

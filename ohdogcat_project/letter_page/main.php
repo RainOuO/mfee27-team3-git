@@ -73,7 +73,7 @@ var_dump($resultUserId);
                         <td class="align-middle text-start"><?= $row['content']; ?></td>
                         <td class="align-middle text-center"><?= $row['time']; ?></td>
                         <td class="align-middle text-center">已回覆</td>
-                        <td><a class="btn catBtn" href="doReply.php?user_id=<?=$row['user_id']?>">回覆</a></td>
+                        <td><a class="btn catBtn" href="reply-letter.php?user_id=<?=$row['user_id']?>">回覆</a></td>
                     </tr>
                 <?php endforeach; ?>
                 <!-- <tr> -->
