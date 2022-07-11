@@ -1,8 +1,10 @@
 <?php
 if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !='' && !empty($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] != 0 ){
     $checkStoreRight = false;
+    $id = $_SESSION["user"]["id"];
 }else{
     $checkStoreRight = true;
+    $id = $_SESSION["user"]["id"];
 }
 ?>
 
@@ -44,7 +46,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
             </div>
             <nav class="menu-box mt-2 overflow-auto flex-shrink-1 h-100">
                 <ul class="list-unstyled accordion" id="menu-accordion">
-                    <li class="menu-item"><a href="" class="menu-button icon-home no-accordion">首頁</a></li>
+                    <li class="menu-item"><a href="../dashboard/" class="menu-button icon-home no-accordion">狀態總覽</a></li>
                     <li class="menu-item accordion-header">
                         <button href="" class="menu-button icon-products accordion-button collapsed"
                             data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="true"
@@ -73,34 +75,8 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
                             </div>
                         </div>
                     </li>
-                    <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-orderlist accordion-button collapsed"
-                            data-bs-toggle="collapse" data-bs-target="#collapseOrderList" aria-expanded="true"
-                            aria-controls="collapseOrderList">訂單管理
-                            <div class="status-mark"></div>
-                        </button>
-                        <div id="collapseOrderList" class="accordion-collapse collapse"
-                            data-bs-parent="#menu-accordion">
-                            <div class="accordion-body">
-                                <ul class="list-unstyled">
-                                    <li>
-                                        <a href="" class="menu-link">訂單總覽</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">旅館票券訂單</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">餐廳票券訂單</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">活動票券訂單</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">實體商品訂單</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </div>
+                    <li class="menu-item">
+                        <a href="../dashboard/" class="menu-button icon-orderlist no-accordion">訂單管理</a>
                     </li>
                     <li class="menu-item accordion-header">
                         <button href="" class="menu-button icon-message accordion-button collapsed"
@@ -166,7 +142,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
                                     src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
                         </a>
                     </div>
-                    <div class="button-area">
+                    <div id="button-area">
                         <?php if($filterSection){ require($filterSection);} ?>
                     </div>
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 scroll-bar">
@@ -186,14 +162,15 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js"
         integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
-    <script src="<?=$js?>"></script>
     <script src="../template/js/main.js?<?=$time?>"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"
-    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
-</script>
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+    </script>
+    <script src="<?=$js?>"></script>
+
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
-        let checkStoreRight = <?=$checkStoreRight?>;
+        let checkStoreRight = <?=($checkStoreRight)?'true':'false'?>;
         if(checkStoreRight) {
             let id = <?=$id?>;
             popup(id);

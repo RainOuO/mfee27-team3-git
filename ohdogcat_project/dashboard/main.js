@@ -1,3 +1,31 @@
+
+
+// $.ajax({
+//     method: "POST",
+//     url: ``,
+//     dataType: "json",
+//     data: {
+//         action: 'update',
+//         id: id,
+//         store_right: storeRight
+//     }
+// }).done(function (response) {
+//     if(response.success){
+//         Swal.fire(
+//         '成功',
+//         `已為你開通${response.data.store_right}`,
+//         'success'
+//         );
+//     }else{
+//         popup(id,`<br><p class="text-danger fs-6 pt-2">${response.message}</p>`)
+//     }
+    
+// }).fail(function (jqXHR, textStatus) {
+//     console.log("Request failed: " + textStatus);
+// });
+
+
+
 var line = document.getElementById('lineChart').getContext('2d');
     var lineChart = new Chart(line, {
         type: 'line',

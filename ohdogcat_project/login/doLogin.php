@@ -25,7 +25,7 @@ if($userExist>0){//登入成功
     ];
     unset($_SESSION["error"]);
     $_SESSION["user"]=$row;
-    header("location:../login-index/");
+    header("location:../dashboard/");
     
 
 }else{

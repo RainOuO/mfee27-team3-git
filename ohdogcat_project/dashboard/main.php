@@ -1,11 +1,11 @@
-<div class="login-index align-item-center justify-content-center">
+<div class="dashboard align-item-center justify-content-center">
     <div class="row w-100 ">
-        <div class="col-3 " >
+        <div class="col-3" >
             <div class="card top-card shadow-sm">
                 <div class="card-body">
-                    <div class="row pt-1">
+                    <div class="row">
                     <div class="col-4 text-center">
-                            <img width="50%" src="../login-index/img/icon-revenue-all.svg" alt="">
+                            <img width="50%" src="../dashboard/img/icon-revenue-all.svg" alt="">
                         </div>
                         <div class="card-content col-8">
                             <p class="card-title">本月營業總額</p>
@@ -18,9 +18,9 @@
         <div class="col-3">
             <div class="card top-card shadow-sm">
                 <div class="card-body">
-                    <div class="row pt-1">
+                    <div class="row">
                         <div class="col-4 text-center">
-                            <img width="50%" src="../login-index/img/icon-revenue-today.svg" alt="">
+                            <img width="50%" src="../dashboard/img/icon-revenue-today.svg" alt="">
                         </div>
                         <div class="card-content col-8">
                             <p class="card-title">今日營業總額</p>
@@ -33,9 +33,9 @@
         <div class="col-3">
             <div class="card top-card box shadow-sm">
                 <div class="card-body">
-                    <div class="row pt-1"> 
+                    <div class="row"> 
                         <div class="col-4 text-center align-content-bottom">
-                            <img width="40%" src="../login-index/img/icon-order-list-y.svg" alt="">
+                            <img width="40%" src="../dashboard/img/icon-order-list-y.svg" alt="">
                         </div>
                         <div class="card-content col-8">
                             <div class="col">
@@ -52,7 +52,7 @@
                 <div class="card-body ">
                     <div class="row">
                         <div class="col-4 text-center">
-                            <img width="50%" src="../login-index/img/icon-message.svg" alt="">
+                            <img width="50%" src="../dashboard/img/icon-message.svg" alt="">
                         </div>
                         <div class="card-content col-8">
                             <p class="card-title">未處理訂單</p>
