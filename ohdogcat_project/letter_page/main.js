@@ -23,4 +23,3 @@ priceFilter.addEventListener("click", function() {
     date.style.display = "none";
     price.style.display = "block";
 });
-

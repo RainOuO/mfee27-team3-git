@@ -7,8 +7,6 @@ session_start();
 
 $user_id = $_GET['user_id'];
 
-var_dump($user_id);
-
 require("../../db-connect.php");
 
 // if (!isset($_SESSION["4user"])) {
@@ -191,22 +189,22 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                     </div>
                                 </div>
                             <?php endforeach; ?>
-                            <div class="bottom-area">
-                                <hr>
-                                <form action="doReply.php" method="post">
-                                    <?= $user_id ?>
-                                    <input name="user_id" type="hidden" value="<?= $user_id ?>">
-                                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
-                                    <div class="row mt-2 g-2 justify-content-end">
-                                        <div class="col-2">
-                                            <a class="btn catBtn" href="index.php">返回</a>
-                                            <button class="btn catBtn" type="submit">送出</button>
-                                        </div>
-                                    </div>
-                                </form>
-                            </div>
                         </div>
                     </main>
+                    <div class="bottom-area">
+                        <hr>
+                        <form action="doReply.php" method="post">
+                            <?= $user_id ?>
+                            <input name="user_id" type="hidden" value="<?= $user_id ?>">
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
+                            <div class="row mt-2 g-2 justify-content-end">
+                                <div class="col-2">
+                                    <a class="btn catBtn" href="index.php">返回</a>
+                                    <button class="btn catBtn" type="submit">送出</button>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -217,6 +215,10 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
     <script src="<?= $js ?>"></script>
+    <script>
+        var chatHistory = document.getElementById("main");
+        chatHistory.scrollTop = chatHistory.scrollHeight;
+    </script>
 </body>
 
 </html>

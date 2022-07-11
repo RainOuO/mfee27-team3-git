@@ -1,3 +1,10 @@
+* {
+    -webkit-user-drag: none;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #222934;
+
+}
+
 .catBtn {
     background-color: #D5EEEE;
     color: #222934;
@@ -20,6 +27,11 @@
     margin-left: 3px;
     border-radius: 3px;
     text-align: center;
+}
+
+.orderBtn:hover {
+    color: #fff;
+    background-color: #49586f;
 }
 
 .countBox {
