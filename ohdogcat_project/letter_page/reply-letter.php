@@ -1,9 +1,10 @@
 <?php
+session_start();
 // if (!isset($_POST['user_id']) and !isset($_POST['message'])) {
 //     echo "沒有參數";
 //     exit;
 // }
-session_start();
+
 $user_id = $_GET['user_id'];
 
 var_dump($user_id);

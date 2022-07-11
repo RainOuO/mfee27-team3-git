@@ -1,12 +1,21 @@
 <?php
+
 require("../../db-connect.php");
 
+// session 資料處理
 
-$sql = "SELECT * FROM letter";
-$result = $conn->query($sql);
-$letterCount = $result->num_rows;
-$rows = $result->fetch_all(MYSQLI_ASSOC);
+$store_id = $_SESSION['user']['store_id'];
 
+var_dump($store_id);
+echo "<br>";
+
+// 選取 letter表
+// $sql = "SELECT * FROM letter";
+// $result = $conn->query($sql);
+// $letterCount = $result->num_rows;
+// $rows = $result->fetch_all(MYSQLI_ASSOC);
+
+// 取得重複 user_id 裡，時間最新(大)的資料 - 試做1
 // $sqlUserId = "SELECT user_id, content, MAX(time)  FROM letter GROUP BY user_id";
 // $resultUserId = $conn -> query($sqlUserId);
 // $UserIdCount = $resultUserId -> num_rows;
@@ -14,7 +23,8 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
 
 // 取得重複 user_id 裡，時間最新(大)的資料
-$sqlUserId = "SELECT * FROM letter letter_1 where time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) order by time";
+$sqlUserId = "SELECT * FROM letter letter_1 
+where store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) order by time";
 $resultUserId = $conn->query($sqlUserId);
 $UserIdCount = $resultUserId->num_rows;
 $rowsUserId = $resultUserId->fetch_all(MYSQLI_ASSOC);
@@ -28,9 +38,15 @@ var_dump($resultUserId);
 <div class="main-content p-4">
     <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
         <h1>信件匣</h1>
-        <div class="" role="">
-            <input type="button" class="btn catBtn my-3 rounded-0" value="系統信件列表" onclick="window.location.href=''">
-            <input type="button" class="btn catBtn my-3 rounded-0" value="顧客信件列表" onclick="window.location.href=''">
+        <div class="row" role="">
+            <form class="col-6" action="test.php" method="get">
+                <input type="hidden" name="type" value="1">
+                <button class="btn catBtn my-3 rounded-0" type="submit">系統信件列表</button>
+            </form>
+            <form class="col-6" action="test.php" method="get">
+                <input type="hidden" name="type" value="2">
+                <button class="btn catBtn my-3 rounded-0" type="submit">顧客信件列表</button>
+            </form>
         </div>
     </div>
     <div class="row mt-3 g-3 justify-content-start">
@@ -76,48 +92,6 @@ var_dump($resultUserId);
                         <td><a class="btn catBtn" href="reply-letter.php?user_id=<?=$row['user_id']?>">回覆</a></td>
                     </tr>
                 <?php endforeach; ?>
-                <!-- <tr> -->
-                <!-- <td class="align-middle text-center">Amber</td> -->
-                <!-- <td class="align-middle text-center">親，我有問題</td> -->
-                <!-- <td class="align-middle text-center">00/00/00</td> -->
-                <!-- <td class="align-middle text-center">已回覆</td> -->
-                <!-- <td class="align-middle text-center">回覆</td> -->
-                <!-- </tr> -->
-                <!-- <tr> -->
-                <!-- <td class="align-middle text-center">Cyril</td> -->
-                <!-- <td class="align-middle text-center">親，我有問題</td> -->
-                <!-- <td class="align-middle text-center">00/00/00</td> -->
-                <!-- <td class="align-middle text-center">未回覆</td> -->
-                <!-- <td class="align-middle text-center">回覆</td> -->
-                <!-- </tr> -->
-                <!-- <tr> -->
-                <!-- <td class="align-middle text-center">Chris</td> -->
-                <!-- <td class="align-middle text-center">親，我有問題</td> -->
-                <!-- <td class="align-middle text-center">00/00/00</td> -->
-                <!-- <td class="align-middle text-center">未回覆</td> -->
-                <!-- <td class="align-middle text-center">回覆</td> -->
-                <!-- </tr> -->
-                <!-- <tr> -->
-                <!-- <td class="align-middle text-center">Alice</td> -->
-                <!-- <td class="align-middle text-center">親，我有問題</td> -->
-                <!-- <td class="align-middle text-center">00/00/00</td> -->
-                <!-- <td class="align-middle text-center">已回覆</td> -->
-                <!-- <td class="align-middle text-center">回覆</td> -->
-                <!-- </tr> -->
-                <!-- <tr> -->
-                <!-- <td class="align-middle text-center">Josh</td> -->
-                <!-- <td class="align-middle text-center">親，我有問題</td> -->
-                <!-- <td class="align-middle text-center">00/00/00</td> -->
-                <!-- <td class="align-middle text-center">未回覆</td> -->
-                <!-- <td class="align-middle text-center">回覆</td> -->
-                <!-- </tr> -->
-                <!-- <tr> -->
-                <!-- <td class="align-middle text-center">Pikachu</td> -->
-                <!-- <td class="align-middle text-center">親，我有問題</td> -->
-                <!-- <td class="align-middle text-center">00/00/00</td> -->
-                <!-- <td class="align-middle text-center">已回覆</td> -->
-                <!-- <td class="align-middle text-center">回覆</td> -->
-                <!-- </tr> -->
             </tbody>
         </table>
     </div>
