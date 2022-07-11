@@ -13,6 +13,24 @@ $day_6 = date( "Y-m-d 00:00:00", strtotime(" -2 day"));
 $day_7 = date( "Y-m-d 00:00:00", strtotime(" -1 day"));
 $today = date( "Y-m-d 00:00:00", strtotime(" -0 day"));
 
+$daysArr =[ $day_1, $day_2, $day_3, $day_4, $day_5, $day_6, $day_7, $today];
+for($i=0; $i<count($daysArr); $i++){
+    $daysArr[$i] = strtotime($daysArr[$i])-1;
+}
+$todayTotal = 0;
+$todayOrders = [];
+
+for($i=0; $i<count($daysArr); $i++){ //針對八個時間點運算
+    if($i == count($daysArr)-1){ //若是計算今天訂單的情況
+        foreach($rows as $row){
+            if(strtotime($row['order_time']) > $daysArr[$i]){
+                $todayTotal = $todayTotal + $row['total']; 
+                array_push($todayOrders, $row);
+            }
+        }
+    }
+}
+
 
 // $sql = "SELECT * FROM order_product WHERE (store_id = 1) AND (order_time BETWEEN '$day_1' AND '$day_7_end')";
 // $result = $conn->query($sql);
