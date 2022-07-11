@@ -60,6 +60,8 @@ var_dump($resultUserId);
             <button type="button" class="btn searchBtn">搜尋</button>
         </div>
         <div class="col-6 d-flex justify-content-end align-items-center mt-3">
+            <a href="" class="orderBtn col-2">已回覆</a>
+            <a href="" class="orderBtn col-2">未回覆</a>
             <a href="" class="orderBtn col-3">建立時間↑</a>
             <a href="" class="orderBtn col-3">建立時間↓</a>
         </div>

@@ -13,7 +13,7 @@ echo "<br>";
 var_dump($store_id);
 echo "<br>";
 
-
+// 列表SQL語法選擇
 if( $type == 1 ){
     $sqlUserId = "SELECT * FROM letter letter_1 where user_id = 1 AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) order by time";
 }elseif( $type > 1){
