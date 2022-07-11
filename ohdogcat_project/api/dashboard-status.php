@@ -23,15 +23,20 @@ for($i=0; $i<count($daysArr); $i++){
 $todayTotal = 0;
 $todayOrders = [];
 $intervalOrders = [0, 0, 0, 0, 0, 0, 0];
-
+echo $day_1;
+echo'<br>';
+echo$todayEnd;
 $sql = "SELECT * FROM order_product WHERE (store_id = 1) AND (order_time BETWEEN '$day_1' AND '$todayEnd')";
 $result = $conn->query($sql);
 $count = $result->num_rows;
 if($count>0){
+    // echo $count."<br><br>";
+    $rows = $result->fetch_all(MYSQLI_ASSOC);
     for($i=0; $i<count($daysArr); $i++){ //針對八個時間點運算
-        if($i == count($daysArr)-1){ //若是計算今天訂單的情況
+        if($i == (count($daysArr)-1)){ //若是計算今天訂單的情況
             foreach($rows as $row){
                 if(strtotime($row['order_time']) > $daysArr[$i]){
+                    echo"Y";
                     $todayTotal = $todayTotal + $row['total']; 
                     array_push($todayOrders, $row);
                 }
@@ -45,7 +50,10 @@ if($count>0){
         }
     }
 }
-echo $todayTotal;
+// foreach($intervalOrders as $x){
+//     var_dump($x);
+//     echo "<br><br>";
+// }
 
 
 // $sql = "SELECT * FROM order_product WHERE (store_id = 1) AND (order_time BETWEEN '$day_1' AND '$day_7_end')";
