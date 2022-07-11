@@ -1,11 +1,12 @@
 <?php
-header('Cache-Control:no-cache,must-revalidate');   
-header('Pragma:no-cache');   
-header("Expires:0"); 
 session_start();
-$css = './style.css';
-$js = './main.js';
-$main = './main.php';
+$time = date('njGis');
+$css = "./style.css?$time";
+$js = "./main.js?$time";
+$main = "./main.php";
+$header = "./header.php";
+$filterSection = "./filter-section.php";
+$footer = "./footer.php";
 
 
 require('../db-connect.php');
@@ -111,7 +112,7 @@ require('../template/dashboard.php');
     let goFilter = document.querySelectorAll('.go-filter');
     goFilter[0].addEventListener('click', (event)=>{
         let keyword = document.querySelector('#keyword').value;
-        if (keyword != ''&& keyword != <?=$search?>) {
+        if (keyword != ''&& keyword != '<?=$search?>') {
             location.href = `?status=<?=$status?>&order=<?=$order?>&sort=<?=$sort?>&search=${keyword}&page=<?=$page?>`;
         }
         

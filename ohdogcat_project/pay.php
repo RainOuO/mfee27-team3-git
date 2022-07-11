@@ -24,6 +24,7 @@ $store_id = $pay['store']['0'];
 $sql = "INSERT INTO order_product(user_id, store_id, order_no, total, order_time, status) VALUES ('$user_id', '$store_id', '$order_no', '$totalPrice', '$now', 1)";
 
 if($conn->query($sql)===TRUE){
+    var_dump($sql);
     $order_id = $conn->insert_id; //抓出剛剛 insert 進去的資料的 id
     for($i=0; $i<count($pay['product']); $i++){
         $product_id = $pay['product'][$i]; // 將單一品項的 id 抓出來

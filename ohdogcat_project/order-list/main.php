@@ -73,7 +73,8 @@
         cancelBtn[i].addEventListener('click', function () {
             let cancelId = this.dataset.cancelId;
             let index = this.dataset.index;
-            doCancelOrder(cancelId, index);
+            let removeBtn = cancelBtn[i];
+            doCancelOrder(cancelId, index, removeBtn);
         });
     }
     
@@ -170,7 +171,8 @@
                         orderCancelBtn.addEventListener('click', function() {
                             let cancelId = this.dataset.cancelId;
                             let index = i;
-                            doCancelOrder(cancelId, index);
+                            let removeBtn = detailBtn[i].nextElementSibling;
+                            doCancelOrder(cancelId, index, removeBtn);
                         });
                     }
                     
@@ -217,8 +219,8 @@
 
 
     // 取消訂單按鈕
-    function doCancelOrder(cancelId, index) {
-        console.log(cancelId, index);
+    function doCancelOrder(cancelId, index, removeBtn) {
+        // console.log(cancelId, index);
         Swal.fire({
             title: '確定取消訂單?',
             text: '取消後的訂單將無法被回復',
@@ -230,7 +232,6 @@
             confirmButtonText: '確定'
             }).then((result) => {
             if (result.isConfirmed) {
-                console.log();
                 $.ajax({
                     method: "POST",
                     url: `../api/do-cancel-order.php`,
@@ -245,8 +246,10 @@
                         let order_status = document.querySelectorAll('.order_status');
                         let offcanvasClose = document.querySelector('#offcanvasClose');
                         order_status[response.data.statusChange.index].innerHTML = `<div class="d-inline-block py-1 px-3 rounded-5 ${response.data.statusChange.status_css.bg}">${response.data.statusChange.status_text}</div>`;
-                        console.log(order_status[response.data.statusChange.index].parentNode);
+                        // console.log(order_status[response.data.statusChange.index].parentNode);
                         order_status[response.data.statusChange.index].parentNode.classList.add('text-secondary');
+                        order_status[response.data.statusChange.index].parentNode.classList.add('text-opacity-50');
+                        removeBtn.style['display'] = 'none';
                         offcanvasClose.click();
                         Swal.fire(
                         '成功',

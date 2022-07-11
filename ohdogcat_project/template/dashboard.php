@@ -1,3 +1,11 @@
+<?php
+if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !='' && !empty($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] != 0 ){
+    $checkStoreRight = false;
+}else{
+    $checkStoreRight = true;
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -142,7 +150,7 @@
                 </ul>
             </nav>
             <div class="menu-box mt-2 flex-shrink-0 logout">
-                <div class="menu-item"><a href="" class="menu-button no-accordion icon-logout">粗企玩</a></div>
+                <div class="menu-item"><a href="../login/doLogout.php" class="menu-button no-accordion icon-logout">粗企玩</a></div>
             </div>
         </aside>
         <div class="content-wrap vh-100">
@@ -150,7 +158,7 @@
                 <div class="d-flex flex-column h-100">
                     <div class="content-header d-flex justify-content-end mb-3">
                         <div class="d-flex flex-shrink-1 w-100 align-items-center">
-                            <?php require('./header.php')?>
+                            <?php if($header){ require($header);}?>
                         </div>
                         <a href="" class="d-flex justify-content-end align-items-center flex-shrink-0">
                             <div class="user-name pe-4">汪汪先輩</div>
@@ -159,13 +167,13 @@
                         </a>
                     </div>
                     <div class="button-area">
-                        <?php require('./filter-section.php')?>
+                        <?php if($filterSection){ require($filterSection);} ?>
                     </div>
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 scroll-bar">
                         <?php require($main)?>
                     </main>
                     <div class="content-footer flex-shrink-1">
-                        <?php require('./footer.php')?>
+                        <?php if($footer){ require($footer);}?>
                     </div>
                 </div>
             </div>
@@ -179,7 +187,70 @@
         integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
     <script src="<?=$js?>"></script>
+    <script src="../template/js/main.js?<?=$time?>"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"
+    integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous">
+</script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        let checkStoreRight = <?=$checkStoreRight?>;
+        if(checkStoreRight) {
+            let id = <?=$id?>;
+            popup(id);
+        }
+
+        function popup(id, text){
+            Swal.fire({
+                title: `<strong class="lh-base"">初次登入<br>請選擇要開通的權限</strong>${(text)? text:'' }`,
+                icon: 'info',
+                html:
+                    `<select id="storeRight" class="form-select" aria-label="Default select example">
+                    <option selected> -- 權限選擇 -- </option>
+                    <option value="1">旅遊票券</option>
+                    <option value="2">餐廳票券</option>
+                    <option value="3">活動票券</option>
+                    <option value="4">實體商品</option>
+                    </select>`,
+                showCloseButton: true,
+                showCancelButton: false,
+                focusConfirm: false,
+                confirmButtonText:'送出'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                let storeRight = document.querySelector('#storeRight').value;
+                storeRightUpdate(id, storeRight);
+            } else if (Swal.DismissReason.backdrop) {
+                popup(id,'<br><p class="text-danger fs-6 pt-2">此步驟無法跳過</p>');
+            }
+            })
+        }
+
+        function storeRightUpdate (id, storeRight){
+            $.ajax({
+                    method: "POST",
+                    url: `../api/store-right-update.php`,
+                    dataType: "json",
+                    data: {
+                        action: 'update',
+                        id: id,
+                        store_right: storeRight
+                    }
+                }).done(function (response) {
+                    if(response.success){
+                        Swal.fire(
+                        '成功',
+                        `已為你開通${response.data.store_right}`,
+                        'success'
+                        );
+                    }else{
+                        popup(id,`<br><p class="text-danger fs-6 pt-2">${response.message}</p>`)
+                    }
+                    
+                }).fail(function (jqXHR, textStatus) {
+                    console.log("Request failed: " + textStatus);
+                });
+        }
+    </script>
 </body>
 
 </html>

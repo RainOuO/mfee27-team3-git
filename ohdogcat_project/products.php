@@ -45,13 +45,20 @@ if(isset($_SESSION['cart']) && !empty($_SESSION['cart'])){
 
 // 判斷分類
 for($i=0; $i<count($rows); $i++){
-    switch ($rows[$i]['store_class']) {
+    switch ($rows[$i]['product_type']) {
         case 1:
-            $rows[$i]['store_class'] = '超級英雄';
+            $rows[$i]['product_type'] = '旅遊票券';
             break;
         case 2:
-            $rows[$i]['store_class'] = '政治英雄';
+            $rows[$i]['product_type'] = '餐廳票券';
             break;
+        case 3:
+            $rows[$i]['product_type'] = '活動票券';
+            break;
+        case 4:
+            $rows[$i]['product_type'] = '實體商品';
+            break;
+                
     }
 };
 ?>
@@ -120,12 +127,12 @@ for($i=0; $i<count($rows); $i++){
                                 <img class="object-cover" src="./images/<?=$row['main_photo']?>" alt="">
                             </figure>
                             <div class="d-flex justify-content-between">
-                                <div class="text-success" style="font-size: 14px;"><?= $row['store_class'] ?></div>
+                                <div class="text-success" style="font-size: 14px;"><?= $row['product_type'] ?></div>
                                 <div class="text-black" style="font-size: 14px;">店鋪：<?= $storeName[$row['store_id']] ?></div>
                             </div>
                             
                             <div class="text-black text-right py-2"
-                                style="font-size: 12px;">分類：<?= $productClass[$row['product_class_id']] ?></div>
+                                style="font-size: 12px;">分類：<?= $productClass[$row['product_category']] ?></div>
                             <h2 class="h4 fw-bold"><?=$row['name']?></h2>
                             <p>$ <?=$row['price']?></p>
                             <button class="btn btn-info btn-cart text-white  w-100" data-id="<?=$row['id']?>"
