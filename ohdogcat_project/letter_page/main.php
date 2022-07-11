@@ -5,25 +5,10 @@ require("../../db-connect.php");
 // session 資料處理
 $store_id = $_SESSION['user']['store_id'];
 
-var_dump($store_id);
-echo "<br>";
-
-// 選取 letter表
-// $sql = "SELECT * FROM letter";
-// $result = $conn->query($sql);
-// $letterCount = $result->num_rows;
-// $rows = $result->fetch_all(MYSQLI_ASSOC);
-
-// 取得重複 user_id 裡，時間最新(大)的資料 - 試做1
-// $sqlUserId = "SELECT user_id, content, MAX(time)  FROM letter GROUP BY user_id";
-// $resultUserId = $conn -> query($sqlUserId);
-// $UserIdCount = $resultUserId -> num_rows;
-// $rowsUserId = $resultUserId -> fetch_all(MYSQLI_ASSOC);
-
 // get 資料處理
-// $order = $_GET["order"];
 $order = isset($_GET['order']) ? $_GET['order'] : 1;
 
+// 排序開關
 switch($order){
     case 1:
         $orderType="time ASC";
@@ -49,15 +34,11 @@ $resultUserId = $conn->query($sqlUserId);
 $UserIdCount = $resultUserId->num_rows;
 $rowsUserId = $resultUserId->fetch_all(MYSQLI_ASSOC);
 
-var_dump($resultUserId);
-
-// var_dump($UserIdCount);
-
 ?>
 
 <div class="main-content p-4">
     <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-        <h1>信件匣</h1> <?= $order ?>
+        <h1>信件匣</h1>
         <div class="row" role="">
             <form class="col-6" action="test.php" method="get">
                 <input type="hidden" name="type" value="1">
@@ -89,7 +70,7 @@ var_dump($resultUserId);
     <hr>
     <div class="d-flex justify-content-end align-items-center">
         <div class="countBox">
-            <h4 class="countBox">以下訊息共: <?= $UserIdCount; ?>筆</h4>
+            <h4 class="countBox">共 <?= $UserIdCount; ?> 筆</h4>
         </div>
     </div>
     <!-- <h2>Second title</h2> -->
