@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- 主機： 127.0.0.1
--- 產生時間： 2022-07-11 11:48:33
+<<<<<<< HEAD >>>>>>> 陳家豪
 -- 伺服器版本： 10.4.24-MariaDB
 -- PHP 版本： 7.4.29
 
@@ -24,6 +24,7 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+<<<<<<< HEAD
 -- 資料表結構 `discount`
 --
 
@@ -88,6 +89,23 @@ INSERT INTO `discount_category` (`id`, `name`) VALUES
 (2, '現金折價券'),
 (3, '商品優惠活動');
 
+=======
+-- 資料表結構 `coupon`
+--
+
+CREATE TABLE `coupon` (
+  `id` int(4) NOT NULL,
+  `coupon_no` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `coupon_code` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `description` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `amount` int(2) NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `discount` int(3) NOT NULL,
+  `valid` tinyint(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+>>>>>>> 陳家豪
 -- --------------------------------------------------------
 
 --
@@ -248,6 +266,7 @@ INSERT INTO `order_product_detail` (`id`, `order_id`, `product_id`, `amount`) VA
 CREATE TABLE `product` (
   `id` int(5) NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+<<<<<<< HEAD
   `store_id` int(11) NOT NULL,
   `intro` varchar(20) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `description` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -262,6 +281,19 @@ CREATE TABLE `product` (
   `coupon_id` tinyint(4) DEFAULT NULL,
   `main_photo` varchar(50) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `sub_photo` varchar(150) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+=======
+  `description` varchar(200) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `price` int(6) NOT NULL,
+  `store_id` int(5) UNSIGNED NOT NULL,
+  `store_class` tinyint(1) NOT NULL,
+  `product_class_id` int(3) NOT NULL,
+  `up_time` datetime NOT NULL,
+  `start_time` datetime NOT NULL,
+  `end_time` datetime NOT NULL,
+  `amount` int(3) DEFAULT NULL,
+  `main_photo` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `sub_photo` varchar(150) COLLATE utf8mb4_unicode_ci NOT NULL,
+>>>>>>> 陳家豪
   `valid` tinyint(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -269,6 +301,7 @@ CREATE TABLE `product` (
 -- 傾印資料表的資料 `product`
 --
 
+<<<<<<< HEAD
 INSERT INTO `product` (`id`, `name`, `store_id`, `intro`, `description`, `price`, `product_type`, `product_category`, `create_time`, `update_time`, `valid_time_start`, `valid_time_end`, `stock_quantity`, `coupon_id`, `main_photo`, `sub_photo`, `valid`) VALUES
 (1, '狗狗救生衣', 1, '當狗狗想玩水的時候，如果保證狗狗的安全呢', '當狗狗想玩水的時候，如果保證狗狗的安全呢？\r\n擁有天使翅膀救生衣，我們再也不用擔心狗狗的玩水\r\n天使翅膀救生衣全程呵護狗狗盡情歡快的玩水\r\n來吧，讓狗狗度過一個愉快的玩水季節a', 550, 4, 2, '2022-07-10 15:23:20', NULL, '2022-07-07 00:05:00', '2022-07-09 06:06:00', 25, 2, '', '', 0),
 (2, 'WAKE n\' BAKE寵物餐廳雙人餐券', 2, '餐券 #套餐 #台北 #', '#餐券 #套餐 #台北 #兌換券 #寵物餐廳 #貓咪 #愛貓人士最愛 \n\n使用期限：107/9/30前（限定平日星期一～四）\n餐廳地址：台北市信義區永吉路30巷158弄18號(近捷運市政府站4 號出口)', 250, 2, 2, '2022-07-12 11:43:48', NULL, '2022-07-16 00:00:00', '2022-07-21 00:00:00', 5, 2, 'restaurant-ticket.png', 'restaurant-ticket.png', 0),
@@ -290,6 +323,18 @@ INSERT INTO `product` (`id`, `name`, `store_id`, `intro`, `description`, `price`
 (18, '狗項圈', 0, '狗狗的項圈', '', 790, 0, 3, '2022-07-10 15:19:47', NULL, '2022-07-11 12:51:00', '2022-07-21 15:19:00', 0, 0, '', '', 1),
 (19, 'f', 0, 'df', '', 0, 0, 0, '2022-07-10 15:20:46', NULL, '2022-07-06 15:20:00', '2022-07-06 15:20:00', 0, 0, '', '', 1),
 (20, '劉學儒', 0, 'fd', 'fdfd', 3, 0, 2, '2022-07-10 20:14:04', NULL, '2022-06-30 20:13:00', '2022-07-18 20:15:00', 0, 2, '', '', 1);
+=======
+INSERT INTO `product` (`id`, `name`, `description`, `price`, `store_id`, `store_class`, `product_class_id`, `up_time`, `start_time`, `end_time`, `amount`, `main_photo`, `sub_photo`, `valid`) VALUES
+(1, 'antman', 'antmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantmanantman', 500, 1, 1, 1, '2022-07-07 13:48:24', '2022-07-07 13:48:24', '2023-07-07 13:48:24', NULL, 'antman.jpg', '', 1),
+(2, 'batman', 'batmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatmanbatman', 600, 1, 1, 2, '2022-07-07 13:48:24', '2022-07-07 13:48:24', '2023-07-07 13:48:24', NULL, 'batman.jpg', '', 1),
+(3, 'blackpanther', 'blackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpanther.jpgblackpan', 400, 1, 1, 1, '2022-07-07 13:48:24', '2022-07-07 13:48:24', '2023-07-07 13:48:24', NULL, 'blackpanther.jpg', '', 1),
+(4, '韓瑜瑜', 'bold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpgbold.jpg', 1000, 1, 2, 3, '2022-07-07 13:48:24', '2022-07-07 13:48:24', '2023-07-07 13:48:24', NULL, 'bold.jpg', '', 1),
+(5, '蔡文文', 'english.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgenglish.jpgen', 1000, 1, 2, 4, '2022-07-07 13:48:24', '2022-07-07 13:48:24', '2023-07-07 13:48:24', NULL, 'english.jpg', '', 1),
+(6, 'superman', 'superman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpgsuperman.jpg', 900, 1, 1, 2, '2022-07-07 13:48:24', '2022-07-07 13:48:24', '2023-07-07 13:48:24', NULL, 'superman.jpg', '', 1),
+(7, '馬九九', '999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg999.jpg', 750, 1, 2, 3, '2022-07-07 13:48:24', '2022-07-07 13:48:24', '2023-07-07 13:48:24', NULL, '999.jpg', '', 1),
+(8, '蘇貞貞', '蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞蘇貞貞', 500, 1, 2, 4, '2022-07-07 13:48:24', '2022-07-07 13:48:24', '2023-07-07 13:48:24', NULL, 'sususu.jpg', '', 1),
+(9, '習大大', 'xidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidadaxidada', 5000, 2, 2, 5, '2022-07-08 10:00:13', '2022-07-08 10:00:13', '2022-07-08 10:00:13', NULL, 'xidada.jpg', '', 1);
+>>>>>>> 陳家豪
 
 -- --------------------------------------------------------
 
@@ -299,7 +344,11 @@ INSERT INTO `product` (`id`, `name`, `store_id`, `intro`, `description`, `price`
 
 CREATE TABLE `product_class` (
   `id` int(3) NOT NULL,
+<<<<<<< HEAD
   `p_type_id` tinyint(1) NOT NULL,
+=======
+  `store_class` tinyint(1) NOT NULL,
+>>>>>>> 陳家豪
   `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -307,11 +356,16 @@ CREATE TABLE `product_class` (
 -- 傾印資料表的資料 `product_class`
 --
 
+<<<<<<< HEAD
 INSERT INTO `product_class` (`id`, `p_type_id`, `name`) VALUES
+=======
+INSERT INTO `product_class` (`id`, `store_class`, `name`) VALUES
+>>>>>>> 陳家豪
 (1, 1, 'Marvel'),
 (2, 1, 'DC'),
 (3, 2, '國民黨'),
 (4, 2, '民進黨'),
+<<<<<<< HEAD
 (5, 2, '共產黨'),
 (6, 3, '會跑的'),
 (7, 3, '會飛的'),
@@ -339,6 +393,9 @@ INSERT INTO `p_type` (`id`, `type_name`) VALUES
 (2, '餐廳票券列表'),
 (3, '活動票券列表'),
 (4, '實體產品列表');
+=======
+(5, 2, '共產黨');
+>>>>>>> 陳家豪
 
 -- --------------------------------------------------------
 
@@ -348,6 +405,7 @@ INSERT INTO `p_type` (`id`, `type_name`) VALUES
 
 CREATE TABLE `store_info` (
   `id` int(3) NOT NULL,
+<<<<<<< HEAD
   `account` varchar(20) COLLATE utf8mb4_unicode_ci NOT NULL,
   `name` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `password` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
@@ -359,12 +417,24 @@ CREATE TABLE `store_info` (
   `email` varchar(30) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `create_time` datetime DEFAULT NULL,
   `valid` tinyint(1) NOT NULL DEFAULT 1
+=======
+  `account` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `name` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(30) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `area` varchar(6) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `address` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `store_right` tinyint(1) NOT NULL,
+  `photo` varchar(50) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `create_time` datetime NOT NULL
+>>>>>>> 陳家豪
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 --
 -- 傾印資料表的資料 `store_info`
 --
 
+<<<<<<< HEAD
 INSERT INTO `store_info` (`id`, `account`, `name`, `password`, `area`, `address`, `store_right`, `photo`, `phone`, `email`, `create_time`, `valid`) VALUES
 (1, 'IU', 'Lee Ji Eun', '1234', '北部', '101大樓台北市信義區 市府路45號', 2, NULL, '0123456789', 'TwiceClub@test.com', NULL, 1),
 (2, 'Rose', 'BlackPink', '111', '中部', '桃園市中壢區新生路421號', 4, NULL, '02223', 'BlackPinkClub@test.com', NULL, 1),
@@ -376,6 +446,11 @@ INSERT INTO `store_info` (`id`, `account`, `name`, `password`, `area`, `address`
 (8, 'BTS', '防彈少年團', '111', '北部', '', 1, 'jisco.jpg', '123', '123@yahoo.com.tw', NULL, 1),
 (9, 'ITZY', 'ITZYYYY', '111', '', '', 1, 'Rose.jpg', NULL, NULL, NULL, 1),
 (10, 'Audi', 'R8', '111', '北部', '新3', 2, 'logo.svg', '123', '1111@12.com', NULL, 1);
+=======
+INSERT INTO `store_info` (`id`, `account`, `password`, `name`, `email`, `area`, `address`, `store_right`, `photo`, `create_time`) VALUES
+(1, '', '', '7-11', '', '', '', 0, '', '2022-07-08 10:04:27'),
+(2, '', '', '萊爾富', '', '', '', 0, '', '2022-07-08 10:05:22');
+>>>>>>> 陳家豪
 
 -- --------------------------------------------------------
 
@@ -398,18 +473,28 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `name`, `account`, `password`, `email`, `create_time`, `valid`) VALUES
+<<<<<<< HEAD
 (1, '帥哥', 'mfee22', 'fee64c78c27d9b3e0ec7da3adeba3c', 'gg@gmail.com', '2022-07-07 13:24:48', 1),
 (2, '強效柯', 'mfee21', 'fee64c78c27d9b3e0ec7da3adeba3c', 'aa@gmail.com', '2022-07-07 13:38:54', 1),
 (3, '黃穗懷', 'mfee10', 'fee64c78c27d9b3e0ec7da3adeba3c', '87@gmail.com', '2022-07-07 13:38:58', 1),
 (4, '雨信OuO', 'mfee28', 'fee64c78c27d9b3e0ec7da3adeba3c', '69@gmail.com', '2022-07-07 13:39:03', 1),
 (5, '采平麻麻', 'mfee11', '', 'mama@gmail.com', '2022-07-10 13:29:29', 0),
 (6, '學儒阿尼基', 'mfee04', '', 'aniki@gmail.com', '2022-07-10 13:29:29', 0);
+=======
+(1, '陳家豪', 'mfee22', 'fee64c78c27d9b3e0ec7da3adeba3c', 'gg@gmail.com', '2022-07-07 13:24:48', 1),
+(2, '柯孝強', 'mfee21', 'fee64c78c27d9b3e0ec7da3adeba3c', 'aa@gmail.com', '2022-07-07 13:38:54', 1),
+(3, '黃穗懷', 'mfee10', 'fee64c78c27d9b3e0ec7da3adeba3c', '87@gmail.com', '2022-07-07 13:38:58', 1),
+(4, '蔡雨信', 'mfee28', 'fee64c78c27d9b3e0ec7da3adeba3c', '69@gmail.com', '2022-07-07 13:39:03', 1),
+(5, '采平麻麻', '', '', '', '2022-07-10 13:29:29', 0),
+(6, '學儒阿尼基', '', '', '', '2022-07-10 13:29:29', 0);
+>>>>>>> 陳家豪
 
 --
 -- 已傾印資料表的索引
 --
 
 --
+<<<<<<< HEAD
 -- 資料表索引 `discount`
 --
 ALTER TABLE `discount`
@@ -419,6 +504,11 @@ ALTER TABLE `discount`
 -- 資料表索引 `discount_category`
 --
 ALTER TABLE `discount_category`
+=======
+-- 資料表索引 `coupon`
+--
+ALTER TABLE `coupon`
+>>>>>>> 陳家豪
   ADD PRIMARY KEY (`id`);
 
 --
@@ -452,12 +542,15 @@ ALTER TABLE `product_class`
   ADD PRIMARY KEY (`id`);
 
 --
+<<<<<<< HEAD
 -- 資料表索引 `p_type`
 --
 ALTER TABLE `p_type`
   ADD PRIMARY KEY (`id`);
 
 --
+=======
+>>>>>>> 陳家豪
 -- 資料表索引 `store_info`
 --
 ALTER TABLE `store_info`
@@ -474,6 +567,7 @@ ALTER TABLE `users`
 --
 
 --
+<<<<<<< HEAD
 -- 使用資料表自動遞增(AUTO_INCREMENT) `discount`
 --
 ALTER TABLE `discount`
@@ -484,6 +578,12 @@ ALTER TABLE `discount`
 --
 ALTER TABLE `discount_category`
   MODIFY `id` int(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+=======
+-- 使用資料表自動遞增(AUTO_INCREMENT) `coupon`
+--
+ALTER TABLE `coupon`
+  MODIFY `id` int(4) NOT NULL AUTO_INCREMENT;
+>>>>>>> 陳家豪
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `letter`
@@ -507,12 +607,17 @@ ALTER TABLE `order_product_detail`
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product`
 --
 ALTER TABLE `product`
+<<<<<<< HEAD
   MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=21;
+=======
+  MODIFY `id` int(5) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+>>>>>>> 陳家豪
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `product_class`
 --
 ALTER TABLE `product_class`
+<<<<<<< HEAD
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
@@ -520,12 +625,19 @@ ALTER TABLE `product_class`
 --
 ALTER TABLE `p_type`
   MODIFY `id` tinyint(1) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+=======
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+>>>>>>> 陳家豪
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `store_info`
 --
 ALTER TABLE `store_info`
+<<<<<<< HEAD
   MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+=======
+  MODIFY `id` int(3) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+>>>>>>> 陳家豪
 
 --
 -- 使用資料表自動遞增(AUTO_INCREMENT) `users`
