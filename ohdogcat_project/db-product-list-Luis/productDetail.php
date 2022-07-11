@@ -1,15 +1,20 @@
 <?php
-if (!isset($_GET['id'])) {
-    echo "沒有資料";
-    exit;
-}
 
+session_start();
+if (!isset($_SESSION["user"]))
+
+    if (!isset($_GET['id'])) {
+        echo "沒有資料";
+        exit;
+    }
+$storeID = "";
 $id = $_GET["id"];
 //TO-DO
 //商品id 使用seesion?
 require("./db-connect.php");
 // require("./doproducts.php");
-$sql = "SELECT * FROM product WHERE valid=1 AND id=$id";
+$sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
+// $sql = $storeID ? "AND store_id = $storeID" : "";
 $result = $conn->query($sql);
 
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
@@ -43,7 +48,7 @@ $product_count = $result->num_rows; //取得資料筆數
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
     <style>
         .photo-window {
-            text-align: center;
+            text-align: start;
 
         }
 
@@ -80,12 +85,11 @@ $product_count = $result->num_rows; //取得資料筆數
         .cover-photo img {
             width: 500px;
             height: 500px;
-            /* border: 1px solid #000; */
-            border-radius: 15px;
+
             min-width: 350px;
             width: 100%;
             object-fit: contain;
-            overflow: hidden;
+
         }
 
         .slideshow {
@@ -102,10 +106,6 @@ $product_count = $result->num_rows; //取得資料筆數
         .photo1 {
             width: 150px;
             height: 150px;
-        }
-
-        .photo-upload .photo-window {
-            max-width: 100%;
         }
 
 
@@ -281,7 +281,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                 </div>
                                 <div class="crudBox">
                                     <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id ?>'">編輯</button>
-                                    <button type="button" class="btn filterBtn mx-1"  onclick="window.location.href='doDelete.php?id=<?= $row['id']?>'">刪除</button>
+                                    <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
                                     <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
                                 </div>
                             </div>
@@ -289,32 +289,31 @@ $product_count = $result->num_rows; //取得資料筆數
 
                             <div class="row d-flex justify-content-center">
                                 <div class="photobar d-flex flex-column col-5">
-                                    <div class="photo-window d-flex flex-column  ">
-                                        <div class="cover-photo m-3">
-                                            <img src="./IMAGES/<?= $row['main_photo'] ?>" alt="">
+                                    <div class="photo-window d-flex flex-column align-items-flex-start ">
+                                        <div class="cover-photo">
+                                            <?php if ($row["main_photo"] == '') : ?>
+                                                <img src="./IMAGES/doglogo.png" alt="">
+                                            <?php else : ?>
+                                                <img src="./upload_main_photo/<?= $row['main_photo'] ?>" alt="">
+                                            <?php endif; ?>
                                         </div>
-                                        <div class="swiper mySwiper">
+                                        <div class="swiper mySwiper mt-2">
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/<?= $row['sub_photo'] ?>" alt=""></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                                <?php if ($row["sub_photo"] == '') : ?>
+                                                    <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
+                                                <?php else : ?>
+                                                    <?php
+                                                    $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
+                                                    array_pop($rowSub);
+                                                    // var_dump($rowSub);
+                                                    foreach ($rowSub as $rowS) : ?>
+                                                        <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" alt=""></div>
+                                                    <?php endforeach; ?>
+                                                <?php endif; ?>
                                             </div>
                                             <div class="swiper-pagination"></div>
                                         </div>
                                     </div>
-                                    <form action=".php" method="post" enctype="multipart/form-data" hidden>
-                                        <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                            <div class=" d-flex col-6">
-                                                <input class="form-control" type="file" name="myFile">
-                                                <button class="btn filterBtn" type="submit">封面照片</button>
-                                            </div>
-                                            <div class="d-flex col-6">
-                                                <input class="form-control" type="file" name="myFile">
-                                                <button class="btn filterBtn" type="submit">商品照片</button>
-                                            </div>
-                                        </div>
-                                    </form>
                                 </div>
                                 <div class="basic-setting col-6">
                                     <form action="doUpdate">
@@ -354,13 +353,12 @@ $product_count = $result->num_rows; //取得資料筆數
                                                 </label>
                                             </div> -->
                                     </form>
-
                                 </div>
                             </div>
                             <hr>
                             <form action="">
                                 <label for="">商品文案編輯頁面</label>
-                                <textarea class="form-control"style="resize:none" rows="10" placeholder="請輸入文案" maxlength="500" readonly><?= $row['description'] ?></textarea>
+                                <textarea class="form-control" style="resize:none" rows="10" placeholder="請輸入文案" maxlength="500" readonly><?= $row['description'] ?></textarea>
                             </form>
                             <!-- <form method="post">
                                 <div class="text-end mb-1 d-flex justify-content-between">
@@ -375,7 +373,7 @@ $product_count = $result->num_rows; //取得資料筆數
                         <div class="d-flex justify-content-end">
                             <div class="crudBox">
                                 <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id ?>'">編輯</button>
-                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id']?>'">刪除</button>
+                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
                                 <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
                             </div>
                         </div>
@@ -383,6 +381,7 @@ $product_count = $result->num_rows; //取得資料筆數
                 </div>
             </div>
         </div>
+    </div>
     </div>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
@@ -399,11 +398,18 @@ $product_count = $result->num_rows; //取得資料筆數
     <script>
         var swiper = new Swiper(".mySwiper", {
             slidesPerView: 3,
-            spaceBetween: 30,
+            spaceBetween: 35,
             pagination: {
                 el: ".swiper-pagination",
                 clickable: true,
             },
+        });
+    </script>
+    <script>
+        let deleteBtn = document.querySelector("#deleteBtn");
+        deleteBtn.addEventListener("click", function() {
+            console.log("click-delete");
+
         });
     </script>
     <!-- <script>

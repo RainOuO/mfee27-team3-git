@@ -12,7 +12,7 @@ $storeID = "";
 $id = $_GET["id"];
 //TO-DO
 //商品id 使用seesion?
-$sql = "SELECT * FROM product WHERE valid=1 AND id=$id";
+$sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
 $result = $conn->query($sql);
 
 $product_count = $result->num_rows; //取得資料筆數 
@@ -78,12 +78,9 @@ $product_count = $result->num_rows; //取得資料筆數
         .cover-photo img {
             width: 500px;
             height: 500px;
-            /* border: 1px solid #000; */
-            border-radius: 15px;
             min-width: 350px;
             width: 100%;
             object-fit: contain;
-            overflow: hidden;
 
         }
 
@@ -283,7 +280,6 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                                         <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
                                     </div>
-
                                     <div class="crudBox">
                                         <button type="submit" class="btn filterBtn mx-1">儲存</button>
                                         <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
@@ -294,35 +290,39 @@ $product_count = $result->num_rows; //取得資料筆數
                                     <div class="photobar d-flex flex-column col-5">
                                         <div class="photo-window d-flex flex-column  ">
                                             <div class="cover-photo m-3">
-                                                <img src="./IMAGES/<?= $row['main_photo'] ?>.png" alt="">
+                                                <?php if ($row["main_photo"] == '') : ?>
+                                                    <img src="./IMAGES/doglogo.png" alt="" id="preview_cover_img" src="#">
+                                                <?php else : ?>
+                                                    <img src="./upload_main_photo/<?= $row['main_photo'] ?>" alt="">
+                                                <?php endif; ?>
                                             </div>
                                             <div class="swiper mySwiper">
                                                 <div class="swiper-wrapper">
-                                                    <div class="swiper-slide photo1"><img class="" src="./IMAGES/<?= $row['sub_photo'] ?>" alt=""></div>
+                                                    <?php if ($row["sub_photo"] == '') : ?>
+                                                        <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" id="preview_sub_img" alt="" src="#">
+                                                    <?php else : ?>
+                                                        <?php
+                                                        $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
+                                                        array_pop($rowSub);
+                                                        // var_dump($rowSub);
+                                                        foreach ($rowSub as $rowS) : ?>
+                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" alt=""></div>
+                                                        <?php endforeach; ?>
+                                                    <?php endif; ?>
                                                 </div>
                                                 <div class="swiper-pagination"></div>
                                             </div>
                                         </div>
-
-                                        <div class="  mt-3 ">
-                                            <form action="" enctype="multipart/form-data" class="d-flex justify-content-center photo-upload">
-                                                <div class=" d-flex ">
-                                                    <input class="form-control" type="file" name="main_photo" accept="image/gif, image/jpeg, image/png">
-                                                    <!-- <button class="btn filterBtn" type="">封面照片</button> -->
-                                                </div>
-                                                <div class="d-flex ">
-                                                    <input class="form-control" type="file" name="sub_photo" accept="image/gif, image/jpeg, image/png">
-                                                    <!-- <button class="btn filterBtn" type="">商品照片</button> -->
-                                                </div>
-                                            </form>
+                                    </div>
+                                    <div class="row photo-upload mt-3 d-flex justify-content-center">
+                                        <div class="col-6">
+                                            <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
+                                        </div>
+                                        <div class="col-6">
+                                            <input class="form-control" type="file" name="sub_photo" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
                                     </div>
-
-
-
                                     <div class="basic-setting col-6">
-
-
                                         <label for="">商品名稱**</label>
                                         <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="<?= $row['name'] ?>" required>
                                         <label for="">商品分類**</label>
@@ -376,21 +376,17 @@ $product_count = $result->num_rows; //取得資料筆數
                                         </div> -->
 
                                     </div>
-                                   
-                                    <div>
-                                        <label for="">商品文案編輯頁面</label>
-                                        <textarea class="form-control" rows="10" placeholder="請輸入文案" maxlength="500" name="description"><?= $row['description'] ?></textarea>
+                                </div>
+                                <hr>
+                                <label for="">商品文案編輯頁面</label>
+                                <textarea class="form-control" rows="10" placeholder="請輸入文案" maxlength="500" name="description"><?= $row['description'] ?></textarea>
+                                <hr>
+                                <div class="d-flex justify-content-end">
+                                    <div class="crudBox">
+                                        <button type="submit" class="btn filterBtn mx-1">儲存</button>
+                                        <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
                                     </div>
                                 </div>
-                </div>
-
-                <hr>
-
-                <div class="d-flex justify-content-end">
-                    <div class="crudBox">
-                        <button type="submit" class="btn filterBtn mx-1">儲存</button>
-                        <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
-                    </div>
                 </div>
                 </form>
             <?php else : ?>
@@ -401,6 +397,7 @@ $product_count = $result->num_rows; //取得資料筆數
         </div>
     </div>
     </div>
+
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
     </script>
@@ -422,6 +419,20 @@ $product_count = $result->num_rows; //取得資料筆數
                 clickable: true,
             },
         });
+    </script>
+    <script>
+        //封面照片上傳預覽
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var imageTagID = input.getAttribute("targetID");
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.getElementById(imageTagID);
+                    img.setAttribute("src", e.target.result)
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
     </script>
     <!-- <script>
         tinymce.init({

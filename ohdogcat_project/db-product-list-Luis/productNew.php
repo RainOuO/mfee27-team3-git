@@ -4,7 +4,8 @@ require("./db-connect.php");
 
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
 $storeID = "";
-
+$type = $_GET["type"];
+// echo $type;
 
 ?>
 
@@ -68,12 +69,10 @@ $storeID = "";
         .cover-photo img {
             width: 500px;
             height: 500px;
-            /* border: 1px solid #000; */
-            border-radius: 15px;
             min-width: 350px;
             width: 100%;
             object-fit: contain;
-            overflow: hidden;
+        
 
         }
 
@@ -264,7 +263,8 @@ $storeID = "";
                         <div class="border-bottom pb-2">
                             <h2>商品內容管理</h2>
                         </div>
-                        <form action="doCreateNew.php" method="post">
+                        <form action="doCreateNew.php" method="post" enctype="multipart/form-data">
+                        <input type="hidden" name="type" value="<?= $type ?>" />
                             <div class="d-flex justify-content-between align-items-center m-2">
                                 <div class="title d-flex mt-2">
                                     <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
@@ -280,49 +280,40 @@ $storeID = "";
                                 <div class="photobar d-flex flex-column col-5">
                                     <div class="photo-window d-flex flex-column  ">
                                         <div class="cover-photo m-3">
-                                            <img src="./IMAGES/doglogo.png" alt="">
+                                            <img src="./IMAGES/doglogo.png" alt="" id="preview_cover_img" src="#">
                                         </div>
                                         <div class="swiper mySwiper">
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt=""></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img" src="#"></div>
+                                                <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_imgs" src="#"></div> -->
                                             </div>
                                             <div class="swiper-pagination"></div>
                                         </div>
                                     </div>
-
+                                    <!-- 圖片上傳UI位置 -->
                                     <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                        <div class=" d-flex col-6">
-                                            <input class="form-control" type="file" name="main_photo">
-                                            <!-- <button class="btn filterBtn" type="">封面照片</button> -->
+                                        <div class="col-6">
+                                            <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
-                                        <div class="d-flex col-6">
-                                            <input class="form-control" type="file" name="sub_photo">
-                                            <!-- <button class="btn filterBtn" type="">商品照片</button> -->
+                                        <div class="col-6">
+                                            <input class="form-control" type="file" name="sub_photo" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
                                     </div>
-
                                 </div>
                                 <div class="basic-setting col-6">
-
                                     <label for="">商品名稱**</label>
                                     <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" required>
                                     <label for="">商品分類**</label>
                                     <select name='category' class="form-control" required>
-                                        <?php
-                                        // $sql = "SELECT id, name FROM production_class";
-                                        // // $result = $conn->query($sql);
-                                        // $result = $conn->query($sql);?>
-
-                                            <option value= 1 >12</option>
-                                    
-                                        <!-- <option value='2'>餐廳票券</option>
+                                        <option value='0'>旅遊票券</option>
+                                        <option value='1'>活動票券</option>
+                                        <option value='2' selected>餐廳票券</option>
                                         <option value='3'>寵物周邊</option>
                                         <option value='4'>寵物服飾</option>
-                                        <option value='5'>寵物食品</option> -->
+                                        <option value='5'>寵物食品</option>
                                     </select>
                                     <label for="">商品簡述</label>
                                     <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" required>
@@ -381,6 +372,8 @@ $storeID = "";
                 </div>
             </div>
         </div>
+
+
     </div>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
@@ -403,6 +396,45 @@ $storeID = "";
                 clickable: true,
             },
         });
+    </script>
+    <script>
+        //封面照片上傳預覽
+        function readURL(input) {
+            if (input.files && input.files[0]) {
+                var imageTagID = input.getAttribute("targetID");
+                var reader = new FileReader();
+                reader.onload = function(e) {
+                    var img = document.getElementById(imageTagID);
+                    img.setAttribute("src", e.target.result)
+                }
+                reader.readAsDataURL(input.files[0]);
+            }
+        }
+        
+
+    </script>
+    <script>
+        //多張照片上傳預覽
+        // $("#progressbarTWInput").change(function() {
+        //     $("#preview_sub_imgs").html(""); // 清除預覽
+        //     readURLM(this);
+        // });
+
+        // function readURLM(input) {
+        //     if (input.files && input.files.length >= 0) {
+        //         for (var i = 0; i < input.files.length; i++) {
+        //             var reader1 = new FileReader();
+        //             reader1.onload = function(e) {
+        //                 var img1 = $("<img width='150' height='150'>").attr('src', e.target.result);
+        //                 $("#preview_sub_imgs").append(img1);
+        //             }
+        //             reader1.readAsDataURL(input.files[i]);
+        //         }
+        //     } else {
+        //         var noPictures = $("<p>目前沒有圖片</p>");
+        //         $("#preview_sub_imgs").append(noPictures);
+        //     }
+        // }
     </script>
     <!-- <script>
         tinymce.init({

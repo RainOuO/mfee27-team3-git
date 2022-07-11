@@ -2,14 +2,14 @@
 require("./doproducts.php");
 require("./db-connect.php");
 
-session_start();
+// session_start();
 
 
 // 判斷帶入的參數
 $page = isset($_GET["page"]) ?  $page = $_GET["page"] : 1;
 $perPage = 10;
 $start = ($page - 1) * $perPage;
-echo $start;
+// echo $start;
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
 $keyword = isset($_GET["keyword"]) ? $_GET["keyword"] : "";
 $minPrice = isset($_GET["minPrice"]) ? $_GET["minPrice"] : 0;
@@ -21,6 +21,8 @@ if (isset($_GET["startDate"]) && isset($_GET["endDate"])) {
     $startDate = "";
     $endDate = "";
 };
+
+
 
 //TO-DO: 未來加入 store_id(從 session 拿) 判斷商家
 //$storeID= isset($_GET["store_id"]) ? $_GET["store_id"] : "";
@@ -48,13 +50,11 @@ switch ($ordertype) {
 $sql = "SELECT * FROM product WHERE valid= 1";
 $sql .= $storeID ? " and store_id = $storeID" : "";
 $sql .= $type ? " and product_type = $type " : "";
-$sql .= $keyword ? " and (name LIKE '%$keyword%' OR description LIKE '%$keyword%' OR )" : "";
+$sql .= $keyword ? " and (name LIKE '%$keyword%' OR intro LIKE '%$keyword%' OR description LIKE '%$keyword%' )" : "";
 $sql .= $minPrice ? " and price >= $minPrice" : "";
 $sql .= $maxPrice ? " and price <= $maxPrice" : "";
-//BUG!!
-$sql .= $startDate ? " and (valid_time_start <= '$endDate') and (valid_time_end >= '$startDate')" : "";
 
-// $sql .= $endDate ? " or ('$startDate' <= valid_time_end and '$endDate' >= valid_time_end))" : "";
+$sql .= $startDate ? " and (valid_time_start <= '$endDate') and (valid_time_end >= '$startDate')" : "";
 $sql .= $ordertype ? " ORDER BY $ordertype" : "";
 
 //根據商品筆數，取得頁碼資訊
@@ -79,7 +79,6 @@ if ($remainder === 0) {
     $totalPage = $quotient + 1;
 }
 
-echo $sql;
 
 // $sql = "SELECT product.*, catagory.name AS catagory_name FROM product
 // JOIN catagory ON product.catagory_id = catagory.id WHERE product.price >= $minPrice and price <= $maxPrice ";
@@ -90,6 +89,11 @@ echo $sql;
 $sql .= " LIMIT $start ,10"; //顯示用
 //Query SQL
 $result = $conn->query($sql);
+
+// $sqlCate=" SELECT product *, production_class* FROM product, production_class WHERE product.production_category = production_class.id AND product_type = $type";
+
+// $resultCate = $conn->query($sqlCate);
+// echo $sql;
 ?>
 
 <!doctype html>
@@ -480,7 +484,7 @@ $result = $conn->query($sql);
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination">
                                             <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                                                <a class="pagebtn <?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?= $ordertype ?>"><?= $i ?></a>
+                                                <a class="pageBtn <?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?= $ordertype ?>"><?= $i ?></a>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>
