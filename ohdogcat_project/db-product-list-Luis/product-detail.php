@@ -62,6 +62,7 @@ require("db-connect.php");
 $sqll = "SELECT * FROM product WHERE store_id='$userstore_right'";
 $results = $conn->query($sqll);
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
+// var_dump($rowss);
 ?>
 
 
@@ -357,11 +358,11 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                                     <form action="photoUpdate.php" method="post" enctype="multipart/form-data">
                                         <div class="row photo-upload mt-3 d-flex justify-content-center">
                                             <div class=" d-flex col-6">
-                                                <input class="form-control" type="file" name="myFile">
+                                                <input class="form-control" type="file" name="MainmyFile">
                                                 <button class="btn filterBtn" type="submit">封面照片</button>
                                             </div>
                                             <div class="d-flex col-6">
-                                                <input class="form-control" type="file" name="photoFile">
+                                                <input class="form-control" type="file" name="myFile">
                                                 <button class="btn filterBtn" type="submit">商品照片</button>
                                             </div>
                                         </div>

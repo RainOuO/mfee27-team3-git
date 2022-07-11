@@ -112,7 +112,7 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
         }
 
         .toastify {
-            background: url("./test/bg_dog-icon.png") 12px center / 50px no-repeat, url('./test/bg_toast-bg.png') no-repeat center center / cover, #fff !important;
+            background: url("./IMAGES/bg_dog-icon.png") 12px center / 50px no-repeat, url('./IMAGES/bg_toast-bg.png') no-repeat center center / cover, #fff !important;
             color: #000;
         }
     </style>

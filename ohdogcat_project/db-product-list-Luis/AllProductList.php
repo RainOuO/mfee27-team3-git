@@ -109,6 +109,16 @@ $resultCate = $conn->query($sqlCate);
 $rowsCate = $resultCate->fetch_all(MYSQLI_ASSOC);
 $rowsCate1 = $resultCate->num_rows;
 
+
+/////////////// join到type 商家權限名稱 
+$sql = "SELECT id, type_name FROM p_type";
+
+$result = $conn->query($sql);
+$rowname = $result->fetch_assoc();
+$product_count = $result->num_rows;
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+$store_type = array_column($rows, 'type_name', 'id');
+
 ?>
 <!doctype html>
 <html lang="en">
@@ -267,14 +277,11 @@ $rowsCate1 = $resultCate->num_rows;
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-
                                         <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                        <?php foreach ($rowsCate as $row) : ?>
-                                            <?php if ($type == $row["type_name"]) ?>
-                                            <a href="AllProductList.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?= $row['type_name'] ?></a>
-                                        <?php endforeach; ?>
+                                        <?php if ($store_type == [$rowname["type_name"]] ) ?>
+                                        <a href="AllProductList.php?type=<?= $rowname['id'] ?>&page=1" class="menu-link"><?= $rowname['type_name'] ?></a>
                                     </li>
                                 </ul>
                             </div>

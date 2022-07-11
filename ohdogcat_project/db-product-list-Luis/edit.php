@@ -9,13 +9,21 @@ require("db-connect.php");
 
 $sql = "SELECT * FROM store_info WHERE account='$id' ";
 $result = $conn->query($sql);
+$row = $result->fetch_assoc();
 $userCount = $result->num_rows;
 $results = $conn->query($sql);
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
-// $sqll = "SELECT * FROM store_info WHERE  account='$id'";
-// $results = $conn->query($sqll);
-// $rowss = $results->fetch_all(MYSQLI_ASSOC);
-// ?>
+
+/////////////// 側邊欄位 join到type 商家權限名稱 
+
+$sql = "SELECT id, type_name FROM p_type";
+$result = $conn->query($sql);
+$resultType = $conn->query($sql);
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+$store_type = array_column($rows, 'type_name', 'id');
+$rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
+
+?>
 
 <!doctype html>
 <html lang="en">
@@ -185,20 +193,12 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                         <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
-                                    <li>
-                                        <a href="" class="menu-link">商品總覽</a>
+                                <li>
+                                        <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link">旅館票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">餐廳票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">活動票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">實體商品列表</a>
+                                    <?php if ($store_type == [$row["store_right"]] ) ?>
+                                        <a href="AllProductList.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?=$store_type[$row["store_right"]]?></a>
                                     </li>
                                 </ul>
                             </div>
@@ -319,10 +319,8 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
                             </div>
 
 
-
-
                             <?php if ($userCount > 0) :
-                                $row = $result->fetch_assoc(); ?>
+                                 ?>
                                 <form  class="form1" action="doUpdate.php" method="POST">
                                     <input name="id" type="hidden" value="<?= $row["id"] ?>">
                                     <table class="table table1">

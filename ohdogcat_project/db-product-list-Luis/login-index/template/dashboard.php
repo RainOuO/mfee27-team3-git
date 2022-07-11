@@ -10,8 +10,8 @@
     <!-- Bootstrap CSS v5.2.0-beta1 -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
-    <link rel="stylesheet" href="../template/css/custom-bs.css">
-    <link rel="stylesheet" href="../template/css/style.css">
+    <link rel="stylesheet" href="./template/css/custom-bs.css">
+    <link rel="stylesheet" href="./template/css/style.css">
     
 </head>
 
@@ -150,7 +150,7 @@
                     </div>
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 px-4">
-                        <?php require('../example_page-1/main.php'); ?>
+                        <?php require('./main.php'); ?>
                     </main>
                 </div>
             </div>

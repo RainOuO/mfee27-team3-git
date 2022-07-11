@@ -1,0 +1,19 @@
+button, button:active, button:focus {
+    box-shadow: none!important;
+    border: 0!important;
+    border-color: transparent!important;
+}
+
+.accordion-button::after {
+    background: none;
+}
+
+.accordion-body {
+    padding-top: 8px;
+    padding-right: 10px;
+}
+
+.container-fluid {
+    padding-right: calc(var(--bs-gutter-x) * 1);
+    padding-left: calc(var(--bs-gutter-x) * 1);
+}

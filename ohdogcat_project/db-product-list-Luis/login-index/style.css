@@ -1,0 +1,23 @@
+* {
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #222934;
+    
+}
+.index{
+    overflow-y: hidden;
+}
+.top-card{
+    border: 2px solid #222934;
+    
+}
+.row{
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    flex-wrap: wrap;
+    }
+    .row [class="col-"]{
+    display: flex;
+    flex-direction: column;
+    }
