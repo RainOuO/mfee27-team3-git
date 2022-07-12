@@ -53,10 +53,10 @@ $sql .= $type ? " and product_type = $type " : "";
 $sql .= $keyword ? " and (name LIKE '%$keyword%' OR intro LIKE '%$keyword%' OR description LIKE '%$keyword%' )" : "";
 $sql .= $minPrice ? " and price >= $minPrice" : "";
 $sql .= $maxPrice ? " and price <= $maxPrice" : "";
-
 $sql .= $startDate ? " and (valid_time_start <= '$endDate') and (valid_time_end >= '$startDate')" : "";
 $sql .= $ordertype ? " ORDER BY $ordertype" : "";
 
+// echo $sql;
 //根據商品筆數，取得頁碼資訊
 $product_count = $conn->query($sql)->num_rows;
 //開始的筆數
@@ -90,10 +90,9 @@ $sql .= " LIMIT $start ,10"; //顯示用
 //Query SQL
 $result = $conn->query($sql);
 
-// $sqlCate=" SELECT product *, production_class* FROM product, production_class WHERE product.production_category = production_class.id AND product_type = $type";
-
+// $sqlCate = " SELECT * FROM product_class";
 // $resultCate = $conn->query($sqlCate);
-// echo $sql;
+
 ?>
 
 <!doctype html>
@@ -122,7 +121,7 @@ $result = $conn->query($sql);
             background-color: #FFC845;
         }
 
-        .filterBtn:hover { 
+        .filterBtn:hover {
             color: #222934;
             background-color: #FFC845;
         }
@@ -142,39 +141,15 @@ $result = $conn->query($sql);
             background-color: #FFC845;
         }
 
-        .detailBtn {
+        .lightblueBtn,
+        .lightblueBtn:focus {
             color: #222934;
             background-color: #D5EEEE;
         }
 
-        .detailBtn:hover {
-            color: #fff;
-            background-color: #49586f;
-        }
-
-        .detailBtn:active {
-            color: #fff;
-            background-color: #49586f;
-        }
-
-        .detailBtn:visited {
-            color: #fff;
-            background-color: #49586f;
-        }
-
-        .detailBtn:focus {
-            color: #222934;
-            background-color: #D5EEEE;
-        }
-
-
-        .catBtn {
-            background-color: #D5EEEE;
-            color: #222934;
-            font-size: 1.25rem;
-        }
-
-        .catBtn:hover {
+        .lightblueBtn:active,
+        .lightblueBtn:visited,
+        .lightblueBtn:hover {
             color: #fff;
             background-color: #49586f;
         }
@@ -205,20 +180,19 @@ $result = $conn->query($sql);
             background-color: #49586f;
         }
 
-        .pageBtn {
-            padding: 10px;
-            border: 2px solid #49586f;
-            border-radius: 5px;
+        .darkblueBtn {
+            border-color: #49586f;
             color: #222934;
+            font-size: 16px;
+            margin: 4px 0;
+            margin-right: 0.25vw;
+            letter-spacing: .5px;
+            padding: 4px 12px;
         }
 
-        .pageBtn:active {
-            color: #fff;
-            background-color: #49586f;
-        }
-
-        .pageBtn:hover {
-            color: #fff;
+        .darkblueBtn:hover,
+        .darkblueBtn.current-active {
+            color: #fff !important;
             background-color: #49586f;
         }
 
@@ -421,10 +395,10 @@ $result = $conn->query($sql);
                                 </div>
                             </div>
                             <div class="col-6 row d-flex justify-content-end btn-group align-items-center mt-3">
-                                <a class="col-2 orderBtn" href="allProductList.php?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=1" class="orderBtn <?php if ($order == 1) echo "active" ?>" name="priceOrder ASC">單價↑</a>
-                                <a class="col-2 orderBtn" href="allProductList.php?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=2" class="orderBtn <?php if ($order == 2) echo "active" ?>" name="priceOrder DESC">單價↓</a>
-                                <a class="col-2 orderBtn" href="allProductList.php?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=3" class="orderBtn <?php if ($order == 3) echo "active" ?>" name="launchOrder ASC">上架時間↑</a>
-                                <a class="col-2 orderBtn" href="allProductList.php?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=4" class="orderBtn <?php if ($order == 4) echo "active" ?>" name="launchOrder DESC">上架時間↓</a>
+                                <a class="col-2 orderBtn" href="allProductList.php?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=1" class="darkblueBtn <?php if ($order == 1) echo "active" ?>" name="priceOrder ASC">單價↑</a>
+                                <a class="col-2 orderBtn" href="allProductList.php?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=2" class="darkblueBtn <?php if ($order == 2) echo "active" ?>" name="priceOrder DESC">單價↓</a>
+                                <a class="col-2 orderBtn" href="allProductList.php?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=3" class="darkblueBtn <?php if ($order == 3) echo "active" ?>" name="launchOrder ASC">上架時間↑</a>
+                                <a class="col-2 orderBtn" href="allProductList.php?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=4" class="darkblueBtn <?php if ($order == 4) echo "active" ?>" name="launchOrder DESC">上架時間↓</a>
                             </div>
                         </div>
                         <hr>
@@ -464,7 +438,7 @@ $result = $conn->query($sql);
                                                 <!-- <td class="align-middle text-center"><?= $row["store_id"] ?></td> -->
                                                 <td class="align-middle text-center"><?= $row["id"] ?></td>
                                                 <td class="align-middle text"><?= $row["product_category"] ?></td>
-                                                <td class="align-middle col-2" ><?= $row["name"] ?></td>
+                                                <td class="align-middle col-2"><?= $row["name"] ?></td>
                                                 <td class="align-middle col-2"><?= $row["intro"] ?></td>
                                                 <td class="align-middle"><?= $row["coupon_id"] ?></td>
                                                 <td class="align-middle text-end"><?= $row["price"] ?></td>
@@ -474,7 +448,7 @@ $result = $conn->query($sql);
                                                 <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
                                                 <!-- <td class="align-middle text-center"><?= $row["valid"] ?></td> -->
                                                 <td class="align-middle text-center">
-                                                    <button type="button" class="btn detailBtn" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&type=<?= $row['product_type']?>&id=<?= $row['id'] ?>'">查看</button>
+                                                    <button type="button" class="btn lightblueBtn" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&type=<?= $row['product_type'] ?>&id=<?= $row['id'] ?>'">查看</button>
                                                 </td>
                                             </tr>
                                         <?php endwhile; ?>
@@ -484,7 +458,7 @@ $result = $conn->query($sql);
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination">
                                             <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                                                <a class="pageBtn <?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?= $ordertype ?>"><?= $i ?></a>
+                                                <a class="darkblueBtn <?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?= $ordertype ?>"><?= $i ?></a>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>

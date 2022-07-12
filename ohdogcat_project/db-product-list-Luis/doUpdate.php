@@ -13,7 +13,7 @@ $store_id = "";
 //TO-DO: validate session
 $type = "";
 $name = $_POST["name"];
-// $category = $_POST["product_category"];
+$category = $_POST["category"];
 $intro = $_POST["intro"];
 $price = $_POST["price"];
 // $spec = $_POST["spec"];
@@ -176,16 +176,16 @@ echo $fileSubtotal;
 
 
 $sqlUpdate = "UPDATE product SET name = '$name', intro = '$intro', description = '$description', price = '$price', create_time = '$now', valid_time_start = '$valid_start', valid_time_end = '$valid_end',
-stock_quantity = '$stock', main_photo ='$fileNameC', sub_photo ='$fileSubtotal', coupon_id = '$coupon' WHERE id = '$id'";
+stock_quantity = '$stock', product_category = '$category', main_photo ='$fileNameC', sub_photo ='$fileSubtotal', coupon_id = '$coupon' WHERE id = '$id'";
 
 
-echo $sqlUpdate;
+// echo $sqlUpdate;
 
 $isUpdate = $conn->query($sqlUpdate);
 $conn->close();
 if ($isUpdate === TRUE) {
     echo "資料修改成功";
-    // header("location: productDetail.php?type=$type&id=$id");
+    header("location: productDetail.php?type=$type&id=$id");
 } else {
     echo "Error: " . $sqlUpdate . "<br>" . $conn->error;
     echo "資料更新錯誤";

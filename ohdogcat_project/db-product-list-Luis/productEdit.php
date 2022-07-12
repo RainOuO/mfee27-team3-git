@@ -21,6 +21,8 @@ $product_count = $result->num_rows; //取得資料筆數
 ?>
 
 
+
+
 <!doctype html>
 <html lang="en">
 
@@ -307,15 +309,15 @@ $product_count = $result->num_rows; //取得資料筆數
                                                     // var_dump($rowSub) ;
                                                     array_pop($rowSub);
                                                     foreach ($rowSub as $rowS) : ?>
-                                                     
+
                                                         <?php if ($row["sub_photo"] == '' || $rowS == '') : ?>
                                                             <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
                                                         <?php else : ?>
-                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" id="preview_sub_img2" src="#" alt=""></div>
+                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" id="preview_sub_img" src="#" alt=""></div>
                                                         <?php endif; ?>
                                                     <?php endforeach; ?>
                                                 </div>
-                        
+
                                                 <div class="swiper-pagination"></div>
                                             </div>
                                         </div>
@@ -327,11 +329,11 @@ $product_count = $result->num_rows; //取得資料筆數
                                             </div>
                                             <div class="col-7 row">
                                                 <h6>商品照片</h6>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img0" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -342,10 +344,12 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <label for="">商品分類**</label>
                                         <select name='category' class="form-control" required>
                                             <!-- TO-DO 連動category -->
+
+                                            <option value="none" selected disabled hidden>請重新確認產品分類</option>
                                             <option value='1'>旅遊票券</option>
                                             <option value='2'>活動票券</option>
                                             <option value='3'>餐廳票券</option>
-                                            <option value='4' selected>寵物周邊>寵物外出用品</option>
+                                            <option value='4'>寵物周邊>寵物外出用品</option>
                                             <option value='5'>寵物周邊>寵物飼料</option>
                                             <option value='6'>寵物周邊>寵物玩具</option>
                                             <option value='7'>寵物周邊>寵物保健</option>

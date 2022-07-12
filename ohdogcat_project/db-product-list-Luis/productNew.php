@@ -323,7 +323,7 @@ $type = $_GET["type"];
                                 </div>
                                 <div class="basic-setting col-6">
                                     <label for="">商品名稱**</label>
-                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" >
+                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value=""required >
                                     <label for="">商品分類**</label>
                                     <select name='category' class="form-control" required>
                                         <!-- TO-DO 連動category -->
@@ -338,7 +338,7 @@ $type = $_GET["type"];
                                     <label for="">商品簡述</label>
                                     <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" >
                                     <label for="">商品價格**</label>
-                                    <input type="number" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control" >
+                                    <input type="number" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control" required>
                                     <!-- <label for="">商品規格</label>
                                     <input type="text" name="spec" placeholder="自由增建選項" class="form-control"required> -->
                                     <div class="d-flex mt-2">
@@ -347,11 +347,11 @@ $type = $_GET["type"];
                                     </div>
                                     <hr>
                                     <label for="">上架時間</label>
-                                    <input type="datetime-local" name="valid_start" class="form-control" >
+                                    <input type="datetime-local" name="valid_start" class="form-control" required>
                                     <label for="">下架時間</label>
-                                    <input type="datetime-local" name="valid_end" class="form-control" >
+                                    <input type="datetime-local" name="valid_end" class="form-control" required>
                                     <label for="">優惠券方案使用</label><br>
-                                    <select name='coupon' class="form-control" >
+                                    <select name='coupon' class="form-control" required>
                                         <option value='1'>可搭配折數優惠券</option>
                                         <option value='2'>可搭配現金折價券</option>
                                         <option value='3'>可搭配商品優惠方案</option>

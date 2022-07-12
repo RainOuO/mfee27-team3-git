@@ -277,7 +277,7 @@ $product_count = $result->num_rows; //取得資料筆數
                             <div class="d-flex justify-content-between align-items-center m-2">
                                 <div class="title d-flex mt-2">
                                     <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
-                                    <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
+                                    <h4 class="pt-3">基本設定</h4>
                                 </div>
                                 <div class="crudBox">
                                 <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id?>&category=<?=$row['product_category']?>'">編輯</button>
