@@ -9,7 +9,7 @@
                         </div>
                         <div class="card-content col-8">
                             <p class="card-title">本月營業總額</p>
-                            <h3 class="fs-3  row-10 card-text "><strong>$</strong>978,000<span class="fs-5">元</span></h3>
+                            <h3 class="fs-3  row-10 card-text "><strong>$</strong> <span class="dashboard-data"></span> <span class="fs-5">元</span></h3>
                         </div>
                     </div>
                 </div>
@@ -24,7 +24,7 @@
                         </div>
                         <div class="card-content col-8">
                             <p class="card-title">今日營業總額</p>
-                            <h3 class="fs-3  row-10 card-text "><strong>$</strong>10,000<span class="fs-5">元</span></h3>
+                            <h3 class="fs-3  row-10 card-text "><strong>$</strong> <span class="dashboard-data"></span> <span class="fs-5">元</span></h3>
                         </div>
                     </div>
                 </div>
@@ -40,7 +40,7 @@
                         <div class="card-content col-8">
                             <div class="col">
                                 <p class="row-2 card-title">今日訂單數</p>
-                                <h3 class="fs-3  row-10 card-text ">40<span class="fs-5">單</span></h3>
+                                <h3 class="fs-3  row-10 card-text "><span class="dashboard-data"></span> <span class="fs-5">單</span></h3>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="card-content col-8">
                             <p class="card-title">未處理訂單</p>
-                            <h3 class="fs-3  row-10 card-text ">10<span class="fs-5">封</span></h3>
+                            <h3 class="fs-3  row-10 card-text "><span class="dashboard-data"></span> <span class="fs-5">封</span></h3>
                         </div>
                     </div>
                 </div>
@@ -101,7 +101,7 @@
         <!--/ to do list -->
     </div>
 </div>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     
 </script>
