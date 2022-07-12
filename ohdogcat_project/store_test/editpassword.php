@@ -4,16 +4,60 @@ session_start();
 if (!isset($_SESSION["user"])) {
     header("location:login.php");
 }
-$id = $_SESSION["user"]['account'];
+$accout = $_SESSION["user"]['account'];
 // $id=$_SESSION["user"]['name'];
 // $id=$_SESSION["user"]['id'];
 // $password=$_SESSION["user"]["password"];
 require("db-connect.php");
 
-$sql = "SELECT * FROM store_info WHERE account='$id' ";
+$sql = "SELECT * FROM store_info WHERE account='$accout' ";
 $result = $conn->query($sql);
 $userCount = $result->num_rows;
 
+
+$sql = "SELECT * FROM store_info WHERE account='$accout'"; //判定是帳號 可改成store_id
+$result = $conn->query($sql);
+$userCount = $result->num_rows;
+//////////////   撈商家使用者資料
+$results = $conn->query($sql);
+$row = $result->fetch_assoc(); //撈所有使用者
+$rowss = $results->fetch_all(MYSQLI_ASSOC);
+
+$typeArr = explode(',', $row["store_right"]);
+
+$sqlWHERE = '';
+for ($i = 0; $i < count($typeArr); $i++) {
+    if ($i == 0) {
+        $ALLstore_right = $typeArr[$i];
+        $sqlWHERE .= "id = $ALLstore_right";
+    } else {
+        $ALLstore_right = $typeArr[$i];
+        $sqlWHERE .= " OR id = $ALLstore_right";
+    }
+}
+$sql = "SELECT id, type_name FROM p_type WHERE $sqlWHERE";
+$result = $conn->query($sql);
+$resultType = $conn->query($sql);
+$product_count = $result->num_rows;
+$rows = $result->fetch_all(MYSQLI_ASSOC);
+for ($i = 0; $i < count($rows); $i++) { //更換測欄頁面的地方  記得改~~!! id:1=旅遊 id:2=餐廳
+    switch ($rows[$i]['id']) {
+        case 1:
+            $rows[$i]['href'] = "user1.php";  //更換測欄頁面的地方  記得改~~!!
+            break;
+        case 2:
+            $rows[$i]['href'] = "user2.php";
+            break;
+        case 3:
+            $rows[$i]['href'] = "user3.php";
+            break;
+        case 4:
+            $rows[$i]['href'] = "user4.php";
+            break;
+    } //更換測欄頁面的地方  記得改~~!!
+}
+$store_type = array_column($rows, 'type_name', 'vaild');
+$rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
 ?>
 
 <!doctype html>
@@ -43,10 +87,12 @@ $userCount = $result->num_rows;
             position: relative;
         }
         .btn5{
-            border-radius: 5px;
-            width: 100px;
-            height: 35px;
+            margin: 20px 0 0 0;
             background-color: #FFC845;
+            width: 80px;
+            height: 38px;
+            border-radius: 5px;
+            line-height: 25px;
         }
         
 
@@ -96,22 +142,18 @@ $userCount = $result->num_rows;
                         </button>
                         <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
-                                <ul class="list-unstyled">
+                            <ul class="list-unstyled">
+                                    <!-- 側邊欄位 權限顯示 -->
                                     <li>
-                                        <a href="" class="menu-link">商品總覽</a>
+                                        <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link">旅館票券列表</a>
-                                    </li>
+                                        <?php foreach ($rows as $rowRight) : ?>
                                     <li>
-                                        <a href="" class="menu-link">餐廳票券列表</a>
+                                        <a href="<?= $rowRight['href'] ?>?type=<?= $rowRight['id'] ?>&page=1" class="menu-link"><?= $rowRight['type_name'] ?></a>
                                     </li>
-                                    <li>
-                                        <a href="" class="menu-link">活動票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">實體商品列表</a>
-                                    </li>
+                                <?php endforeach; ?>
+                                    <!-- 側邊欄位 權限顯示 -->
                                 </ul>
                             </div>
                         </div>

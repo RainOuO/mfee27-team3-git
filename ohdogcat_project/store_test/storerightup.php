@@ -4,26 +4,73 @@ session_start();
 if (!isset($_SESSION["user"])) {
     header("location:login.php");
 }
-$id = $_SESSION["user"]['account'];
+$accout = $_SESSION["user"]['account'];
 require("db-connect.php");
 
-$sql = "SELECT * FROM store_info WHERE account='$id' ";
+$sql = "SELECT * FROM store_info WHERE account='$accout' ";
 $result = $conn->query($sql);
 $userCount = $result->num_rows;
 
-$sql = "SELECT * FROM store_info WHERE account='$id' ";
+$sql = "SELECT * FROM store_info WHERE account='$accout' ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 $userCount = $result->num_rows;
 $results = $conn->query($sql);
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
 
-$sql = "SELECT id, type_name FROM p_type";
+
+
+
+
+/////////////////側邊全限欄位code 開始
+
+
+$sql = "SELECT * FROM store_info WHERE account='$accout'"; //判定是帳號 可改成store_id
+$result = $conn->query($sql);
+$userCount = $result->num_rows;
+//////////////   撈商家使用者資料
+$results = $conn->query($sql);
+$row = $result->fetch_assoc(); //撈所有使用者
+$rowss = $results->fetch_all(MYSQLI_ASSOC);
+
+$typeArr = explode(',', $row["store_right"]);
+
+$sqlWHERE = '';
+for ($i = 0; $i < count($typeArr); $i++) {
+    if ($i == 0) {
+        $ALLstore_right = $typeArr[$i];
+        $sqlWHERE .= "id = $ALLstore_right";
+    } else {
+        $ALLstore_right = $typeArr[$i];
+        $sqlWHERE .= " OR id = $ALLstore_right";
+    }
+}
+$sql = "SELECT id, type_name FROM p_type WHERE $sqlWHERE";
 $result = $conn->query($sql);
 $resultType = $conn->query($sql);
+$product_count = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-$store_type = array_column($rows, 'type_name', 'id');
+for ($i = 0; $i < count($rows); $i++) { //更換測欄頁面的地方  記得改~~!! id:1=旅遊 id:2=餐廳
+    switch ($rows[$i]['id']) {
+        case 1:
+            $rows[$i]['href'] = "user1.php";  //更換測欄頁面的地方  記得改~~!!
+            break;
+        case 2:
+            $rows[$i]['href'] = "user2.php";
+            break;
+        case 3:
+            $rows[$i]['href'] = "user3.php";
+            break;
+        case 4:
+            $rows[$i]['href'] = "user4.php";
+            break;
+    } //更換測欄頁面的地方  記得改~~!!
+}
+$store_type = array_column($rows, 'type_name', 'vaild');
 $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
+
+
+////////////////////////////////側邊欄未權限結束
 ?>
 
 <!doctype html>
@@ -53,13 +100,13 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
             position: relative;
         }
         .btn5{
-            border-radius: 5px;
-            width: 100px;
-            height: 35px;
+            margin: 20px 0 0 0;
             background-color: #FFC845;
+            width: 80px;
+            height: 38px;
+            border-radius: 5px;
+            line-height: 25px;
         }
-        
-
         .toastify {
             background: url("./bg_dog-icon.png") 12px center / 50px no-repeat, url('./bg_toast-bg.png') no-repeat center center / cover, #fff !important;
             color: #000;
@@ -92,7 +139,8 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
         margin-bottom: 20px;
        }
        .trip{
-        width: 200px;
+        margin-left: 20px;
+        width: 130px;
         height: 100px;
        }
        .tripinput{
@@ -122,14 +170,18 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                         </button>
                         <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
-                                <ul class="list-unstyled">
-                                <li>
+                            <ul class="list-unstyled">
+                                    <!-- 側邊欄位 權限顯示 -->
+                                    <li>
                                         <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                    <?php if ($store_type == [$row["store_right"]] ) ?>
-                                        <a href="AllProductList.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?=$store_type[$row["store_right"]]?></a>
+                                        <?php foreach ($rows as $rowRight) : ?>
+                                    <li>
+                                        <a href="<?= $rowRight['href'] ?>?type=<?= $rowRight['id'] ?>&page=1" class="menu-link"><?= $rowRight['type_name'] ?></a>
                                     </li>
+                                <?php endforeach; ?>
+                                    <!-- 側邊欄位 權限顯示 -->
                                 </ul>
                             </div>
                         </div>
@@ -243,26 +295,25 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                                 <label class="titles" for="gender">權限更換:</label>
                                 <br>
                                 <div>
-                                <input class="tripinput" type="radio" name="name" value="1">旅遊
-                                    <img class="trip" src="./IMAGES/1075455_airport_baggage_journey_luggage_travelling_icon.svg" alt="">
+                                <input class="tripinput" type="checkbox" name="type_1" value="1">旅遊
+                                    <img class="trip" src="./IMAGES/travel-luggage.png" alt="">
                                     </div>
                                 <br>
                                 <div>
-                                <input class="tripinput" type="radio" name="name" value="2">餐廳
-                                    <img class="trip" src="./IMAGES/111094_eat_restaurant_icon.svg" alt="">
+                                <input class="tripinput" type="checkbox" name="type_2" value="2">餐廳
+                                    <img class="trip" src="./IMAGES/cafe.png" alt="">
                                     </div>
                                 <br>
                                 <div>
-                                <input class="tripinput" type="radio" name="name" value="3">旅館
-                                    <img class="trip" src="./IMAGES/5452468_buildings_holidays_hotel_vacations_icon.svg" alt="">
+                                <input class="tripinput" type="checkbox" name="type_3" value="3">旅館
+                                    <img class="trip" src="./IMAGES/hotel.png" alt="">
                                     </div>
                                 <br>
                                 <div>
-                                <input class="tripinput" type="radio" name="name" value="4">寵物商品
-                                    <img class="trip" src="./IMAGES/logo.svg" alt="">
+                                <input class="tripinput" type="checkbox" name="type_4" value="4">寵物商品
+                                    <img class="trip" src="./IMAGES/pet-house.png" alt="">
                                     </div>
                                 <br>
-                                    
 
                                 <div class="py-2 text-end">
                                     <button type="submit" class="btn5" href="#">儲存</button>

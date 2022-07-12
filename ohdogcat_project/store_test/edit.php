@@ -4,10 +4,10 @@ session_start();
 if (!isset($_SESSION["user"])) {
     header("location:login.php");
 }
-$id = $_SESSION["user"]['account'];
+$accout = $_SESSION["user"]['account'];
 require("db-connect.php");
 
-$sql = "SELECT * FROM store_info WHERE account='$id' ";
+$sql = "SELECT * FROM store_info WHERE account='$accout' ";
 $result = $conn->query($sql);
 $row = $result->fetch_assoc();
 $userCount = $result->num_rows;
@@ -16,13 +16,49 @@ $rowss = $results->fetch_all(MYSQLI_ASSOC);
 
 /////////////// 側邊欄位 join到type 商家權限名稱 
 
-$sql = "SELECT id, type_name FROM p_type";
+$sql = "SELECT * FROM store_info WHERE account='$accout'"; //判定是帳號 可改成store_id
+$result = $conn->query($sql);
+$userCount = $result->num_rows;
+//////////////   撈商家使用者資料
+$results = $conn->query($sql);
+$row = $result->fetch_assoc(); //撈所有使用者
+$rowss = $results->fetch_all(MYSQLI_ASSOC);
+
+$typeArr = explode(',', $row["store_right"]);
+
+$sqlWHERE = '';
+for ($i = 0; $i < count($typeArr); $i++) {
+    if ($i == 0) {
+        $ALLstore_right = $typeArr[$i];
+        $sqlWHERE .= "id = $ALLstore_right";
+    } else {
+        $ALLstore_right = $typeArr[$i];
+        $sqlWHERE .= " OR id = $ALLstore_right";
+    }
+}
+$sql = "SELECT id, type_name FROM p_type WHERE $sqlWHERE";
 $result = $conn->query($sql);
 $resultType = $conn->query($sql);
+$product_count = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-$store_type = array_column($rows, 'type_name', 'id');
+for ($i = 0; $i < count($rows); $i++) { //更換測欄頁面的地方  記得改~~!! id:1=旅遊 id:2=餐廳
+    switch ($rows[$i]['id']) {
+        case 1:
+            $rows[$i]['href'] = "user1.php";  //更換測欄頁面的地方  記得改~~!!
+            break;
+        case 2:
+            $rows[$i]['href'] = "user2.php";
+            break;
+        case 3:
+            $rows[$i]['href'] = "user3.php";
+            break;
+        case 4:
+            $rows[$i]['href'] = "user4.php";
+            break;
+    } //更換測欄頁面的地方  記得改~~!!
+}
+$store_type = array_column($rows, 'type_name', 'vaild');
 $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
-
 ?>
 
 <!doctype html>
@@ -46,13 +82,18 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
         body {
             position: relative;
         }
-        .emailinput,.phoneinput{
+
+        .emailinput,
+        .phoneinput {
             height: 70px;
         }
-       .passwordinput,.accountinput,.nameinput{
-        
-        height: 55px;
-       }
+
+        .passwordinput,
+        .accountinput,
+        .nameinput {
+
+            height: 55px;
+        }
 
         .iconpen {
             margin-top: 5px;
@@ -64,25 +105,27 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
         .photoinputALL {
             margin-top: 25px;
             width: 530px;
-    
+
             font-size: 20px;
             font-weight: 200;
-        
+
         }
-        
+
 
         .imgALL {
             margin-right: 50PX;
         }
-        .table1{
+
+        .table1 {
             width: 650px;
             font-size: 20px;
             font-weight: 200;
 
         }
+
         .input1 {
             margin-top: 8px;
-            
+
         }
 
         .btn1 {
@@ -97,7 +140,6 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
             justify-content: center;
             align-items: center;
             display: flex;
-            /* padding: 8px 10px 20px 18px; */
         }
 
         .btn1:hover {
@@ -106,7 +148,6 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
         }
 
         .btn2 {
-            /* padding: 8px 10px 20px 28px; */
             text-align: center;
             justify-content: center;
             align-items: center;
@@ -124,7 +165,7 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
             color: #000;
         }
 
-        .btn3up{
+        .btn3up {
             margin: 20px 0 0 0;
             background-color: #FFC845;
             width: 80px;
@@ -147,10 +188,11 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
         }
 
         .object-cover {
-            width: 550;
+            width: 550px;
             height: 450px;
             object-fit: cover;
-            margin: auto 50px;
+           margin-right: 80px;
+            margin-left: 50px;
         }
 
         .btnphoto {
@@ -192,18 +234,19 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                         </button>
                         <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
-                                <ul class="list-unstyled">
-                                <li>
+                            <ul class="list-unstyled">
+                                    <!-- 側邊欄位 權限顯示 -->
+                                    <li>
                                         <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                    <?php if ($store_type == [$row["store_right"]] ) ?>
-                                        <a href="AllProductList.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?=$store_type[$row["store_right"]]?></a>
+                                        <?php foreach ($rows as $rowRight) : ?>
+                                    <li>
+                                        <a href="<?= $rowRight['href'] ?>?type=<?= $rowRight['id'] ?>&page=1" class="menu-link"><?= $rowRight['type_name'] ?></a>
                                     </li>
+                                <?php endforeach; ?>
+                                    <!-- 側邊欄位 權限顯示 -->
                                 </ul>
-                            </div>
-                        </div>
-                    </li>
                     <li class="menu-item accordion-header">
                         <button href="" class="menu-button icon-orderlist accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOrderList" aria-expanded="true" aria-controls="collapseOrderList">訂單管理
                             <div class="status-mark"></div>
@@ -301,30 +344,24 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                         </div>
                         <hr>
                         <div class="d-flex my-4">
-
+                                <!-- 學儒教的照片即時更新 -->          <!-- 學儒教的照片即時更新 -->
                             <div class="my-2 imgALL ">
                                 <?php foreach ($rowss as $rowa) : ?>
-                                    <img class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?> 
-                                        src="./IMAGES/3669480_account_circle_ic_icon.svg" alt="">
+                                    <img id="previewUP" class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?> src="./IMAGES/3669480_account_circle_ic_icon.svg" alt="">
                                 <?php else : ?>
-                                    <img src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
+                                    <img id="previewUP" src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
                                 <?php endif; ?>
-                                <form class="photoinputALL" action="doUpdate.php" method="post" enctype="multipart/form-data">
-                                    <input type="hidden" name="max_file_size" value="1024000">
-                                    <div class="mb-2">
-                                        <input class="form-control inputphoto mx-3" type="file" name="myFile">
-                                    </div>
-                                    <!-- <button class="btnphoto mx-2" type="submit">照片儲存</button> -->
-                            <?php endforeach; ?>
+                                    <form  class="photoinputALL" action="doUpdate.php"  method="post" enctype="multipart/form-data">
+                                    <input class="form-control inputphoto mx-5" type="file" onchange="readURL(this)" targetID="previewUP" 
+                                    accept="image/gif, image/jpeg, image/png" type="file" name="myFile" />
+                                  <!-- 學儒教的照片即時更新 -->              <!-- 學儒教的照片即時更新 -->
+
+                                <?php endforeach; ?>
                             </div>
-
-
-                            <?php if ($userCount > 0) :
-                                 ?>
-                                <form  class="form1" action="doUpdate.php" method="POST">
+                            <?php if ($userCount > 0) :?>
+                                <form  action="doUpdate.php" method="POST">
                                     <input name="id" type="hidden" value="<?= $row["id"] ?>">
                                     <table class="table table1">
-
                                         <tr>
                                             <th>店家名稱</th>
                                             <td class="nameinput"><input type="text" name="name" class="form-control input1" value="<?= $row["name"] ?>"></td>
@@ -338,7 +375,7 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                                             <td class="input1 passwordinput">*******</td>
                                         </tr>
                                         <tr>
-                                            <th class="phoneinput" >連絡電話</th>
+                                            <th class="phoneinput">連絡電話</th>
                                             <td><input type="tel" name="phone" class="form-control input1" value="<?= $row["phone"] ?>"></td>
                                         </tr>
                                         <tr>
@@ -348,13 +385,13 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                                         <tr>
                                             <th>
                                                 <label class="title " for="livingn">區域:</label>
-                                            <select name="area">
-                                                <option>北部</option>
-                                                <option>中部</option>
-                                                <option>南部</option>
-                                            </select>
+                                                <select name="area">
+                                                    <option>北部</option>
+                                                    <option>中部</option>
+                                                    <option>南部</option>
+                                                </select>
                                             </th>
-                                            
+
                                             <!-- <th>地址</th> -->
                                             <td>
                                                 <input type="text" name="address" class="form-control input1" value="<?= $row["address"] ?>">
@@ -406,6 +443,37 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
             <?php unset($_SESSION['updates']) ?>
         }
     </script>
+
+
+
+
+
+
+<script>
+
+function readURL(input){
+
+  if(input.files && input.files[0]){
+
+    var imageTagID = input.getAttribute("targetID");
+
+    var reader = new FileReader();
+
+    reader.onload = function (e) {
+
+       var img = document.getElementById(imageTagID);
+
+       img.setAttribute("src", e.target.result)
+
+    }
+
+    reader.readAsDataURL(input.files[0]);
+
+  }
+
+}
+
+</script>
 </body>
 
 </html>

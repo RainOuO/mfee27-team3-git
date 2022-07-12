@@ -3,15 +3,13 @@ session_start();
 if (!isset($_SESSION["user"])) {
     header("location:login.php");
 }
-//session 商家登入帳號
-$id = $_SESSION["user"]['account'];
-///////////假設他是商家id
-// $store_id= 3;
-$storeid = $_SESSION["user"]['store_right']; ///////////////假設他是商家id
-require("db-connect.php");
+$accout = $_SESSION["user"]['account'];
 
+$storeid = $_SESSION["user"]['store_right']; ///////////////假設他是商家id
+require("../db-connect.php");
 ////////////////////////// 撈商家登入帳號 可以改
-$sql = "SELECT * FROM store_info WHERE account='$id'"; //判定是帳號 可改成store_id
+/////////////////撈側邊資訊欄開始
+$sql = "SELECT * FROM store_info WHERE account='$accout'"; //判定是帳號 可改成store_id
 $result = $conn->query($sql);
 $userCount = $result->num_rows;
 //////////////   撈商家使用者資料
@@ -19,21 +17,41 @@ $results = $conn->query($sql);
 $row = $result->fetch_assoc(); //撈所有使用者
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
 
-/////////////// join到type 商家權限名稱 
+$typeArr = explode(',', $row["store_right"]);
 
-$sql = "SELECT id, type_name FROM p_type";
+$sqlWHERE = '';
+for ($i = 0; $i < count($typeArr); $i++) {
+    if ($i == 0) {
+        $ALLstore_right = $typeArr[$i];
+        $sqlWHERE .= "id = $ALLstore_right";
+    } else {
+        $ALLstore_right = $typeArr[$i];
+        $sqlWHERE .= " OR id = $ALLstore_right";
+    }
+}
+$sql = "SELECT id, type_name FROM p_type WHERE $sqlWHERE";
 $result = $conn->query($sql);
 $resultType = $conn->query($sql);
 $product_count = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
-$store_type = array_column($rows, 'type_name', 'id');
+for ($i = 0; $i < count($rows); $i++) { //更換測欄頁面的地方  記得改~~!! id:1=旅遊 id:2=餐廳
+    switch ($rows[$i]['id']) {
+        case 1:
+            $rows[$i]['href'] = "user1.php";  //更換測欄頁面的地方  記得改~~!!
+            break;
+        case 2:
+            $rows[$i]['href'] = "user2.php";
+            break;
+        case 3:
+            $rows[$i]['href'] = "user3.php";
+            break;
+        case 4:
+            $rows[$i]['href'] = "user4.php";
+            break;
+    } //更換測欄頁面的地方  記得改~~!!
+}
+$store_type = array_column($rows, 'type_name', 'vaild');
 $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
-
-//撈權限id
-// $store_right = $_SESSION["user"]['store_right'];
-// $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
-
-
 ?>
 <!doctype html>
 <html lang="en">
@@ -49,12 +67,10 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
     <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/toastify-js"></script>
     <style>
         .userfrom {
-            /* background-color: #f5f6f7; */
             width: 650px;
             line-height: 45px;
             font-size: 20px;
             font-weight: 200;
-
         }
 
         .iconpen {
@@ -103,7 +119,7 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
         }
 
         .object-cover {
-            width: 550;
+            width: 550px;
             height: 450px;
             object-fit: cover;
             margin-right: 80px;
@@ -138,17 +154,20 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                         <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
+                                    <!-- 側邊欄位 權限顯示 -->
                                     <li>
                                         <a href="AllProductList.php" class="menu-link">商品總覽</a>
                                     </li>
                                     <li>
-                                    <?php if ($store_type == [$row["store_right"]] ) ?>
-                                        <a href="AllProductList.php?type=<?= $row['id'] ?>&page=1" class="menu-link"><?=$store_type[$row["store_right"]]?></a>
+                                        <?php foreach ($rows as $rowRight) : ?>
+                                    <li>
+                                        <a href="<?= $rowRight['href'] ?>?type=<?= $rowRight['id'] ?>&page=1" class="menu-link"><?= $rowRight['type_name'] ?></a>
                                     </li>
+                                <?php endforeach; ?>
+                                    <!-- 側邊欄位 權限顯示 -->
                                 </ul>
                             </div>
                         </div>
-                    </li>
                     <li class="menu-item accordion-header">
                         <button href="" class="menu-button icon-orderlist accordion-button collapsed" data-bs-toggle="collapse" data-bs-target="#collapseOrderList" aria-expanded="true" aria-controls="collapseOrderList">訂單管理
                             <div class="status-mark"></div>
@@ -283,29 +302,30 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                                             <th>區域</th>
                                             <td><?= $row["area"] ?></td>
                                         </tr>
-
                                         <th>店鋪權限</th>
                                         <td>
-                                            <class="form-control"><?= $store_type[$row["store_right"]] ?>
+                                            <class="form-control">
+                                                <?php
+                                                foreach ($rows as $rowRight) {
+                                                    echo $rowRight['type_name'] . ' , ';
+                                                }
+                                                ?>
                                         </td>
                                         </tr>
                                         <tr>
                                             <th>地址</th>
                                             <td><?= $row["address"] ?></td>
                                         </tr>
-
                                     </table>
                                     <div class="py-2">
                                         <!-- <button type="submit" class="btn btn-info" href="editttttt2222">儲存</button> -->
                                     </div>
                                 </form>
-
                             <?php else : ?>
                                 沒有該使用者
                             <?php endif; ?>
                         </div>
                         </div>
-
                     </main>
                 </div>
             </div>
@@ -316,7 +336,6 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
     </script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
-
     <script>
         if ('<?= $_SESSION['update'] ?>' == 'success') {
             Toastify({
@@ -338,6 +357,31 @@ $rowType = $resultType->fetch_all(MYSQLI_ASSOC); //指定撈出p_type的權限
                 onClick: function() {} // Callback after click
             }).showToast();
             <?php unset($_SESSION['update']) ?>
+        }
+    </script>
+
+
+    <script>
+        function readURL(input) {
+
+            if (input.files && input.files[0]) {
+
+                var imageTagID = input.getAttribute("targetID");
+
+                var reader = new FileReader();
+
+                reader.onload = function(e) {
+
+                    var img = document.getElementById(imageTagID);
+
+                    img.setAttribute("src", e.target.result)
+
+                }
+
+                reader.readAsDataURL(input.files[0]);
+
+            }
+
         }
     </script>
 </body>
