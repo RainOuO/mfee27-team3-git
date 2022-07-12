@@ -301,6 +301,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                             <div class="swiper-wrapper">
                                                 <?php
                                                 $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
+                                                // var_dump($rowSub) ;
                                                 array_pop($rowSub);
                                                 foreach ($rowSub as $rowS) : ?>
                                                     <?php if ($row["sub_photo"] == '' || $rowS == '') : ?>

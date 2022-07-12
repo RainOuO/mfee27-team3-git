@@ -291,8 +291,8 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <div class="photo-window d-flex flex-column  ">
                                             <div class="cover-photo m-3">
                                                 <?php if ($row["main_photo"] == '') : ?>
-                    
-                                                    <img src="./IMAGES/doglogo.png" alt="" >
+
+                                                    <img src="./IMAGES/doglogo.png" alt="">
                                                 <?php else : ?>
                                                     <!-- <img src="./IMAGES/doglogo.png" alt="" id="preview_cover_img" src="#"> -->
                                                     <img src="./upload_main_photo/<?= $row['main_photo'] ?>" id="preview_cover_img" src="#" alt="">
@@ -301,13 +301,13 @@ $product_count = $result->num_rows; //取得資料筆數
                                             <div class="swiper mySwiper">
                                                 <div class="swiper-wrapper">
                                                     <?php if ($row["sub_photo"] == '') : ?>
-                                                        <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="" >
+                                                        <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
                                                     <?php else : ?>
                                                         <?php
                                                         $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
-                                                        array_pop($rowSub);
+                                                        array_pop($rowSub);                            
                                                         foreach ($rowSub as $rowS) : ?>
-                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>"id="preview_sub_img"src="#"  alt=""></div>
+                                                           <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" id="preview_sub_img" src="#" alt=""></div>
                                                         <?php endforeach; ?>
                                                     <?php endif; ?>
                                                 </div>
@@ -315,12 +315,18 @@ $product_count = $result->num_rows; //取得資料筆數
                                             </div>
                                         </div>
                                         <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                            <div class="col-6">
+                                            <div class="col-5 ">
+
+                                                <h6>封面照片</h6>
                                                 <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
                                             </div>
-                                            <div class="col-6">
-                                                <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
-                                                <input class="form-control" type="file" name="sub_photo" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
+                                            <div class="col-7 row">
+                                                <h6>商品照片</h6>
+                                                1<div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onclick="closeSubPhoto()" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
+                                                2<div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
+                                                3<div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
+                                                4<div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
+                                                5<div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img5" accept="image/gif, image/jpeg, image/png"></div>
                                             </div>
                                         </div>
                                     </div>
