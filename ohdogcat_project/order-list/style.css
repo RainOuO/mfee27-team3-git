@@ -9,6 +9,6 @@
 }
 
 /* offcanvas */
-.offcanvas .dropdown-toggle::after {
+.offcanvas .dropdown-toggle::after, table .dropdown-toggle::after {
     color: #FFF;
 };

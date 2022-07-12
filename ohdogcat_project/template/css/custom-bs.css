@@ -29,8 +29,3 @@ button, button:active, button:focus {
     cursor: pointer;
 }
 
-/* #button-area .btn-outline-secondary.dropdown-toggle:active, #button-area .btn-outline-secondary.dropdown-toggle:hover,#button-area .btn-outline-secondary.dropdown-toggle:focus {
-    border-color: var(--bs-btn-border-color)!important;
-    color: var(--bs-btn-border-color)!important;
-    background-color: var(--bs-btn-hover-color)!important;
-} */

@@ -84,33 +84,49 @@ if($result_count>0) {
             case 0:
                 $rows[$i]['status_css'] = [
                     "bg" => 'bg-secondary opacity-25',
-                    "text" => 'text-secondary'
+                    "text" => 'text-white',
+                    "color" => "secondary",
+                    "rounded" => "rounded",
+                    "display" => "invisible"
                 ];
                 $rows[$i]['status_text'] = "已取消";
+                $rows[$i]['next_status'] = "";
                 $rows[$i]['activeOrder'] = false;
                 break;
             case 1:
                 $rows[$i]['status_css'] = [
                     "bg" => 'bg-danger',
-                    "text" => 'text-danger'
+                    "text" => 'text-danger',
+                    "color" => "danger",
+                    "rounded" => "rounded-start",
+                    "display" => "d-inline-block" 
                 ];
                 $rows[$i]['status_text'] = "未確認";
+                $rows[$i]['next_status'] = "處理中";
                 $rows[$i]['activeOrder'] = true;
                 break;
             case 2:
                 $rows[$i]['status_css'] = [
                     "bg" => 'bg-warning',
-                    "text" => 'text-warning'
+                    "text" => 'text-warning',
+                    "color" => "warning",
+                    "rounded" => "rounded-start",
+                    "display" => "d-inline-block"        
                 ];
                 $rows[$i]['status_text'] = "處理中";
+                $rows[$i]['next_status'] = "已結單";
                 $rows[$i]['activeOrder'] = true;
                 break;
             case 3:
                 $rows[$i]['status_css'] = [
                     "bg" => 'bg-success',
-                    "text" => 'text-success'
+                    "text" => 'text-white',
+                    "color" => "success",
+                    "rounded" => "rounded",
+                    "display" => "invisible"
                 ];
                 $rows[$i]['status_text'] = "已結單";
+                $rows[$i]['next_status'] = "";
                 $rows[$i]['activeOrder'] = false;
                 break;
         }
