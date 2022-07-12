@@ -48,7 +48,7 @@ if ($_FILES["main_photo"]["error"] == 0 && $_FILES["sub_photo"]["error"] == 0) {
         echo $sqlUpdateSub;
         if ($conn->query($sqlUpdate) === TRUE && $conn->query($sqlUpdateSub) === TRUE) {
             echo "資料上傳成功";
-            // header("location: productDetail.php?type=$type&id=$id");
+            header("location: productDetail.php?type=$type&id=$id");
         } else {
             echo "Error: " . $sqlUpdate .$sqlUpdateSub. "<br>" . $conn->error;
         }

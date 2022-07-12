@@ -291,37 +291,40 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <div class="photo-window d-flex flex-column  ">
                                             <div class="cover-photo m-3">
                                                 <?php if ($row["main_photo"] == '') : ?>
-                                                    <img src="./IMAGES/doglogo.png" alt="" id="preview_cover_img" src="#">
+                    
+                                                    <img src="./IMAGES/doglogo.png" alt="" >
                                                 <?php else : ?>
-                                                    <img src="./upload_main_photo/<?= $row['main_photo'] ?>" alt="">
+                                                    <!-- <img src="./IMAGES/doglogo.png" alt="" id="preview_cover_img" src="#"> -->
+                                                    <img src="./upload_main_photo/<?= $row['main_photo'] ?>" id="preview_cover_img" src="#" alt="">
                                                 <?php endif; ?>
                                             </div>
                                             <div class="swiper mySwiper">
                                                 <div class="swiper-wrapper">
                                                     <?php if ($row["sub_photo"] == '') : ?>
-                                                        <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" id="preview_sub_img" alt="" src="#">
+                                                        <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="" >
                                                     <?php else : ?>
                                                         <?php
                                                         $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
                                                         array_pop($rowSub);
-                                                        // var_dump($rowSub);
                                                         foreach ($rowSub as $rowS) : ?>
-                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" alt=""></div>
+                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>"id="preview_sub_img"src="#"  alt=""></div>
                                                         <?php endforeach; ?>
                                                     <?php endif; ?>
                                                 </div>
                                                 <div class="swiper-pagination"></div>
                                             </div>
                                         </div>
-                                    </div>
-                                    <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                        <div class="col-6">
-                                            <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
+                                        <div class="row photo-upload mt-3 d-flex justify-content-center">
+                                            <div class="col-6">
+                                                <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
+                                            </div>
+                                            <div class="col-6">
+                                                <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
+                                                <input class="form-control" type="file" name="sub_photo" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
+                                            </div>
                                         </div>
-                                        <div class="col-6">
-                                            <input class="form-control" type="file" name="sub_photo" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
-                                        </div>
                                     </div>
+
                                     <div class="basic-setting col-6">
                                         <label for="">商品名稱**</label>
                                         <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="<?= $row['name'] ?>" required>

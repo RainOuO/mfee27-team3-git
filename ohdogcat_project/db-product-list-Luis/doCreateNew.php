@@ -34,40 +34,22 @@ if ($_FILES["main_photo"]["error"] == 0 && $_FILES["sub_photo"]["error"] == 0) {
         // //TO-DO
         $fileNameC = $_FILES["main_photo"]["name"];
         $fileNameS = $_FILES["sub_photo"]["name"];
-        // $sub_photo =  (CONCAT('$fileNameS,'));
         // $sqlPhoto = "INSERT INTO  product ( main_photo, sub_photo ) VALUE ('$fileNameC','$fileNameS,') ";
-        // $sqlCreateSub = "INSERT INTO  product ( sub_photo ) VALUE (CONCAT($fileNameS,))";
-
-        $now = date('Y-m-d H:i:s');
-        $sqlCreate = "INSERT INTO product (name, store_id, product_type, intro, description ,price, 
-        product_category, create_time, main_photo, valid_time_start, valid_time_end, 
-        stock_quantity, coupon_id, valid) VALUE('$name','$store_id', '$type', '$intro','$description','$price',
-        '$category','$now', '$fileNameC','$valid_start','$valid_end','$stock','$coupon',1)";
-        if ($conn->query($sqlCreate) === TRUE) {
-            echo "商品新增成功";
-            // header("location: allProductList.php?type=$type&page=1");
-        } else {
-            echo "Error: " . $sqlCreateSub .$sqlCreate."<br>" . $conn->error;
-        }
+        $sqlPhoto = "INSERT INTO  product ( main_photo, sub_photo ) VALUE ('$fileNameC','$fileNameS')";
     } else {
         echo "照片建立錯誤";
     };
 }
+$cover = $main_photo["name"];
+$sub = $sub_photo["name"];
+$sqlCreate = "INSERT INTO product (name, store_id, product_type, intro, description ,price, product_category, create_time, main_photo, sub_photo, valid_time_start, valid_time_end, 
+stock_quantity, coupon_id, valid) 
+VALUE('$name','$store_id', '$type', '$intro','$description','$price','$category','$now', '$cover','$sub,','$valid_start','$valid_end','$stock','$coupon',1)";
+$isCreate = $conn->query($sqlCreate) === TRUE;
+$conn->close();
+if ($isCreate) {
 
-// $cover = $main_photo["name"];
-// $sub = $sub_photo["name"];
-//寫入資料庫
-
-// $sqlCreate = "INSERT INTO product (name, store_id, product_type, intro, description ,price, product_category, create_time, main_photo, valid_time_start, valid_time_end, 
-// stock_quantity, coupon_id, valid) 
-// VALUE('$name','$store_id', '$type', '$intro','$description','$price','$category','$now', '$fileNameC','$valid_start','$valid_end','$stock','$coupon',1)";
-
-// // echo $sqlCreate;
-
-// $isCreate = $conn->query($sqlCreate) === TRUE;
-// $conn->close();
-// if ($isCreate) {
-//     header("location: allProductList.php?type=$type&page=1");
-// } else {
-//     echo "帳號建立錯誤" . $conn->error;
-// }
+    // header("location: allProductList.php?type=$type&page=1");
+} else {
+    echo "帳號建立錯誤" . $conn->error;
+}

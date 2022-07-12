@@ -300,7 +300,7 @@ $type = $_GET["type"];
                                         </div>
                                         <div class="col-6">
                                             <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
-                                            <input class="form-control" type="file" name="sub_photo[]" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
+                                            <input class="form-control" type="file" name="sub_photo" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
                                     </div>
                                 </div>
