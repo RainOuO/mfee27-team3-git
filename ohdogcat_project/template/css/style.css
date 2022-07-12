@@ -371,6 +371,7 @@ a {
 }
 
 
+
 .detailBtn, .detailBtn:active, .detailBtn:focus {
     color: #222934;
     background-color: #D5EEEE;
@@ -425,8 +426,6 @@ a {
     border: 2px solid #49586f;
     border-radius: 5px;
     color: #222934;
-    /* margin: 2px; */
-
 }
 
 .pageBtn:hover {
@@ -444,17 +443,14 @@ td {
     padding: 12px 0!important;
 }
 
-table{table-layout:fixed;word-break:break-all;}
-
-
-/* offcanvas */
-.offcanvas {
-    --bs-offcanvas-width: 80%;
-    max-width: 1600px;
+table{
+    table-layout:fixed;
+    word-break:break-all;
 }
 
-#productList {
-    overflow-y: scroll;
-}
+
+
+
+
 
 

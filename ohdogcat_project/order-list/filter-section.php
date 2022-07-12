@@ -57,7 +57,7 @@
         </div>
     </div>
     <div class="dropdown-left d-flex justify-content-end flex-shrink-0" style="width: 140px;">
-        <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownCenterBtn" data-bs-toggle="dropdown"
+        <button class="btn btn-outline-secondary border border-secondary dropdown-toggle" type="button" id="dropdownCenterBtn" data-bs-toggle="dropdown"
             aria-expanded="false">
             <?=(!isset($_GET['sort'])||empty($_GET['sort']))?'訂單排序':(($order == 'DESC')? ($sort_text."↑"):($sort_text."↓"))?>
         </button>

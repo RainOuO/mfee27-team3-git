@@ -41,18 +41,24 @@ switch($rowOrderStatus['status']) {
     case 1:
         $_SESSION["order-list"][$index]['status_css'] = [
             "bg" => 'bg-danger',
-            "text" => 'text-danger'
+            "text" => 'text-danger',
+            "offCanvas" => 'danger',
         ];
         $_SESSION["order-list"][$index]['status_text'] = "未確認";
         $_SESSION["order-list"][$index]['activeOrder'] = true;
+        $_SESSION["order-list"][$index]['nextStatus'] = '處理中';
         break;
     case 2:
         $_SESSION["order-list"][$index]['status_css'] = [
             "bg" => 'bg-warning',
-            "text" => 'text-warning'
+            "text" => 'text-warning',
+            "offCanvas" => 'warning',
+            "nextStatus" => '已結單'
         ];
         $_SESSION["order-list"][$index]['status_text'] = "處理中";
         $_SESSION["order-list"][$index]['activeOrder'] = true;
+        $_SESSION["order-list"][$index]['nextStatus'] = '已結單';
+
         break;
     case 3:
         $_SESSION["order-list"][$index]['status_css'] = [

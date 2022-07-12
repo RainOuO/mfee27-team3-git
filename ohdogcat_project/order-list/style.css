@@ -1,0 +1,14 @@
+/* offcanvas */
+.offcanvas {
+    --bs-offcanvas-width: 80%;
+    max-width: 1600px;
+}
+
+#productList {
+    overflow-y: scroll;
+}
+
+/* offcanvas */
+.offcanvas .dropdown-toggle::after {
+    color: #FFF;
+};

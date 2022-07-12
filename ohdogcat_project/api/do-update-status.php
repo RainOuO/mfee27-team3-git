@@ -5,8 +5,9 @@ session_start();
 $order_id = $_POST['id'];
 $index = $_POST['index'];
 $status = $_POST['status'];
+$newStatus =  $status+1;
 
-$sql = "UPDATE order_product SET status = 0 WHERE id = $order_id";
+$sql = "UPDATE order_product SET status = $newStatus WHERE id = $order_id";
 if( $conn->query($sql) === TRUE ){
     $sqlOrderItem = "SELECT status FROM order_product WHERE id = $order_id";
     $resultOrderItem = $conn->query($sqlOrderItem);
@@ -45,7 +46,7 @@ if( $conn->query($sql) === TRUE ){
     };
     
     $now = date('Y-m-d H:i:s');
-    $sqlLog = "INSERT INTO order_product_status (status_before, status, update_time) VALUES ('$status', 0, '$now')";
+    $sqlLog = "INSERT INTO order_product_status (status_before, status, update_time) VALUES ('$status', $newStatus, '$now')";
     if ($conn->query($sqlLog) === TRUE) {
         $data = [
             "data" => [
