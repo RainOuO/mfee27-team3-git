@@ -72,7 +72,7 @@ $type = $_GET["type"];
             min-width: 350px;
             width: 100%;
             object-fit: contain;
-        
+
 
         }
 
@@ -264,7 +264,7 @@ $type = $_GET["type"];
                             <h2>商品內容管理</h2>
                         </div>
                         <form action="doCreateNew.php" method="post" enctype="multipart/form-data">
-                        <input type="hidden" name="type" value="<?= $type ?>" />
+                            <input type="hidden" name="type" value="<?= $type ?>" />
                             <div class="d-flex justify-content-between align-items-center m-2">
                                 <div class="title d-flex mt-2">
                                     <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
@@ -299,7 +299,8 @@ $type = $_GET["type"];
                                             <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
                                         <div class="col-6">
-                                            <input class="form-control" type="file" name="sub_photo" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
+                                            <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
+                                            <input class="form-control" type="file" name="sub_photo[]" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
                                     </div>
                                 </div>
@@ -308,13 +309,15 @@ $type = $_GET["type"];
                                     <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" required>
                                     <label for="">商品分類**</label>
                                     <select name='category' class="form-control" required>
-                                        <option value='0'>旅遊票券</option>
-                                        <option value='1'>活動票券</option>
-                                        <option value='2' selected>餐廳票券</option>
-                                        <option value='3'>寵物周邊</option>
-                                        <option value='4'>寵物服飾</option>
-                                        <option value='5'>寵物食品</option>
-                                    </select>
+                                            <!-- TO-DO 連動category -->
+                                            <option value='1'>旅遊票券</option>
+                                            <option value='2'>活動票券</option>
+                                            <option value='3'>餐廳票券</option>
+                                            <option value='4'>寵物周邊>寵物外出用品</option>
+                                            <option value='4'>寵物周邊>寵物飼料</option>
+                                            <option value='5'>寵物周邊>寵物玩具</option>
+                                            <option value='5'>寵物周邊>寵物保健</option>
+                                        </select>
                                     <label for="">商品簡述</label>
                                     <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" required>
                                     <label for="">商品價格**</label>
@@ -410,8 +413,6 @@ $type = $_GET["type"];
                 reader.readAsDataURL(input.files[0]);
             }
         }
-        
-
     </script>
     <script>
         //多張照片上傳預覽

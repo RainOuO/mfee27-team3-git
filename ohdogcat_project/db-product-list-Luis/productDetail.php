@@ -305,8 +305,14 @@ $product_count = $result->num_rows; //取得資料筆數
                                                     <?php
                                                     $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
                                                     array_pop($rowSub);
-                                                    // var_dump($rowSub);
-                                                    foreach ($rowSub as $rowS) : ?>
+                                                    var_dump($rowSub);
+                                                    foreach ($rowSub as $rowS) :
+                                                        echo $rowS;
+                                                    
+                            
+                            
+                                                    ?>
+                                                    
                                                         <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" alt=""></div>
                                                     <?php endforeach; ?>
                                                 <?php endif; ?>

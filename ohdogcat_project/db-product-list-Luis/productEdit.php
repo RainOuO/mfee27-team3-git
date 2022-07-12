@@ -273,7 +273,7 @@ $product_count = $result->num_rows; //取得資料筆數
                         </div>
                         <?php if ($product_count > 0) :
                             $row = $result->fetch_assoc() ?>
-                            <form action="doUpdate.php" method="post">
+                            <form action="doUpdate.php" method="post" enctype="multipart/form-data">
                                 <input type="hidden" name="id" value="<?= $id ?>" />
                                 <div class="d-flex justify-content-between align-items-center m-2">
                                     <div class="title d-flex mt-2">
@@ -328,12 +328,13 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <label for="">商品分類**</label>
                                         <select name='category' class="form-control" required>
                                             <!-- TO-DO 連動category -->
-                                            <option value='0'>旅遊票券</option>
-                                            <option value='1'>活動票券</option>
-                                            <option value='2' selected>餐廳票券</option>
-                                            <option value='3'>寵物周邊</option>
-                                            <option value='4'>寵物服飾</option>
-                                            <option value='5'>寵物食品</option>
+                                            <option value='1'>旅遊票券</option>
+                                            <option value='2'>活動票券</option>
+                                            <option value='3'>餐廳票券</option>
+                                            <option value='4'>寵物周邊>寵物外出用品</option>
+                                            <option value='4'>寵物周邊>寵物飼料</option>
+                                            <option value='5'>寵物周邊>寵物玩具</option>
+                                            <option value='5'>寵物周邊>寵物保健</option>
                                         </select>
                                         <label for="">商品簡述**</label>
                                         <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" value="<?= $row['intro'] ?>" required>
