@@ -10,7 +10,7 @@ $user_id = $_GET['user_id'];
 $store_id = $_SESSION['user']['store_id'];
 
 // 抓取 letter資料表內容，且只有 user_id AND $store_id資料
-$sql = "SELECT * FROM letter where user_id = '$user_id' AND store_id = '$store_id'";
+$sql = "SELECT * FROM letter where user_id = '$user_id' AND (store_id = '$store_id' OR store_id IS NULL)";
 $result = $conn->query($sql);
 $letterCount = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -45,31 +45,42 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
     main{
         overflow: hidden;
     }
-    .filterBtn {
-        color: #222934;
-        background-color: #FFC845;
-    }
-
-    .filterBtn:hover {
-        color: #222934;
-        background-color: #f1daa4;
-    }
-
-    .filterBtn:active {
-        color: #222934;
-        background-color: #FFC845;
-    }
-
-    .filterBtn:visited {
-        color: #222934;
-        background-color: #FFC845;
-    }
-
+    .filterBtn,
+    .filterBtn:active,
     .filterBtn:focus {
         color: #222934;
         background-color: #FFC845;
+        border: 0;
+        transition: all .3s;
     }
-    </style>
+
+    .filterBtn:hover {  
+        color: #222934;
+        background-color: #ffe3a1;
+    }
+
+
+    .filterBtn:visited {
+        color: #222934;
+    background-color: #FFC845;
+    }
+
+    .text-word-break{
+        word-break: break-all;
+        min-width: 50px;
+        max-width: 200px;
+    }
+
+    .object-cover{
+        object-fit: cover;
+    }
+
+    .stickers{
+        border: 1px solid #ccc;;
+        border-radius: 50%;
+        width: 70%;
+    }
+</style>
 
 </head>
 
@@ -203,8 +214,12 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
                             <?php foreach ($rows as $row) : ?>
                                 <div class="card mb-3" style="max-width: auto;">
                                     <div class="row g-0">
-                                        <div class="col-md-1">
-                                            <img class="stickers" src="tray_large.webp" class="img-fluid rounded-start" alt="...">
+                                        <div class="col-md-1 d-flex justify-content-center align-items-center object-cover">
+                                            <?php if($row['reply_status'] == 1): ?>
+                                                <img class="stickers" src="../images/profile-user.png" class="img-fluid rounded-start" alt="...">
+                                            <?php else: ?>
+                                                <img class="stickers" src="../images/01.png" class="img-fluid rounded-start" alt="...">
+                                            <?php endif; ?>
                                         </div>
                                         <div class="col-md-1">
                                             <?php if($row['reply_status'] == 1){echo $rowsUserName['name'];}else{echo $rowsStoreName['name'];} echo "<br>" . $row['time']; ?>
@@ -223,10 +238,11 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
                         <hr>
                         <form action="doReply.php" method="post">
                             <input name="user_id" type="hidden" value="<?= $user_id ?>">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message" required></textarea>
+                            <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" name="message" required placeholder="請輸入訊息" onkeydown="if(event.keyCode==32||event.keyCode==13){return false;}"></textarea>
+                            <div class="error"></div>
                             <div class="row mt-2 g-2 justify-content-end">
                                 <div class="col-2">
-                                    <a class="btn filterBtn" href="index.php">返回</a>
+                                    <input class="btn filterBtn" type ="button" onclick="javascript:location.href='index.php'" value="返回"></input>
                                     <button class="btn filterBtn" type="submit">送出</button>
                                 </div>
                             </div>

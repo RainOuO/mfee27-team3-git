@@ -5,6 +5,12 @@
 
 }
 
+.single-ellipsis {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
 .catBtn {
     background-color: #D5EEEE;
     color: #222934;
@@ -14,10 +20,6 @@
 .catBtn:hover {
     color: #fff;
     background-color: #49586f;
-}
-
-.searchBtn {
-    background-color: #FFC845;
 }
 
 .orderBtn {
@@ -41,27 +43,20 @@
 
 }
 
-.filterBtn {
+.filterBtn, .filterBtn:active, .filterBtn:focus {
     color: #222934;
     background-color: #FFC845;
-}
+    border: 0;
+    transition: all .3s;
+    }
 
-.filterBtn:hover {
+    .filterBtn:hover {
+    color: #222934;
+    background-color: #ffe3a1;
+    }
+
+
+    .filterBtn:visited {
     color: #222934;
     background-color: #FFC845;
-}
-
-.filterBtn:active {
-    color: #222934;
-    background-color: #f1daa4;
-}
-
-.filterBtn:visited {
-    color: #222934;
-    background-color: #FFC845;
-}
-
-.filterBtn:focus {
-    color: #222934;
-    background-color: #FFC845;
-}
+    }
