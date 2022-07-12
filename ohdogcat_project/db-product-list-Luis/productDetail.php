@@ -299,17 +299,16 @@ $product_count = $result->num_rows; //取得資料筆數
                                         </div>
                                         <div class="swiper mySwiper mt-2">
                                             <div class="swiper-wrapper">
-                                                <?php if ($row["sub_photo"] == '') : ?>
-                                                    <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
-                                                <?php else : ?>
-                                                    <?php
-                                                    $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
-                                                    array_pop($rowSub);
-                                                    foreach ($rowSub as $rowS) :
-                                                    ?>
+                                                <?php
+                                                $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
+                                                array_pop($rowSub);
+                                                foreach ($rowSub as $rowS) : ?>
+                                                    <?php if ($row["sub_photo"] == '' || $rowS == '') : ?>
+                                                        <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
+                                                    <?php else : ?>
                                                         <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" alt=""></div>
-                                                    <?php endforeach; ?>
-                                                <?php endif; ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
                                             </div>
                                             <div class="swiper-pagination"></div>
                                         </div>

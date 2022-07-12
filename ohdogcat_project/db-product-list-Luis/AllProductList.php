@@ -122,7 +122,7 @@ $result = $conn->query($sql);
             background-color: #FFC845;
         }
 
-        .filterBtn:hover {
+        .filterBtn:hover { 
             color: #222934;
             background-color: #FFC845;
         }

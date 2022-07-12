@@ -133,6 +133,16 @@ $type = $_GET["type"];
             object-fit: contain;
             border: 1px solid lightgrey;
         }
+
+        .a-upload input {
+            position: absolute;
+            font-size: 100px;
+            right: 0;
+            top: 0;
+            opacity: 0;
+            filter: alpha(opacity=0);
+            cursor: pointer
+        }
     </style>
 </head>
 
@@ -284,10 +294,11 @@ $type = $_GET["type"];
                                         </div>
                                         <div class="swiper mySwiper">
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img" src="#"></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img" src="#"></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img" src="#"></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img" src="#"></div>
+                                                <div class="swiper-slide photo1">1<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img1" src="#"></div>
+                                                <div class="swiper-slide photo1">2<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img2" src="#"></div>
+                                                <div class="swiper-slide photo1">3<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img3" src="#"></div>
+                                                <div class="swiper-slide photo1">4<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img4" src="#"></div>
+                                                <div class="swiper-slide photo1">5<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img5" src="#"></div>
                                                 <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_imgs" src="#"></div> -->
                                             </div>
                                             <div class="swiper-pagination"></div>
@@ -295,33 +306,40 @@ $type = $_GET["type"];
                                     </div>
                                     <!-- 圖片上傳UI位置 -->
                                     <div class="row photo-upload mt-3 d-flex justify-content-center">
-                                        <div class="col-6">
+                                        <div class="col-5 ">
+                                            
+                                            <h6>封面照片</h6>
                                             <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
-                                        <div class="col-6">
-                                            <input type="hidden" name="MAX_FILE_SIZE" value="2097152">
-                                            <input class="form-control" type="file" name="sub_photo" multiple onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png">
+                                        <div class="col-7 row">
+                                            <h6>商品照片</h6>
+                                            
+                                            1<div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
+                                            2<div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
+                                            3<div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
+                                            4<div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
+                                            5<div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img5" accept="image/gif, image/jpeg, image/png"></div>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="basic-setting col-6">
                                     <label for="">商品名稱**</label>
-                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" required>
+                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" >
                                     <label for="">商品分類**</label>
                                     <select name='category' class="form-control" required>
-                                            <!-- TO-DO 連動category -->
-                                            <option value='1'>旅遊票券</option>
-                                            <option value='2'>活動票券</option>
-                                            <option value='3'>餐廳票券</option>
-                                            <option value='4'>寵物周邊>寵物外出用品</option>
-                                            <option value='4'>寵物周邊>寵物飼料</option>
-                                            <option value='5'>寵物周邊>寵物玩具</option>
-                                            <option value='5'>寵物周邊>寵物保健</option>
-                                        </select>
+                                        <!-- TO-DO 連動category -->
+                                        <option value='1'>旅遊票券</option>
+                                        <option value='2'>活動票券</option>
+                                        <option value='3'>餐廳票券</option>
+                                        <option value='4'>寵物周邊>寵物外出用品</option>
+                                        <option value='4'>寵物周邊>寵物飼料</option>
+                                        <option value='5'>寵物周邊>寵物玩具</option>
+                                        <option value='5'>寵物周邊>寵物保健</option>
+                                    </select>
                                     <label for="">商品簡述</label>
-                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" required>
+                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" >
                                     <label for="">商品價格**</label>
-                                    <input type="number" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control" required>
+                                    <input type="number" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control" >
                                     <!-- <label for="">商品規格</label>
                                     <input type="text" name="spec" placeholder="自由增建選項" class="form-control"required> -->
                                     <div class="d-flex mt-2">
@@ -330,11 +348,11 @@ $type = $_GET["type"];
                                     </div>
                                     <hr>
                                     <label for="">上架時間</label>
-                                    <input type="datetime-local" name="valid_start" class="form-control" required>
+                                    <input type="datetime-local" name="valid_start" class="form-control" >
                                     <label for="">下架時間</label>
-                                    <input type="datetime-local" name="valid_end" class="form-control" required>
+                                    <input type="datetime-local" name="valid_end" class="form-control" >
                                     <label for="">優惠券方案使用</label><br>
-                                    <select name='coupon' class="form-control" required>
+                                    <select name='coupon' class="form-control" >
                                         <option value='0'>全站周年慶</option>
                                         <option value='1'>父親節活動</option>
                                         <option value='2'>兒童節寵愛牠</option>
