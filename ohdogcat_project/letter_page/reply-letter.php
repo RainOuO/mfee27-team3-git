@@ -41,6 +41,35 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
     <link rel="stylesheet" href="<?= $css ?>">
+    <style>
+    main{
+        overflow: hidden;
+    }
+    .filterBtn {
+        color: #222934;
+        background-color: #FFC845;
+    }
+
+    .filterBtn:hover {
+        color: #222934;
+        background-color: #FFC845;
+    }
+
+    .filterBtn:active {
+        color: #222934;
+        background-color: #FFC845;
+    }
+
+    .filterBtn:visited {
+        color: #222934;
+        background-color: #FFC845;
+    }
+
+    .filterBtn:focus {
+        color: #222934;
+        background-color: #FFC845;
+    }
+    </style>
 
 </head>
 
@@ -179,7 +208,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                             <img class="stickers" src="tray_large.webp" class="img-fluid rounded-start" alt="...">
                                         </div>
                                         <div class="col-md-1">
-                                            <?= $row['user_id'] . "<br>" . $row['time'] ?>
+                                            <?php if($row['reply_status'] == 1){echo "奧客" . $row['user_id'];}else{echo "店家" . $row['store_id'];} echo "<br>" . $row['time']; ?>
                                         </div>
                                         <div class="col-md-auto">
                                             <div class="card-body">
@@ -196,11 +225,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <form action="doReply.php" method="post">
                             <?= $user_id ?>
                             <input name="user_id" type="hidden" value="<?= $user_id ?>">
-                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message"></textarea>
+                            <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message" required></textarea>
                             <div class="row mt-2 g-2 justify-content-end">
                                 <div class="col-2">
-                                    <a class="btn catBtn" href="index.php">返回</a>
-                                    <button class="btn catBtn" type="submit">送出</button>
+                                    <a class="btn filterBtn" href="index.php">返回</a>
+                                    <button class="btn filterBtn" type="submit">送出</button>
                                 </div>
                             </div>
                         </form>
@@ -215,10 +244,9 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
     <script src="<?= $js ?>"></script>
-    <script>
-        var chatHistory = document.getElementById("main");
+    <script>var chatHistory = document.getElementById("main");
         chatHistory.scrollTop = chatHistory.scrollHeight;
-    </script>
+</script>
 </body>
 
 </html>

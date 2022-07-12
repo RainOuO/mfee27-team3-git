@@ -7,6 +7,7 @@ $store_id = $_SESSION['user']['store_id'];
 
 // get 資料處理
 $order = isset($_GET['order']) ? $_GET['order'] : 1;
+$type = isset($_GET['type']) ? $_GET['type'] : "";
 
 // 排序開關
 switch($order){
@@ -27,9 +28,16 @@ switch($order){
 }
 
 
-// 取得重複 user_id 裡，時間最新(大)的資料
-$sqlUserId = "SELECT * FROM letter letter_1 
-where store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) ORDER BY $orderType";
+if( $type == 1 ){
+    $sqlUserId = "SELECT * FROM letter letter_1 where user_id = 1 order by 'ASC'";
+    // $sqlUserId = "SELECT * FROM letter letter_1 where user_id = 1 AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id AND letter_1.store_id = letter.store_id ) order by $orderType";
+}else{
+    $sqlUserId = "SELECT * FROM letter letter_1 where user_id > 1 AND store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id AND letter_1.store_id = letter.store_id ) order by $orderType";
+}
+
+// // 取得重複 user_id 裡，時間最新(大)的資料
+// $sqlUserId = "SELECT * FROM letter letter_1 
+// where store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) ORDER BY $orderType";
 $resultUserId = $conn->query($sqlUserId);
 $UserIdCount = $resultUserId->num_rows;
 $rowsUserId = $resultUserId->fetch_all(MYSQLI_ASSOC);
@@ -40,11 +48,11 @@ $rowsUserId = $resultUserId->fetch_all(MYSQLI_ASSOC);
     <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
         <h1>信件匣</h1>
         <div class="row" role="">
-            <form class="col-6" action="test.php" method="get">
+            <form class="col-5" action="index.php" method="get">
                 <input type="hidden" name="type" value="1">
                 <button class="btn catBtn my-3 rounded-0" type="submit">系統信件列表</button>
             </form>
-            <form class="col-6" action="test.php" method="get">
+            <form class="col-5" action="index.php" method="get">
                 <input type="hidden" name="type" value="2">
                 <button class="btn catBtn my-3 rounded-0" type="submit">顧客信件列表</button>
             </form>

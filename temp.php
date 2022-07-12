@@ -7,3 +7,8 @@
 </td>
 
 $sqlUserId = "SELECT * FROM letter letter_1 where user_id = 1 AND store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) order by time";
+
+$sqlUserId = "SELECT * FROM letter letter_1 
+WHERE store_id = $store_id 
+AND time = (SELECT MAX(time) 
+FROM letter WHERE letter_1.user_id = letter.user_id) order by $orderType";
