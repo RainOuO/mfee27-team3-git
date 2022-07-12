@@ -280,10 +280,10 @@ $product_count = $result->num_rows; //取得資料筆數
                                     <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
                                 </div>
                                 <div class="crudBox">
-                                    <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id ?>'">編輯</button>
-                                    <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
-                                    <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
-                                </div>
+                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id?>&category=<?=$row['product_category']?>'">編輯</button>
+                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
+                                <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
+                            </div>
                             </div>
                             <hr>
 
@@ -372,7 +372,7 @@ $product_count = $result->num_rows; //取得資料筆數
                         <hr>
                         <div class="d-flex justify-content-end">
                             <div class="crudBox">
-                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id ?>'">編輯</button>
+                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id?>&category=<?=$row['product_category']?>'">編輯</button>
                                 <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
                                 <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
                             </div>

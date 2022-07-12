@@ -13,7 +13,7 @@ $store_id = "";
 //TO-DO: validate session
 $type = "";
 $name = $_POST["name"];
-$category = $_POST["category"];
+$category = $_POST["product_category"];
 $intro = $_POST["intro"];
 $price = $_POST["price"];
 // $spec = $_POST["spec"];
@@ -38,10 +38,31 @@ $sqlOldPhoto = "SELECT * FROM product WHERE valid=1 AND id = $id";
 $resultOldPhoto = $conn->query($sqlOldPhoto);
 $rowOld = $resultOldPhoto->fetch_assoc();
 //取舊資料陣列
-echo "舊資料" . "<br>";
-$rowSubOld = explode(",", $rowOld["sub_photo"]);
-array_pop($rowSubOld);
-var_dump($rowSubOld) . "<br>";
+if ($rowOld["main_photo"] == "") {
+    $oldMainPhoto = "";
+}
+if ($rowOld["sub_photo"] == "") {
+    $oldSubPhoto1 = "";
+    $oldSubPhoto2 = "";
+    $oldSubPhoto3 = "";
+    $oldSubPhoto4 = "";
+    $oldSubPhoto5 = "";
+} else {
+    $rowSubOld = explode(",", $rowOld["sub_photo"]);
+    array_pop($rowSubOld);
+    var_dump($rowSubOld) . "<br>";
+
+    $oldSubPhoto1 = $rowSubOld[0];
+    $oldSubPhoto2 = $rowSubOld[1];
+    $oldSubPhoto3 = $rowSubOld[2];
+    $oldSubPhoto4 = $rowSubOld[3];
+    $oldSubPhoto5 = $rowSubOld[4];
+}
+
+// echo "舊資料" . "<br>";
+// $rowSubOld = explode(",", $rowOld["sub_photo"]);
+// array_pop($rowSubOld);
+// var_dump($rowSubOld) . "<br>";
 
 
 
@@ -85,11 +106,11 @@ var_dump($rowSubOld) . "<br>";
 // var_dump($rowOld);
 echo "舊資料";
 echo $oldMainPhoto . "<br>";
-echo $rowSubOld[0] . "<br>";
-echo $rowSubOld[1] . "<br>";
-echo $rowSubOld[2] . "<br>";
-echo $rowSubOld[3] . "<br>";
-echo $rowSubOld[4] . "<br>";
+// echo $rowSubOld[0] . "<br>";
+// echo $rowSubOld[1] . "<br>";
+// echo $rowSubOld[2] . "<br>";
+// echo $rowSubOld[3] . "<br>";
+// echo $rowSubOld[4] . "<br>";
 echo "新資料";
 // echo $main_photo = $_FILES["main_photo"];
 // echo $fileNameS1 = $_FILES["sub_photo1"]["name"];
@@ -105,64 +126,111 @@ $now = date('Y-m-d H:i:s');
 
 //判斷是否有取到 main photo的新上傳資料
 if ($_FILES["main_photo"]["error"] == 0) {
-    move_uploaded_file($_FILES["main_photo"]["tmp_name"], "./upload_main_photo/" . $_FILES["main_photo"]["name"]) ;
-    $fileNameC = $_FILES["main_photo"]["name"];
-}else {
+    if (move_uploaded_file($_FILES["main_photo"]["tmp_name"], "./upload_main_photo/" . $_FILES["main_photo"]["name"])) {
+        $fileNameC = $_FILES["main_photo"]["name"];
+    }
+} else {
     $fileNameC = $oldMainPhoto;
 }
 if ($_FILES["sub_photo1"]["error"] == 0) {
-    move_uploaded_file($_FILES["sub_photo1"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo1"]["name"]) ;
-    $fileNameS1 = $_FILES["sub_photo1"]["name"];
-}else {
+    if (move_uploaded_file($_FILES["sub_photo1"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo1"]["name"])) {
+        $fileNameS1 = $_FILES["sub_photo1"]["name"];
+    }
+} else {
     $fileNameS1 = $oldSubPhoto1;
 }
 if ($_FILES["sub_photo2"]["error"] == 0) {
-    move_uploaded_file($_FILES["sub_photo2"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo2"]["name"]) ;
-    $fileNameS2 = $_FILES["sub_photo2"]["name"];
-}else {
-    $fileNameS2 = $oldSubPhoto2;
+    if (move_uploaded_file($_FILES["sub_photo2"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo2"]["name"])) {
+        $fileNameS1 = $_FILES["sub_photo2"]["name"];
+    }
+} else {
+    $fileNameS1 = $oldSubPhoto2;
 }
 if ($_FILES["sub_photo3"]["error"] == 0) {
-    move_uploaded_file($_FILES["sub_photo3"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo3"]["name"]) ;
-    $fileNameS3 = $_FILES["sub_photo3"]["name"];
-}else {
-    $fileNameS3 = $oldSubPhoto3;
+    if (move_uploaded_file($_FILES["sub_photo3"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo3"]["name"])) {
+        $fileNameS1 = $_FILES["sub_photo3"]["name"];
+    }
+} else {
+    $fileNameS1 = $oldSubPhoto3;
 }
 if ($_FILES["sub_photo4"]["error"] == 0) {
-    move_uploaded_file($_FILES["sub_photo4"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo4"]["name"]) ;
-    $fileNameS4 = $_FILES["sub_photo4"]["name"];
-}else {
-    $fileNameS4 = $oldSubPhoto4;
+    if (move_uploaded_file($_FILES["sub_photo4"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo4"]["name"])) {
+        $fileNameS1 = $_FILES["sub_photo4"]["name"];
+    }
+} else {
+    $fileNameS1 = $oldSubPhoto4;
 }
 if ($_FILES["sub_photo5"]["error"] == 0) {
-    move_uploaded_file($_FILES["sub_photo5"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo5"]["name"]) ;
-    $fileNameS5 = $_FILES["sub_photo5"]["name"];
-}else {
-    $fileNameS5 = $oldSubPhoto5;
+    if (move_uploaded_file($_FILES["sub_photo5"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo5"]["name"])) {
+        $fileNameS1 = $_FILES["sub_photo5"]["name"];
+    }
+} else {
+    $fileNameS1 = $oldSubPhoto5;
 }
 
+echo $fileNameC;
 $fileSubtotal = "$fileNameS1,$fileNameS2,$fileNameS3,$fileNameS4,$fileNameS5,";
-echo $fileNameS1;
-echo $fileNameS2;
-echo $fileNameS3;
-echo $fileNameS4;
-echo $fileNameS5;
+echo $fileSubtotal;
 
-// $sqlUpdate = "UPDATE product SET name = '$name', intro = '$intro', description = '$description', price = '$price',
-// product_category = '$category', create_time = '$now', valid_time_start = '$valid_start', valid_time_end = '$valid_end',
-// stock_quantity = '$stock', main_photo ='$fileNameC', sub_photo= '$fileSubtotal', coupon_id = '$coupon' WHERE id = '$id'";
 
-// echo $sqlUpdate;
+$sqlUpdate = "UPDATE product SET name = '$name', intro = '$intro', description = '$description', price = '$price',
+product_category = '$category', create_time = '$now', valid_time_start = '$valid_start', valid_time_end = '$valid_end',
+stock_quantity = '$stock', main_photo ='$fileNameC', sub_photo ='$fileSubtotal', coupon_id = '$coupon' WHERE id = '$id'";
 
-// $isUpdate = $conn->query($sqlUpdate);
-//     $conn->close();
-//     if ($isUpdate === TRUE) {
-//     echo "資料修改成功";
-//     // header("location: productDetail.php?type=$type&id=$id");
-//     } else {
-//     echo "Error: " . $sqlUpdate . "<br>" . $conn->error;
-//     echo "資料更新錯誤";
-//     };
+
+echo $sqlUpdate;
+
+$isUpdate = $conn->query($sqlUpdate);
+$conn->close();
+if ($isUpdate === TRUE) {
+    echo "資料修改成功";
+    // header("location: productDetail.php?type=$type&id=$id");
+} else {
+    echo "Error: " . $sqlUpdate . "<br>" . $conn->error;
+    echo "資料更新錯誤";
+};
+
+// if ($_FILES["sub_photo1"]["error"] == 0) {
+//     move_uploaded_file($_FILES["sub_photo1"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo1"]["name"]) ;
+//     $fileNameS1 = $_FILES["sub_photo1"]["name"];
+// }else {
+//     $fileNameS1 = $oldSubPhoto1;
+// }
+// if ($_FILES["sub_photo2"]["error"] == 0) {
+//     move_uploaded_file($_FILES["sub_photo2"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo2"]["name"]) ;
+//     $fileNameS2 = $_FILES["sub_photo2"]["name"];
+// }else {
+//     $fileNameS2 = $oldSubPhoto2;
+// }
+// if ($_FILES["sub_photo3"]["error"] == 0) {
+//     move_uploaded_file($_FILES["sub_photo3"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo3"]["name"]) ;
+//     $fileNameS3 = $_FILES["sub_photo3"]["name"];
+// }else {
+//     $fileNameS3 = $oldSubPhoto3;
+// }
+// if ($_FILES["sub_photo4"]["error"] == 0) {
+//     move_uploaded_file($_FILES["sub_photo4"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo4"]["name"]) ;
+//     $fileNameS4 = $_FILES["sub_photo4"]["name"];
+// }else {
+//     $fileNameS4 = $oldSubPhoto4;
+// }
+// if ($_FILES["sub_photo5"]["error"] == 0) {
+//     move_uploaded_file($_FILES["sub_photo5"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo5"]["name"]) ;
+//     $fileNameS5 = $_FILES["sub_photo5"]["name"];
+// }else {
+//     $fileNameS5 = $oldSubPhoto5;
+// }
+
+// $fileSubtotal = "$fileNameS1,$fileNameS2,$fileNameS3,$fileNameS4,$fileNameS5,";
+// echo $fileNameS1;
+// echo $fileNameS2;
+// echo $fileNameS3;
+// echo $fileNameS4;
+// echo $fileNameS5;
+
+
+
+
 
 // if (
 // $_FILES["main_photo"]["error"] == 0 ||
@@ -228,4 +296,3 @@ echo $fileNameS5;
     // } else {
     // echo "帳號更新錯誤" . $conn->error;
     // }
-    

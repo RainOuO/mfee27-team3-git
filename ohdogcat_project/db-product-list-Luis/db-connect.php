@@ -3,7 +3,7 @@
 $servername = "localhost";
 $username = "admin";
 $password = "1234";
-$dbname = "team3_project";
+$dbname = "ohdogcat_data0712";
 
 $conn = new mysqli($servername, $username, $password , $dbname);
 //檢查連線

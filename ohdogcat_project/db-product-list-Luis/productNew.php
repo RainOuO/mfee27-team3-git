@@ -294,11 +294,11 @@ $type = $_GET["type"];
                                         </div>
                                         <div class="swiper mySwiper">
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide photo1">1<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img1" src="#"></div>
-                                                <div class="swiper-slide photo1">2<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img2" src="#"></div>
-                                                <div class="swiper-slide photo1">3<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img3" src="#"></div>
-                                                <div class="swiper-slide photo1">4<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img4" src="#"></div>
-                                                <div class="swiper-slide photo1">5<img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img5" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img1" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img2" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img3" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img4" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img5" src="#"></div>
                                                 <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_imgs" src="#"></div> -->
                                             </div>
                                             <div class="swiper-pagination"></div>
@@ -313,11 +313,11 @@ $type = $_GET["type"];
                                         </div>
                                         <div class="col-7 row">
                                             <h6>商品照片</h6> 
-                                            1<div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
-                                            2<div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
-                                            3<div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
-                                            4<div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
-                                            5<div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img5" accept="image/gif, image/jpeg, image/png"></div>
+                                            <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
+                                            <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
+                                            <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
+                                            <div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
+                                            <div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img5" accept="image/gif, image/jpeg, image/png"></div>
                                         </div>
                                     </div>
                                 </div>
@@ -352,12 +352,9 @@ $type = $_GET["type"];
                                     <input type="datetime-local" name="valid_end" class="form-control" >
                                     <label for="">優惠券方案使用</label><br>
                                     <select name='coupon' class="form-control" >
-                                        <option value='0'>全站周年慶</option>
-                                        <option value='1'>父親節活動</option>
-                                        <option value='2'>兒童節寵愛牠</option>
-                                        <option value='4'>站內年中慶 全站三件打85折</option>
-                                        <option value='5'>由優惠券管理作連動</option>
-                                        <option value='6'>無</option>
+                                        <option value='1'>可搭配折數優惠券</option>
+                                        <option value='2'>可搭配現金折價券</option>
+                                        <option value='3'>可搭配商品優惠方案</option>
                                     </select>
                                     <!-- <label for="">商品更新時間</label>
                                     <input type="date" name="create_time" placeholder="自由增建選項" class="form-control" hidden> -->

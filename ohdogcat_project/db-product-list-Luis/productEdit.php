@@ -8,8 +8,10 @@ if (!isset($_GET['id'])) {
     exit;
 }
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
+$category = isset($_GET["category"]) && !empty($_GET["category"]) ? $_GET["category"] : "";
 $storeID = "";
 $id = $_GET["id"];
+
 //TO-DO
 //商品id 使用seesion?
 $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
@@ -305,9 +307,9 @@ $product_count = $result->num_rows; //取得資料筆數
                                                     <?php else : ?>
                                                         <?php
                                                         $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
-                                                        array_pop($rowSub);                            
+                                                        array_pop($rowSub);
                                                         foreach ($rowSub as $rowS) : ?>
-                                                           <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" id="preview_sub_img" src="#" alt=""></div>
+                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" id="preview_sub_img" src="#" alt=""></div>
                                                         <?php endforeach; ?>
                                                     <?php endif; ?>
                                                 </div>
@@ -322,11 +324,11 @@ $product_count = $result->num_rows; //取得資料筆數
                                             </div>
                                             <div class="col-7 row">
                                                 <h6>商品照片</h6>
-                                                1<div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onclick="closeSubPhoto()" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
-                                                2<div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
-                                                3<div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
-                                                4<div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
-                                                5<div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img5" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onclick="closeSubPhoto()" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img5" accept="image/gif, image/jpeg, image/png"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -340,10 +342,11 @@ $product_count = $result->num_rows; //取得資料筆數
                                             <option value='1'>旅遊票券</option>
                                             <option value='2'>活動票券</option>
                                             <option value='3'>餐廳票券</option>
-                                            <option value='4'>寵物周邊>寵物外出用品</option>
-                                            <option value='4'>寵物周邊>寵物飼料</option>
-                                            <option value='5'>寵物周邊>寵物玩具</option>
-                                            <option value='5'>寵物周邊>寵物保健</option>
+                                            <option value='4' selected>寵物周邊>寵物外出用品</option>
+                                            <option value='5'>寵物周邊>寵物飼料</option>
+                                            <option value='6'>寵物周邊>寵物玩具</option>
+                                            <option value='7'>寵物周邊>寵物保健</option>
+
                                         </select>
                                         <label for="">商品簡述**</label>
                                         <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" value="<?= $row['intro'] ?>" required>
@@ -362,15 +365,13 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <input type="datetime-local" name="valid_start" class="form-control" value="<?= $row['valid_time_start'] ?>" required>
                                         <label for="">下架時間**</label>
                                         <input type="datetime-local" name="valid_end" class="form-control" value="<?= $row['valid_time_end'] ?>" required>
-                                        <label for="">優惠券方案使用**</label><br>
+                                        <label for="">搭配優惠方案**</label><br>
                                         <select name='coupon' class="form-control">
-                                            <!-- TO-DO 連動coupon -->
-                                            <option value='0'>全站周年慶</option>
-                                            <option value='1'>父親節活動</option>
-                                            <option value='2' selected>兒童節寵愛牠</option>
-                                            <option value='4'>站內年中慶 全站三件打85折</option>
-                                            <option value='5'>由優惠券管理作連動</option>
-                                            <option value='6'>無</option>
+                                            <option value='1'>折數優惠券</option>
+                                            <option value='2'>現金折價券</option>
+                                            <option value='3'>商品優惠方案</option>
+                                            <option value='4'>折數優惠+現金折價</option>
+                                            <option value='5'>全方案適用</option>
                                         </select>
                                         <!--
                                         <label for="">商品更新時間</label>
