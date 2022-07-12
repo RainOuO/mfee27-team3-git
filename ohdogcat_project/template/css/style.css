@@ -336,8 +336,8 @@ a {
 
 /* #main Section-Scroll-Bar  */
 .scroll-bar {
+    overflow-y: auto;
     scrollbar-width: thin;
-    padding-right: 1.5rem;
 }
 
 .scroll-bar::-webkit-scrollbar {
@@ -347,10 +347,114 @@ a {
 .scroll-bar::-webkit-scrollbar-track {
     background-color: rgba(0, 0, 0, .1);
     border-radius: 4px;
+
 }
 
 .scroll-bar::-webkit-scrollbar-thumb {
     background-color: rgba(0, 0, 0, .5);
     border-radius: 4px;
 }
+
+
+
+/* header */
+.filterBtn, .filterBtn:active, .filterBtn:focus {
+    color: #222934;
+    background-color: #FFC845;
+    border: 0;
+    transition: all .3s;
+}
+
+.filterBtn:hover {
+    color: #222934;
+    background-color: #ffe3a1;
+}
+
+
+.detailBtn, .detailBtn:active, .detailBtn:focus {
+    color: #222934;
+    background-color: #D5EEEE;
+    transition: all .3s;
+}
+.detailBtn:hover {
+    color: #222934;
+    background-color: #D5EEEE;
+}
+
+.catBtn {
+    border-color: #49586f;
+    color: #222934;
+    font-size: 16px;
+    margin: 4px 0;
+    margin-right: 0.25vw;
+    letter-spacing: .5px;
+    padding: 4px 12px;
+}
+
+.catBtn:hover, .catBtn.current-active {
+    color: #fff!important;
+    background-color: #49586f;
+}
+
+
+.countBox {
+    line-height: 37px;
+    height: 37px;
+    font-size: 16px;
+
+}
+
+.orderBtn {
+    display: inline-block;
+    border: 2px solid #49586f;
+    color: #222934;
+    padding: 5px;
+    margin-left: 3px;
+    border-radius: 3px;
+    text-align: center;
+    width: 110px;
+}
+
+.orderBtn:hover {
+    color: #fff;
+    background-color: #49586f;
+}
+
+.pageBtn {
+    display: block;
+    border: 2px solid #49586f;
+    border-radius: 5px;
+    color: #222934;
+    /* margin: 2px; */
+
+}
+
+.pageBtn:hover {
+    color: #fff;
+    background-color: #49586f;
+}
+
+.dateF {
+    font-size: 0.8rem;
+}
+
+
+td {
+    vertical-align: center!important;
+    padding: 12px 0!important;
+}
+
+table{table-layout:fixed;word-break:break-all;}
+
+
+/* offcanvas */
+.offcanvas {
+    --bs-offcanvas-width: 80%;
+    max-width: 1600px;
+}
+
+#productList {
+    overflow-y: scroll;
+}
+
 

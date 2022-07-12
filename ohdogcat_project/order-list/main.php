@@ -25,7 +25,7 @@
                 </td>
                 <td class="align-middle"><?= $rows[$i]['order_time'] ?></td>
                 <td class="align-middle text-start">
-                    <button type="button" class="btn detailBtn" data-order-id="<?= $rows[$i]['id'] ?>"
+                    <button type="button" class="btn detailBtn me-1" data-order-id="<?= $rows[$i]['id'] ?>"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasOrderList"
                         aria-controls="offcanvasOrderList">查看
                     </button>

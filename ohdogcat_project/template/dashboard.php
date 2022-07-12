@@ -5,6 +5,9 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
 }else{
     $checkStoreRight = true;
     $id = $_SESSION["user"]["id"];
+    if(!isset($_SESSION['user'])){
+        header('location: ../login/login.php');
+    }
 }
 ?>
 
@@ -76,7 +79,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
                         </div>
                     </li>
                     <li class="menu-item">
-                        <a href="../dashboard/" class="menu-button icon-orderlist no-accordion">訂單管理</a>
+                        <a href="../order-list/" class="menu-button icon-orderlist no-accordion">訂單管理</a>
                     </li>
                     <li class="menu-item accordion-header">
                         <button href="" class="menu-button icon-message accordion-button collapsed"
@@ -145,7 +148,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
                     <div id="button-area">
                         <?php if($filterSection){ require($filterSection);} ?>
                     </div>
-                    <main id="main" class="content-main overflow-auto flex-shrink-1 h-100 scroll-bar">
+                    <main id="main" class="content-main flex-shrink-1 h-100 scroll-bar">
                         <?php require($main)?>
                     </main>
                     <div class="content-footer flex-shrink-1">
@@ -170,6 +173,14 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     <script>
+        // activeBtn event.preventDefault()
+        let activeBtn = document.getElementsByClassName('current-active');
+        for(let i=0; i<activeBtn.length; i++) {
+            activeBtn[i].onclick = function (event) {
+                event.preventDefault();
+            }
+        }
+
         let checkStoreRight = <?=($checkStoreRight)?'true':'false'?>;
         if(checkStoreRight) {
             let id = <?=$id?>;

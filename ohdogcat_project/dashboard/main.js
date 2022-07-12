@@ -45,7 +45,7 @@ function printChart(data) {
                     '#D5EEEE',
                     'rgba(255, 206, 86)',
                     '#D5EEEE',
-                    'rgba(255, 206, 86)',
+                    'rgba(230, 230, 230, 1)',
                 ],
                 borderWidth: 1
             }],

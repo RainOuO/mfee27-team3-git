@@ -1,5 +1,5 @@
 <div class="dashboard align-item-center justify-content-center">
-    <div class="row w-100 ">
+    <div class="row w-100 m-0">
         <div class="col-3" >
             <div class="card top-card shadow-sm">
                 <div class="card-body">
@@ -64,7 +64,7 @@
         </div>
     </div>
 
-    <div class="row my-3 w-100">
+    <div class="row my-3 mx-0 w-100">
         <div class="col-8">
             <div class="card  h-100">
                 <div class="card-body">
