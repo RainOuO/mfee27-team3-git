@@ -13,8 +13,6 @@ $userCount = $result->num_rows;
 
 ?>
 
-
-
 <!doctype html>
 <html lang="en">
 
@@ -51,8 +49,16 @@ $userCount = $result->num_rows;
                     <td><?= $row["description"] ?></td>
                 </tr>
                 <tr>
+                    <th>Amount</th>
+                    <td><?= $row["amount"] ?></td>
+                </tr>
+                <tr>
                     <th>Discount number</th>
                     <td><?= $row["discount_number"] ?></td>
+                </tr>
+                <tr>
+                    <th>Discount code</th>
+                    <td><?= $row["discount_code"] ?></td>
                 </tr>
                 <tr>
                     <th>Lower Limit</th>

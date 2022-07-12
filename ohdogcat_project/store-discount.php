@@ -25,11 +25,12 @@ switch ($ordertype) {
   
 }
 
-$sql = "SELECT * FROM discount WHERE valid= 1";
+$sql = "SELECT * FROM discount WHERE valid= 1 AND category_id=3";
 $sql .= $category ? " AND category_id = $category " : "";
 $sql .= $valid ? " AND buyer_valid = $valid " : "";
 $sql .= $ordertype ? " ORDER BY $ordertype" : "";
 $pageUserCount = $conn->query($sql)->num_rows;
+var_dump($pageUserCount);
 $starItem = ($page - 1) * $perPage + 1;
 //結束的筆數
 $endItem = $page * $perPage;
@@ -51,10 +52,6 @@ if ($remainder === 0) {
 
 $sql .= " LIMIT $start ,10";
 $result = $conn->query($sql);
-
-// echo $page."<br>" ;
-// echo $perPage."<br>";
-// echo $totalPage."<br>";
 
 ?>
 <!doctype html>
@@ -83,48 +80,29 @@ $result = $conn->query($sql);
     </div>
   </div>
   <div class="py-2 d-flex justify-content-end align-items-center">
-    <!-- <div class="me-2">排序 <?= $ordertype ?></div> -->
 
     <div class="btn-group">
-      <a href="discounts.php?valid=<?= $valid ?>&category=<?= $category ?>&order=1" class="btn btn-primary <?php if ($ordertype == 1) echo "active" ?>">id <i class="fa-solid fa-arrow-down-short-wide"></i></a>
-      <a href="discounts.php?valid=<?= $valid ?>&category=<?= $category ?>&order=2" class="btn btn-primary <?php if ($ordertype == 2) echo "active" ?>">id <i class="fa-solid fa-arrow-down-wide-short"></i></a>
-      <a href="discounts.php?valid=<?= $valid ?>&category=<?= $category ?>&order=3" class="btn btn-primary <?php if ($ordertype == 3) echo "active" ?>">name <i class="fa-solid fa-arrow-down-a-z"></i></a>
-      <a href="discounts.php?valid=<?= $valid ?>&category=<?= $category ?>&order=4" class="btn btn-primary <?php if ($ordertype == 4) echo "active" ?>">name <i class="fa-solid fa-arrow-down-z-a"></i></a>
+      <a href="store-discount.php?valid=<?= $valid ?>&category=<?= $category ?>&order=1" class="btn btn-primary <?php if ($ordertype == 1) echo "active" ?>">id <i class="fa-solid fa-arrow-down-short-wide"></i></a>
+      <a href="store-discount.php?valid=<?= $valid ?>&category=<?= $category ?>&order=2" class="btn btn-primary <?php if ($ordertype == 2) echo "active" ?>">id <i class="fa-solid fa-arrow-down-wide-short"></i></a>
+      <a href="store-discount.php?valid=<?= $valid ?>&category=<?= $category ?>&order=3" class="btn btn-primary <?php if ($ordertype == 3) echo "active" ?>">name <i class="fa-solid fa-arrow-down-a-z"></i></a>
+      <a href="store-discount.php?valid=<?= $valid ?>&category=<?= $category ?>&order=4" class="btn btn-primary <?php if ($ordertype == 4) echo "active" ?>">name <i class="fa-solid fa-arrow-down-z-a"></i></a>
     </div>
     </div>
-  <ul class="nav nav-pills">
-    <li class="nav-item">
-      <a class="nav-link  <?php
-                          if ($category == "") echo "active";
-                          ?>" aria-current="page" href="discounts.php?ordertype=<?= $ordertype ?>">全部</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link  <?php
-                          if ($_GET['category'] == "1") echo "active";
-                          ?>" aria-current="page" href="discounts.php?ordertype=<?= $ordertype ?>&valid=<?= $valid ?>&category=1">%數折價券</a>
-    </li>
-    <li class="nav-item">
-      <a class="nav-link  <?php
-                          if ($_GET['category'] == "2") echo "active";
-                          ?>" aria-current="page" href="discounts.php?ordertype=<?= $ordertype ?>&valid=<?= $valid ?>&category=2">現金折價券</a>
-    </li>
-  </ul>
-
   <ul class="nav nav-pills">
     <li class="nav-item">
       <a class="nav-link  <?php
                           if ($valid == "") echo "active";
-                          ?>" aria-current="page" href="discounts.php?ordertype=<?= $ordertype ?>&category=<?= $category ?>">全部</a>
+                          ?>" aria-current="page" href="store-discount.php?ordertype=<?= $ordertype ?>&category=<?= $category ?>">全部</a>
     </li>
     <li class="nav-item">
       <a class="nav-link  <?php
                           if ($_GET['valid'] == "1") echo "active";
-                          ?>" aria-current="page" href="discounts.php?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=1">有效</a>
+                          ?>" aria-current="page" href="store-discount.php?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=1">有效</a>
     </li>
     <li class="nav-item">
       <a class="nav-link  <?php
                           if ($_GET['valid'] == "2") echo "active";
-                          ?>" aria-current="page" href="discounts.php?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=2">失效</a>
+                          ?>" aria-current="page" href="store-discount.php?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=2">失效</a>
     </li>
   </ul>
 
@@ -133,11 +111,9 @@ $result = $conn->query($sql);
       <thead>
         <tr>
           <td>Id</td>
-          <td>類別</td>
-          <td>優惠券名稱</td>
-          <td>優惠券敘述</td>
+          <td>優惠名稱</td>
+          <td>優惠敘述</td>
           <td>折扣數字</td>
-          <td>優惠序號</td>
           <td>啟用日期</td>
           <td>失效日期</td>
           <td>狀態</td>
@@ -149,23 +125,11 @@ $result = $conn->query($sql);
         <?php while ($row = $result->fetch_assoc()) : ?>
           <tr>
             <td><?php echo $row["id"] ?></td>
-            <td>
-              <?php
-              if ($row["category_id"] == 1) {
-                echo "%數折扣券";
-              } elseif ($row["category_id"] == 2) {
-                echo "現金折扣券";
-              } else {
-                echo "商家優惠活動";
-              }
-              ?></td>
             <td><?php echo $row["name"] ?></td>
             <td><?php echo $row["description"] ?></td>
             <td><?php echo $row["discount_number"] ?></td>
-            <td><?php echo $row["discount_code"] ?></td>
             <td><?php echo $row["start_time"] ?></td>
             <td><?php echo $row["end_time"] ?></td>
-
             <td><?php
                 if ($row["buyer_valid"] == 2) {
                   echo "無效<br>";
@@ -173,14 +137,14 @@ $result = $conn->query($sql);
                   echo "有效<br>";
                 } ?>
             </td>
-            <td><a class="btn btn-info" href="discount.php?id=<?= $row["id"] ?>">Detail</a></td>
+            <td><a class="btn btn-info" href="store-discount.php?id=<?= $row["id"] ?>">Detail</a></td>
           </tr>
         <?php endwhile; ?>
       </tbody>
     </table>
 
     <div class="py-2">
-      <a href="create-discount.php" class="btn btn-info">新增折價券</a>
+      <a href="create-store-discount.php" class="btn btn-info">新增優惠活動</a>
     </div>
 
   <?php else : ?>

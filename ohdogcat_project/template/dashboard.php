@@ -1,3 +1,6 @@
+<?php
+require("../Nellie.php");
+?>
 <!doctype html>
 <html lang="en">
 
@@ -108,7 +111,9 @@
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="" class="menu-link">有效優惠券</a>
+                                    <a class="nav-link  <?php 
+                          if ($category == "") echo "active";
+                          ?>" aria-current="page" href="discounts.php?page=<?= $page ?>&order=<?= $order ?>">全部</a>
                                     </li>
                                     <li>
                                         <a href="" class="menu-link">排程中列表</a>
