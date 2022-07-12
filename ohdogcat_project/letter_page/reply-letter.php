@@ -1,32 +1,32 @@
 <?php
 session_start();
-// if (!isset($_POST['user_id']) and !isset($_POST['message'])) {
-//     echo "沒有參數";
-//     exit;
-// }
-
-$user_id = $_GET['user_id'];
-
 require("../../db-connect.php");
 
-// if (!isset($_SESSION["4user"])) {
-//     header("location: login.php");
-// }
 
-$sql = "SELECT * FROM letter where user_id = '$user_id'";
+// GET 資料處理
+$user_id = $_GET['user_id'];
+
+// SESSION 資料處理
+$store_id = $_SESSION['user']['store_id'];
+
+// 抓取 letter資料表內容，且只有 user_id AND $store_id資料
+$sql = "SELECT * FROM letter where user_id = '$user_id' AND store_id = '$store_id'";
 $result = $conn->query($sql);
 $letterCount = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
 
-// if (isset($_POST['message'])) {
-//     $message = $_POST['message'];
-//     $now = date("Y-m-d H:i:s");
-//     $sqlMessage = "INSERT INTO letter (content, time, user_id)  VALUES ('$message', '$now', '$user_id')";
-//     $resultMessage = $conn->query($sqlMessage);
-//     header("Refresh:1");
-//     header("Location:doReply2.php");
-// }
+// 抓取 users資料表內容，為了抓取 user_id對應名稱
+$sqlUserName = "SELECT id,name FROM users WHERE id = '$user_id' ";
+$resultUserName = $conn -> query($sqlUserName);
+$rowsUserName = $resultUserName -> fetch_assoc();
+
+// 抓取 store_info資料表內容，為了抓取 store_id對應名稱
+$sqlStoreName = "SELECT id, name FROM store_info WHERE id = '$store_id'";
+$resultStoreName = $conn -> query($sqlStoreName);
+$rowsStoreName = $resultStoreName -> fetch_assoc();
+
 ?>
+
 <!doctype html>
 <html lang="en">
 
@@ -52,7 +52,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
 
     .filterBtn:hover {
         color: #222934;
-        background-color: #FFC845;
+        background-color: #f1daa4;
     }
 
     .filterBtn:active {
@@ -199,7 +199,6 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                         <div class="main-content p-4 position-relative">
                             <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
                                 <h1>回覆</h1>
-                                <?= $letterCount ?>
                             </div>
                             <?php foreach ($rows as $row) : ?>
                                 <div class="card mb-3" style="max-width: auto;">
@@ -208,7 +207,7 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                                             <img class="stickers" src="tray_large.webp" class="img-fluid rounded-start" alt="...">
                                         </div>
                                         <div class="col-md-1">
-                                            <?php if($row['reply_status'] == 1){echo "奧客" . $row['user_id'];}else{echo "店家" . $row['store_id'];} echo "<br>" . $row['time']; ?>
+                                            <?php if($row['reply_status'] == 1){echo $rowsUserName['name'];}else{echo $rowsStoreName['name'];} echo "<br>" . $row['time']; ?>
                                         </div>
                                         <div class="col-md-auto">
                                             <div class="card-body">
@@ -223,7 +222,6 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
                     <div class="bottom-area">
                         <hr>
                         <form action="doReply.php" method="post">
-                            <?= $user_id ?>
                             <input name="user_id" type="hidden" value="<?= $user_id ?>">
                             <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" name="message" required></textarea>
                             <div class="row mt-2 g-2 justify-content-end">
@@ -244,9 +242,11 @@ $rows = $result->fetch_all(MYSQLI_ASSOC);
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/js/bootstrap.min.js" integrity="sha384-kjU+l4N0Yf4ZOJErLsIcvOU2qSb74wXpOhqTvwVx3OElZRweTnQ6d31fXEoRD1Jy" crossorigin="anonymous">
     </script>
     <script src="<?= $js ?>"></script>
-    <script>var chatHistory = document.getElementById("main");
+    <script>
+        // scroll Bar 永遠保持在最底部
+        var chatHistory = document.getElementById("main");
         chatHistory.scrollTop = chatHistory.scrollHeight;
-</script>
+    </script>
 </body>
 
 </html>

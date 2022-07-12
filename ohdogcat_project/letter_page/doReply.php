@@ -18,7 +18,7 @@
 
     //  資料庫寫入
     $now = date("Y-m-d H:i:s");
-    $sqlMessage = "INSERT INTO letter (content, time, user_id, store_id)  VALUES ('$message', '$now', '$user_id', '$store_id')";
+    $sqlMessage = "INSERT INTO letter (content, time, user_id, store_id, reply_status)  VALUES ('$message', '$now', '$user_id', '$store_id', 2)";
     $resultMessage = $conn->query($sqlMessage);
     header("Location:reply-letter.php?user_id=$user_id");
 

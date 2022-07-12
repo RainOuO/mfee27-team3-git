@@ -35,24 +35,30 @@ if( $type == 1 ){
     $sqlUserId = "SELECT * FROM letter letter_1 where user_id > 1 AND store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id AND letter_1.store_id = letter.store_id ) order by $orderType";
 }
 
-// // 取得重複 user_id 裡，時間最新(大)的資料
-// $sqlUserId = "SELECT * FROM letter letter_1 
-// where store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) ORDER BY $orderType";
 $resultUserId = $conn->query($sqlUserId);
 $UserIdCount = $resultUserId->num_rows;
 $rowsUserId = $resultUserId->fetch_all(MYSQLI_ASSOC);
 
+// // 取得重複 user_id 裡，時間最新(大)的資料
+// $sqlUserId = "SELECT * FROM letter letter_1 
+// where store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) ORDER BY $orderType";
+
+// 利用關聯式陣列，查詢出 user_id 的 name
+$sqlUserName = "SELECT id,name FROM users";
+$resultUserName = $conn->query($sqlUserName);
+$rowsUserName = $resultUserName->fetch_all(MYSQLI_ASSOC);
+$userName = array_column($rowsUserName, "name", "id");
 ?>
 
 <div class="main-content p-4">
     <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
         <h1>信件匣</h1>
         <div class="row" role="">
-            <form class="col-5" action="index.php" method="get">
+            <form class="col-6" action="index.php" method="get">
                 <input type="hidden" name="type" value="1">
                 <button class="btn catBtn my-3 rounded-0" type="submit">系統信件列表</button>
             </form>
-            <form class="col-5" action="index.php" method="get">
+            <form class="col-6" action="index.php" method="get">
                 <input type="hidden" name="type" value="2">
                 <button class="btn catBtn my-3 rounded-0" type="submit">顧客信件列表</button>
             </form>
@@ -96,7 +102,7 @@ $rowsUserId = $resultUserId->fetch_all(MYSQLI_ASSOC);
             <tbody>
                 <?php foreach ($rowsUserId as $row) : ?>
                     <tr>
-                        <td class="align-middle text-center"><?= $row['user_id']; ?></td>
+                        <td class="align-middle text-center"><?= $userName[$row['user_id']]; ?></td>
                         <td class="align-middle text-start"><?= $row['content']; ?></td>
                         <td class="align-middle text-center"><?= $row['time']; ?></td>
                         <td class="align-middle text-center"><?php if($row['reply_status'] ==1){ echo "未回覆";}else{ echo "已回覆";};?></td>
