@@ -8,7 +8,7 @@ if (!isset($_GET['id'])) {
     exit;
 }
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
-$category = isset($_GET["category"]) && !empty($_GET["category"]) ? $_GET["category"] : "";
+$category = isset($_POST["category"]) && !empty($_POST["category"]) ? $_POST["category"] : "";
 $storeID = "";
 $id = $_GET["id"];
 
@@ -302,17 +302,20 @@ $product_count = $result->num_rows; //取得資料筆數
                                             </div>
                                             <div class="swiper mySwiper">
                                                 <div class="swiper-wrapper">
-                                                    <?php if ($row["sub_photo"] == '') : ?>
-                                                        <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
-                                                    <?php else : ?>
-                                                        <?php
-                                                        $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
-                                                        array_pop($rowSub);
-                                                        foreach ($rowSub as $rowS) : ?>
-                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" id="preview_sub_img" src="#" alt=""></div>
-                                                        <?php endforeach; ?>
-                                                    <?php endif; ?>
+                                                    <?php
+                                                    $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
+                                                    // var_dump($rowSub) ;
+                                                    array_pop($rowSub);
+                                                    foreach ($rowSub as $rowS) : ?>
+                                                     
+                                                        <?php if ($row["sub_photo"] == '' || $rowS == '') : ?>
+                                                            <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
+                                                        <?php else : ?>
+                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" id="preview_sub_img2" src="#" alt=""></div>
+                                                        <?php endif; ?>
+                                                    <?php endforeach; ?>
                                                 </div>
+                        
                                                 <div class="swiper-pagination"></div>
                                             </div>
                                         </div>
@@ -324,11 +327,11 @@ $product_count = $result->num_rows; //取得資料筆數
                                             </div>
                                             <div class="col-7 row">
                                                 <h6>商品照片</h6>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onclick="closeSubPhoto()" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img5" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img0" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
                                             </div>
                                         </div>
                                     </div>

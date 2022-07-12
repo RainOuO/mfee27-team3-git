@@ -13,7 +13,7 @@ $store_id = "";
 //TO-DO: validate session
 $type = "";
 $name = $_POST["name"];
-$category = $_POST["product_category"];
+// $category = $_POST["product_category"];
 $intro = $_POST["intro"];
 $price = $_POST["price"];
 // $spec = $_POST["spec"];
@@ -40,6 +40,8 @@ $rowOld = $resultOldPhoto->fetch_assoc();
 //取舊資料陣列
 if ($rowOld["main_photo"] == "") {
     $oldMainPhoto = "";
+}else {
+    $oldMainPhoto = $rowOld["main_photo"];
 }
 if ($rowOld["sub_photo"] == "") {
     $oldSubPhoto1 = "";
@@ -141,31 +143,31 @@ if ($_FILES["sub_photo1"]["error"] == 0) {
 }
 if ($_FILES["sub_photo2"]["error"] == 0) {
     if (move_uploaded_file($_FILES["sub_photo2"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo2"]["name"])) {
-        $fileNameS1 = $_FILES["sub_photo2"]["name"];
+        $fileNameS2 = $_FILES["sub_photo2"]["name"];
     }
 } else {
-    $fileNameS1 = $oldSubPhoto2;
+    $fileNameS2 = $oldSubPhoto2;
 }
 if ($_FILES["sub_photo3"]["error"] == 0) {
     if (move_uploaded_file($_FILES["sub_photo3"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo3"]["name"])) {
-        $fileNameS1 = $_FILES["sub_photo3"]["name"];
+        $fileNameS3 = $_FILES["sub_photo3"]["name"];
     }
 } else {
-    $fileNameS1 = $oldSubPhoto3;
+    $fileNameS3 = $oldSubPhoto3;
 }
 if ($_FILES["sub_photo4"]["error"] == 0) {
     if (move_uploaded_file($_FILES["sub_photo4"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo4"]["name"])) {
-        $fileNameS1 = $_FILES["sub_photo4"]["name"];
+        $fileNameS4 = $_FILES["sub_photo4"]["name"];
     }
 } else {
-    $fileNameS1 = $oldSubPhoto4;
+    $fileNameS4 = $oldSubPhoto4;
 }
 if ($_FILES["sub_photo5"]["error"] == 0) {
     if (move_uploaded_file($_FILES["sub_photo5"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo5"]["name"])) {
-        $fileNameS1 = $_FILES["sub_photo5"]["name"];
+        $fileNameS5 = $_FILES["sub_photo5"]["name"];
     }
 } else {
-    $fileNameS1 = $oldSubPhoto5;
+    $fileNameS5 = $oldSubPhoto5;
 }
 
 echo $fileNameC;
@@ -173,8 +175,7 @@ $fileSubtotal = "$fileNameS1,$fileNameS2,$fileNameS3,$fileNameS4,$fileNameS5,";
 echo $fileSubtotal;
 
 
-$sqlUpdate = "UPDATE product SET name = '$name', intro = '$intro', description = '$description', price = '$price',
-product_category = '$category', create_time = '$now', valid_time_start = '$valid_start', valid_time_end = '$valid_end',
+$sqlUpdate = "UPDATE product SET name = '$name', intro = '$intro', description = '$description', price = '$price', create_time = '$now', valid_time_start = '$valid_start', valid_time_end = '$valid_end',
 stock_quantity = '$stock', main_photo ='$fileNameC', sub_photo ='$fileSubtotal', coupon_id = '$coupon' WHERE id = '$id'";
 
 
