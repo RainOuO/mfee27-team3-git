@@ -76,14 +76,18 @@ $userName = array_column($rowsUserName, "name", "id");
         </div>
     </div>
     <div class="row mt-3 g-3 justify-content-start">
-        <div class="col-2">
-            <button type="button" class="btn filterBtn">篩選條件 ▸</button>
-        </div>
-        <div class="col-2">
-            <input type="text" class="form-control" placeholder="請輸入關鍵字">
-        </div>
-        <div class="col-2">
-            <button type="button" class="btn filterBtn">搜尋</button>
+        <div class="col-6">
+            <div class="row">
+                <div class="col-auto">
+                    <h5>用戶搜尋</h5>
+                </div>
+                <div class="col-auto">
+                    <input type="text" class="form-control" placeholder="請輸入關鍵字">
+                </div>
+                <div class="col-auto">
+                    <button type="button" class="btn filterBtn">搜尋</button>
+                </div>
+            </div>
         </div>
         <div class="col-6 d-flex justify-content-end align-items-center mt-3">
             <a href="index.php?order=1" class="orderBtn col-3 <?php if($order==1) echo "active" ?>">回覆時間↑</a>
@@ -103,7 +107,7 @@ $userName = array_column($rowsUserName, "name", "id");
         <table class="table table-sm justify-content-between align-items-center">
             <thead>
                 <tr>
-                    <th class="align-middle text-center">用戶暱稱</th>
+                    <th class="align-middle text-center">用戶名稱</th>
                     <th class="align-middle text-center">內容</th>
                     <th class="align-middle text-center">建立時間</th>
                     <th class="align-middle text-center">狀態</th>

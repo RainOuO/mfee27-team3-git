@@ -20,8 +20,8 @@ $sqlUserName = "SELECT id,name FROM users WHERE id = '$user_id' ";
 $resultUserName = $conn -> query($sqlUserName);
 $rowsUserName = $resultUserName -> fetch_assoc();
 
-// 抓取 store_info資料表內容，為了抓取 store_id對應名稱
-$sqlStoreName = "SELECT id, name FROM store_info WHERE id = '$store_id'";
+// 抓取 store_info資料表內容，為了抓取 store_id對應名稱、圖片
+$sqlStoreName = "SELECT id, name, photo FROM store_info WHERE id = '$store_id'";
 $resultStoreName = $conn -> query($sqlStoreName);
 $rowsStoreName = $resultStoreName -> fetch_assoc();
 
@@ -218,7 +218,11 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
                                             <?php if($row['reply_status'] == 1): ?>
                                                 <img class="stickers" src="../images/profile-user.png" class="img-fluid rounded-start" alt="...">
                                             <?php else: ?>
-                                                <img class="stickers" src="../images/01.png" class="img-fluid rounded-start" alt="...">
+                                                <?php if(isset($rowsStoreName['photo'])== null): ?>
+                                                    <img class="stickers" src="../images/profile-user.png" class="img-fluid rounded-start" alt="...">
+                                                <?php else: ?>
+                                                    <img class="stickers" src="../images/store_photo/<?=$rowsStoreName['photo']?>" class="img-fluid rounded-start" alt="...">
+                                                <?php endif;?>
                                             <?php endif; ?>
                                         </div>
                                         <div class="col-md-1">
