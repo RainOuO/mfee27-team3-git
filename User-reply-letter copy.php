@@ -10,7 +10,7 @@ $user_id = $_GET['user_id'];
 $store_id = $_SESSION['user']['store_id'];
 
 // 抓取 letter資料表內容，且只有 user_id AND $store_id資料
-$sql = "SELECT * FROM letter where user_id = '$user_id' AND (store_id IN ('$store_id', 0))";
+$sql = "SELECT * FROM letter where user_id = '$user_id' AND (store_id = '$store_id' OR store_id IS NULL)";
 $result = $conn->query($sql);
 $letterCount = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -213,7 +213,7 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
                             </div>
                             <?php foreach ($rows as $row) : ?>
                                 <div class="card mb-3" style="max-width: auto;">
-                                    <div class="row p-1 g-0">
+                                    <div class="row g-0">
                                         <div class="col-md-1 d-flex justify-content-center align-items-center object-cover">
                                             <?php if($row['reply_status'] == 1): ?>
                                                 <img class="stickers" src="../images/profile-user.png" class="img-fluid rounded-start" alt="...">

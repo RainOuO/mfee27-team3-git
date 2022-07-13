@@ -60,3 +60,19 @@
     color: #222934;
     background-color: #FFC845;
     }
+
+    .darkblueBtn {
+        border-color: #49586f;
+        color: #222934;
+        font-size: 16px;
+        margin: 4px 0;
+        margin-right: 0.25vw;
+        letter-spacing: .5px;
+        padding: 4px 12px;
+    }
+
+    .darkblueBtn:hover,
+    .darkblueBtn.current-active {
+        color: #fff !important;
+        background-color: #49586f;
+    }
