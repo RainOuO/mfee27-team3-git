@@ -11,11 +11,6 @@
     white-space: nowrap;
 }
 
-.catBtn {
-    background-color: #D5EEEE;
-    color: #222934;
-    font-size: 1.25rem;
-}
 
 .catBtn:hover {
     color: #fff;

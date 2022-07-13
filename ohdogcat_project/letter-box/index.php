@@ -10,7 +10,7 @@ $header = './header.php';
 $filterSection = './filter-section.php';
 $footer = false;
 $current = 'letter-box';
-$pageType = false;
+$pageType = (isset($_GET['type'])&&!empty($_GET['type']))?$_GET['type']:'0';
 require("../db-connect.php");
 
 
@@ -53,6 +53,7 @@ $sqlUserId ="SELECT * FROM letter letter_1 where $sqlWhere";
 $resultUserId = $conn->query($sqlUserId);
 $UserIdCount = $resultUserId->num_rows;
 $rowsUserId = $resultUserId->fetch_all(MYSQLI_ASSOC);
+// var_dump($sqlUserId);
 
 // // 取得重複 user_id 裡，時間最新(大)的資料
 // $sqlUserId = "SELECT * FROM letter letter_1 

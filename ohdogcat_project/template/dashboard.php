@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="<?=$path?>template/css/style.css">
     <link rel="stylesheet" href="<?= $css ?>">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
 </head>
 
 <body>
@@ -67,21 +67,21 @@
                     </li>
                     <li class="menu-item accordion-header">
                         <button href="" class="menu-button icon-message accordion-button <?=($current == 'letter-box')?'current-active':'collapsed';?>"
-                            data-bs-toggle="collapse" data-bs-target="#collapseMessages" aria-expanded="true"
+                            data-bs-toggle="<?=($current == 'letter-box')?'current-active':'collapse';?>" data-bs-target="#collapseMessages" aria-expanded="true"
                             aria-controls="collapseMessages">信件匣
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseMessages" class="accordion-collapse collapse <?=($current == 'letter-box')?'show':'';?>" data-bs-parent="#menu-accordion">
+                        <div id="collapseMessages" class="accordion-collapse <?=($current == 'letter-box')?'show':'collapse';?>" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="../letter-box/" class="menu-link <?=($current == 'letter-box'&& $pageType == '0')?'current-active':'';?>">所有信件</a>
+                                        <a href="../letter-box/" class="menu-link <?=($current == 'letter-box'&& $pageType === '0')?'current-active':'';?>">所有信件</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link <?=($current == 'letter-box'&& $pageType == '1')?'current-active':'';?>">系統信件列表</a>
+                                        <a href="../letter-box/?type=1" class="menu-link <?=($current == 'letter-box'&& $pageType == '1')?'current-active':'';?>">系統信件列表</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link <?=($current == 'letter-box'&& $pageType == '2')?'current-active':'';?>">顧客信件列表</a>
+                                        <a href="../letter-box/?type=2" class="menu-link <?=($current == 'letter-box'&& $pageType == '2')?'current-active':'';?>">顧客信件列表</a>
                                     </li>
                                 </ul>
                             </div>
@@ -208,11 +208,18 @@
                     }
                 }).done(function (response) {
                     if(response.success){
-                        Swal.fire(
-                        '成功',
-                        `已為你開通${response.data.store_right}`,
-                        'success'
-                        );
+                        Swal.fire({
+                            icon: 'success',
+                            title: '成功',
+                            text: `已為你開通${response.data.store_right}`,
+                            confirmButtonText:'確認'
+                        }).then((result) => {
+                        if (result.isConfirmed) {
+                            window.location.assign(window.location.href);
+                        } else if (Swal.DismissReason.backdrop) {
+                            popup(id,'<br><p class="text-danger fs-6 pt-2">此步驟無法跳過</p>');
+                        }
+                });
                     }else{
                         popup(id,`<br><p class="text-danger fs-6 pt-2">${response.message}</p>`)
                     }

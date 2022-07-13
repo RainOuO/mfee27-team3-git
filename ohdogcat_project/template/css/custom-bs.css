@@ -29,3 +29,17 @@ button, button:active, button:focus {
     cursor: pointer;
 }
 
+.progress-bar {
+    transform: translateX(-100%);
+    border-radius: 20px;
+    animation: moveIn 1.5s ease-in-out .5s 1 forwards;
+}
+
+@keyframes moveIn {
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
+}

@@ -61,7 +61,6 @@
                 <div id="productList" class="col-md-4 h-100 scroll-bar">
                 </div>
                 <div id="orderInfo" class="container-fluid col-md-8">
-                
                 </div>
             </div>
         </div>
@@ -114,7 +113,7 @@
                         order_id: orderId,
                         index: i
                     }
-                })
+                }) 
                 .done(function (response) {
                     let productList = document.querySelector('#productList');
                     let orderInfo = document.querySelector('#orderInfo');
@@ -123,6 +122,9 @@
                     let status = response.data.order_item.status;
                     let activeOrder = (status != 0 && status != 3 );
                     let amount = 0;
+                    let logLength = response.data.progressLog.log.length;
+                    let itemLog = response.data.progressLog.log[logLength-1];
+                    
                     for(let item of response.data.order_detail){
                         amount += Number(item.amount);
                         porductItem += `
@@ -149,7 +151,7 @@
                             </div>
                         </div>`
                     }
-                    let statusBtn = (activeOrder)? `<div class="btn-group">
+                    let statusBtn = (activeOrder)? `<div class="btn-group dropend">
                                         <div class="d-flex align-items-center px-3 bg-wite pe-none border border-${response.data.order_item.status_css.offCanvas} text-${response.data.order_item.status_css.offCanvas} rounded-start w-100">${response.data.order_item.status_text}</div>
                                         <button type="button" class="btn btn-${response.data.order_item.status_css.offCanvas} dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
                                             <span class="visually-hidden"></span>
@@ -159,11 +161,22 @@
                                             <li><a id="orderCancelBtn" class="dropdown-item" href="#" data-cancel-id="${response.data.order_item.id}">取消訂單</a></li>
                                         </ul>
                                     </div>`:`<p class="bg-light p-2 rounded-3 ${response.data.order_item.status_css.text}">${response.data.order_item.status_text}</span></p>`;
+                    let progressStatus = (logLength==2)? `<div class="card mb-3 text-secondary bg-secondary bg-opacity-10">
+                                                            <div class="card-body">
+                                                                <p class="card-text fs-6">${response.data.progressLog.log[0].update_time}   訂單進入處理中</p>
+                                                            </div>
+                                                        </div>`:'';
+                    let isNew = (response.data.progressLog.newItem)? '':`<div class="card mb-3 text-secondary bg-${response.data.progressLog.progress.status} bg-opacity-10">
+                                                                        <div class="card-body">
+                                                                            <h5 class="card-title">訂單${response.data.progressLog.progress.text}</h5>
+                                                                            <p class="card-text fs-6">賣家已於 ${itemLog.update_time} 將訂單狀態更新為${response.data.progressLog.progress.text}</p>
+                                                                        </div>
+                                                                    </div>`;
                     let order_info = `
                         <h4>詳細資料</h4>
                         <hr>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div>
                                     <h6 class="text-secondary">用戶暱稱</h6>
                                     <p class="bg-light p-2 rounded-3">${response.data.order_item.userName}</p>
@@ -176,8 +189,6 @@
                                     <h6 class="text-secondary">總金額</h6>
                                     <p class="bg-light p-2 rounded-3">${formatNum(response.data.order_item.total)} 元</p>
                                 </div>
-                            </div>
-                            <div class="col-6">
                                 <div>
                                     <h6 class="text-secondary">訂單成立時間</h6>
                                     <p class="bg-light p-2 rounded-3">${response.data.order_item.order_time}</p>
@@ -190,6 +201,19 @@
                                     <h6 class="text-secondary">訂單狀態</h6>
                                     ${statusBtn}
                                 </div>
+                            </div>
+                            <div class="col-8">
+                                <h6>目前處理進度：</h6>
+                                <div class="progress mb-3 gx-2">
+                                    <div class="progress-bar bg-${response.data.progressLog.progress.status}" role="progressbar" style="width: ${response.data.progressLog.progress.num}%" aria-valuenow="${response.data.progressLog.progress.num}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="card mb-3 text-secondary bg-secondary bg-opacity-10">
+                                    <div class="card-body">
+                                        <p class="card-text fs-6">${response.data.order_item.order_time}   訂單建立</p>
+                                    </div>
+                                </div>
+                                ${progressStatus}
+                                ${isNew}
                             </div>
                         </div>
                     `;

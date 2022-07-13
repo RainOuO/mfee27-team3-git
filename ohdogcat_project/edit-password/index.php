@@ -72,46 +72,62 @@ require('../template/dashboard.php');
 ?>
 
 <script>
+
+    // let submit = document.querySelector('#submit');
+    // let form = document.querySelector('#form');
+    // submit.addEventListener('click', function(e) {
+    //     Swal.fire({
+    //         title: '你確定要更新密碼？',
+    //         icon: 'info',
+    //         showDenyButton: false,
+    //         showCancelButton: true,
+    //         confirmButtonText: '送出',
+    //         denyButtonText: `取消`,
+    //         }).then((result) => {
+    //         if (result.isConfirmed) {
+    //         }else if(Swal.DismissReason.backdrop){
+    //             e.preventDefault();
+    //         }
+    //     })
+    // });
+
+
+
+
     if ('<?=  $_SESSION['update'] ?>'== 'error1' ) {
             console.log(132);
-            Toastify({
-                text: "舊密碼輸入錯誤!",
-                duration: 2000,
-                destination: "https://github.com/apvarun/toastify-js",
-                newWindow: true,
-                //   close: true,
-                gravity: "bottom", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-
-                    background: "linear-gradient(to right, rgb(255, 165, 0), #96c93d)",
-                    width: "250px",
-                    height: "50px",
-                    padding: "15px  15px 5px 66px",
-                },
-                onClick: function() {} // Callback after click
-            }).showToast();
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'info',
+                title: '舊密碼輸入錯誤！'
+            })
         }else if('<?=  $_SESSION['update'] ?>'== 'error2' ) {
             console.log(132);
-            Toastify({
-                text: "兩次密碼輸入不一致",
-                duration: 2000,
-                destination: "https://github.com/apvarun/toastify-js",
-                newWindow: true,
-                //   close: true,
-                gravity: "bottom", // `top` or `bottom`
-                position: "right", // `left`, `center` or `right`
-                stopOnFocus: true, // Prevents dismissing of toast on hover
-                style: {
-
-                    background: "linear-gradient(to right, rgb(255, 165, 0), #96c93d)",
-                    width: "250px",
-                    height: "50px",
-                    padding: "15px  15px 5px 66px",
-                },
-                onClick: function() {} // Callback after click
-            }).showToast();
+            const Toast = Swal.mixin({
+                toast: true,
+                position: 'bottom-end',
+                showConfirmButton: false,
+                timer: 2500,
+                timerProgressBar: true,
+                didOpen: (toast) => {
+                    toast.addEventListener('mouseenter', Swal.stopTimer)
+                    toast.addEventListener('mouseleave', Swal.resumeTimer)
+                }
+            })
+            Toast.fire({
+                icon: 'info',
+                title: '兩次密碼輸入不一致'
+            })
             
       }
       <?php $_SESSION['update']=''?>

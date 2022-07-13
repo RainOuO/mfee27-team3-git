@@ -65,7 +65,7 @@ if( $conn->query($sql) === TRUE ){
     };
     
     $now = date('Y-m-d H:i:s');
-    $sqlLog = "INSERT INTO order_product_status (status_before, status, update_time) VALUES ('$status', $newStatus, '$now')";
+    $sqlLog = "INSERT INTO order_product_status (order_id, status_before, status, update_time) VALUES ('$order_id', '$status', $newStatus, '$now')";
     if ($conn->query($sqlLog) === TRUE) {
         $data = [
             "data" => [

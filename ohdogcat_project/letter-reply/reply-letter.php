@@ -1,31 +1,3 @@
-<?php
-session_start();
-require("../../db-connect.php");
-
-
-// GET 資料處理
-$user_id = $_GET['user_id'];
-
-// SESSION 資料處理
-$store_id = $_SESSION['user']['store_id'];
-
-// 抓取 letter資料表內容，且只有 user_id AND $store_id資料
-$sql = "SELECT * FROM letter where user_id = '$user_id' AND (store_id = '$store_id' OR store_id IS NULL)";
-$result = $conn->query($sql);
-$letterCount = $result->num_rows;
-$rows = $result->fetch_all(MYSQLI_ASSOC);
-
-// 抓取 users資料表內容，為了抓取 user_id對應名稱
-$sqlUserName = "SELECT id,name FROM users WHERE id = '$user_id' ";
-$resultUserName = $conn -> query($sqlUserName);
-$rowsUserName = $resultUserName -> fetch_assoc();
-
-// 抓取 store_info資料表內容，為了抓取 store_id對應名稱、圖片
-$sqlStoreName = "SELECT id, name, photo FROM store_info WHERE id = '$store_id'";
-$resultStoreName = $conn -> query($sqlStoreName);
-$rowsStoreName = $resultStoreName -> fetch_assoc();
-
-?>
 
 <!doctype html>
 <html lang="en">
@@ -41,7 +13,7 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
     <link rel="stylesheet" href="<?= $css ?>">
-    <style>
+<style>
     main{
         overflow: hidden;
     }
@@ -208,9 +180,6 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
                         <div class="main-content p-4 position-relative">
-                            <div class="d-flex justify-content-between align-items-center border-bottom pb-2 mb-3">
-                                <h1>回覆</h1>
-                            </div>
                             <?php foreach ($rows as $row) : ?>
                                 <div class="card mb-3" style="max-width: auto;">
                                     <div class="row g-0">

@@ -42,7 +42,7 @@ a {
 /* pagination style */
 .current-active {
     color: #adadad;
-    cursor: default;
+    cursor: default!important;
 }
 
 .current-active:active, .current-active:focus, .current-active:hover {

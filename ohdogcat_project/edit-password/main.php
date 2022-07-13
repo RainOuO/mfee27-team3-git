@@ -21,7 +21,7 @@
 
     </table>
     <div class="py-2 text-end">
-        <button type="submit" class="btn5" href="#">儲存</button>
+        <button id="submit" type="submit" class="btn5" href="#">儲存</button>
     </div>
 </form>
 
