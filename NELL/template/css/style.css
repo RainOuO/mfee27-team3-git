@@ -1,0 +1,330 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@100;300;400;500;700;900&display=swap');
+
+:root {
+    --menu-text-color: #222934;
+}
+
+* {
+    -webkit-user-drag: none;
+    font-family: 'Noto Sans TC', sans-serif;
+}
+
+a {
+    text-decoration: none;
+    color: var(--menu-text-color);
+}
+
+.fill-h {
+    height: 100%;
+    width: auto;
+}
+
+.fill-w {
+    height: auto;
+    width: 100%;
+}
+
+
+/* basic background */
+.lowest-background {
+    background: url("../../images/dashboard/bg_cat-feet.svg") left 116% / 440px no-repeat, linear-gradient(178deg, rgb(212, 237, 237) 0%, rgba(212, 237, 237, 0.7) 540px, rgba(255, 255, 255, 0.6) 720px, rgb(255, 170, 107) 100%) no-repeat
+}
+
+
+/* logo */
+.logo-box {
+    animation: rotate .1s ease-in-out infinite 0s;
+}
+
+.logo-box a {
+    position: relative;
+    height: 150px;
+}
+
+.logo-box .img-component {
+    position: absolute;
+}
+
+.logo-box .img-component.dog-body {
+    width: auto;
+    height: 100%;
+    top: 0;
+    left: 1.5rem;
+}
+
+.logo-box .img-component.dog-tail {
+    width: auto;
+    height: 24%;
+    top: 50.8%;
+    left: 38.6%;
+    transform: rotate(20deg) translate(50%, -35%);
+    animation: tailShake 10s ease-in-out 0s infinite;
+    z-index: 99;
+}
+
+.logo-box .img-component.dog-text {
+    width: auto;
+    height: 71%;
+    top: 18%;
+    right: 14.74%;
+}
+
+/* @keyframes tailShake {
+    0%, 10%, 22%, 35%, 47%, 58%, 65%, 76%, 87%, 100% {
+        transform: rotate(20deg) translate(50%, -35%);
+    }
+    5%, 17%, 25%, 40%, 54%, 61%, 70%, 84%, 95%  {
+        transform: rotate(-30deg) translate(50%, -35%);
+    }
+} */
+@keyframes tailShake {
+
+    0%,
+    10%,
+    30%,
+    40%,
+    50%,
+    70%,
+    85%,
+    100% {
+        transform: rotate(20deg) translate(50%, -35%);
+    }
+
+    5%,
+    17%,
+    47%,
+    54%,
+    90% {
+        transform: rotate(-30deg) translate(50%, -35%);
+    }
+}
+
+
+
+/* aside setting */
+.side-wrap {
+    flex-shrink: 0;
+    flex-basis: 240px;
+}
+
+.content-wrap {
+    flex-shrink: 1;
+    width: 100%;
+}
+
+.side-wrap .menu-box {
+    padding-right: 12px;
+    scrollbar-width: thin;
+    /* Firefox */
+}
+
+.side-wrap .menu-box::-webkit-scrollbar {
+    /* Chrome Safari */
+    width: .5em;
+}
+
+.side-wrap .menu-box::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, .1);
+    /* Chrome Safari */
+    border-radius: 4px;
+    
+}
+
+.side-wrap .menu-box::-webkit-scrollbar-thumb {
+    /* Chrome Safari */
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 4px;
+}
+
+.side-wrap .menu-item {
+    /* Chrome Safari */
+    position: relative;
+    padding: 2px 0;
+    margin-bottom: 4px;
+}
+
+
+/* nav hover & active css */
+.side-wrap .menu-button.collapsed,
+.side-wrap .menu-button.no-accordion {
+    padding-left: 80px;
+    background: url('../../images/dashboard/bg_side-button-effect.svg') no-repeat -280px center / contain;
+}
+
+.side-wrap .menu-button {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    padding: 8px 0;
+    padding-left: 65px;
+    color: var(--menu-text-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: background .3s;
+    background: url('../../images/dashboard/bg_side-button-effect.svg') no-repeat 0px center / contain;
+}
+
+.side-wrap .menu-button.collapsed::before,
+.side-wrap .menu-button.no-accordion::before {
+    left: 45px;
+}
+
+.side-wrap .logout .menu-button.no-accordion {
+    padding: 20px 0 10px 100px;
+    background-size: cover;
+    background-position: -320px;
+}
+
+.side-wrap .logout .menu-button:hover {
+    background-position: right;
+}
+
+.side-wrap .menu-button::after,
+.side-wrap .menu-button.collapsed::after,
+.side-wrap .menu-button.no-accordion::after {
+    position: absolute;
+    content: '';
+    top: 50%;
+    left: 0;
+    height: 36px;
+    width: 0px;
+    border-radius: 0 8px 8px 0;
+    transform: translateY(-50%);
+    background-color: transparent;
+    transition: all .45s;
+    z-index: 99;
+}
+
+.side-wrap .menu-button:hover::after,
+.side-wrap .menu-button::after {
+    width: 7px;
+    background-color: #49586F;
+}
+
+.side-wrap .menu-button:hover {
+    background: url('../../images/dashboard/bg_side-button-effect.svg') no-repeat 0px center / contain;
+    transition: all .3s;
+}
+
+.menu-button .status-mark {
+    position: absolute;
+    width: 12px;
+    height: 2px;
+    top: 50%;
+    right: 40px;
+    transform: translate(0, -50%);
+    border-radius: 10px;
+    background-color: #555;
+    transition: all .1s;
+}
+
+.menu-button.collapsed .status-mark {
+    right: 0px;
+    transform: translate(100%, -50%);
+}
+
+
+/* nav list icon */
+.side-wrap .menu-button::before {
+    position: absolute;
+    content: '';
+    left: 30px;
+    top: 0;
+    width: 26px;
+    height: 100%;
+    transition: all .3s;
+}
+
+.menu-button.icon-home::before {
+    background: url('../../images/dashboard/icon_home.svg') no-repeat left center / contain;
+}
+
+.menu-button.icon-products::before {
+    background: url('../../images/dashboard/icon_products.svg') no-repeat left center / contain;
+    transform: rotate(45deg);
+}
+
+.menu-button.icon-orderlist::before {
+    background: url('../../images/dashboard/icon_order-list.svg') no-repeat left center / contain;
+}
+
+.menu-button.icon-message::before {
+    background: url('../../images/dashboard/icon_message.svg') no-repeat left center / contain;
+}
+
+.menu-button.icon-coupon::before {
+    background: url('../../images/dashboard/icon_coupon.svg') no-repeat left center / contain;
+    transform: rotate(90deg);
+}
+
+.menu-button.icon-setting::before {
+    background: url('../../images/dashboard/icon_settings.svg') no-repeat left center / contain;
+}
+
+.menu-button.icon-logout::before {
+    width: 56px;
+    background: url('../../images/dashboard/icon_log-out.svg') no-repeat left top / contain;
+}
+
+
+/* second layer button */
+.menu-item li {
+    margin-bottom: 4px;
+}
+
+.menu-item li a {
+    padding: 4px 0;
+    padding-left: 44px;
+    display: block;
+    color: var(--menu-text-color);
+    text-decoration: none;
+    transition: all .3s;
+}
+
+.menu-item a:hover {
+    background-color: rgba(34, 41, 52, 0.1);
+    border-radius: 6px;
+}
+
+
+
+
+
+/* content-wrap */
+.content-wrap {
+    background-color: white;
+    border-radius: 20px 0 0 20px;
+    box-shadow: -0px 0px 10px rgba(0, 0, 0, .1);
+}
+
+.content-header .user-sticker {
+    width: 64px;
+    height: 64px;
+}
+
+.content-header a:hover {
+    color: #49586f;
+    transition: all .1s;
+}
+
+
+
+/* #main Section-Scroll-Bar  */
+#main {
+    scrollbar-width: thin;
+    padding-right: 1.5rem;
+}
+
+#main::-webkit-scrollbar {
+    width: .5em;
+}
+
+#main::-webkit-scrollbar-track {
+    background-color: rgba(0, 0, 0, .1);
+    border-radius: 4px;
+}
+
+#main::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, .5);
+    border-radius: 4px;
+}
