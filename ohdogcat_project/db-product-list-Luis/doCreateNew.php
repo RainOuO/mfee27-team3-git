@@ -10,6 +10,7 @@ require("./db-connect.php");
 $store_id = "";
 // TO-DO 
 $type = $_POST["type"];
+
 // echo $type;
 $name = $_POST["name"];
 $category = $_POST["category"];
@@ -30,7 +31,7 @@ echo $valid_start;
 echo $valid_end; 
 
 
-$coupon = $_POST["coupon"];
+$coupon_id = $_POST["coupon_id"];
 $now = date('Y-m-d H:i:s');
 $stock = $_POST["stock"];
 $description = $_POST["description"];

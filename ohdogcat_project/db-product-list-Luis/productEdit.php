@@ -12,17 +12,25 @@ $category = $_GET["category"];
 $storeID = "";
 $id = $_GET["id"];
 
+
 //TO-DO
 //商品id 使用seesion?
 // $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
-$sql = "SELECT product.*, discount_category.id AS coupon_id_new,
-discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
-INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+$sql = "SELECT product.*, discount_store.id AS coupon_id_store,
+discount_store.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
+INNER JOIN discount_store ON discount_store.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
 WHERE product.valid = 1 and product.id = $id";
+
+
+
 $result = $conn->query($sql);
 
 $product_count = $result->num_rows; //取得資料筆數 
 
+// echo $category;
+
+$sqlC = "SELECT * FROM discount_store WHERE valid = 1 AND buyer_valid = 1 ";
+$resultC = $conn->query($sqlC);
 
 
 ?>
@@ -349,14 +357,29 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <label for="">商品分類**</label>
                                         <select name='category' class="form-control" required>
                                             <!-- TO-DO 連動category -->
+
                                             <!-- <option value="none"  disabled hidden>請重新確認產品分類</option> -->
-                                            <option value='1' <?php ($category == 1) ? "selected" : '' ?>>旅遊票券</option>
-                                            <option value='2' <?php ($category == 2) ? "selected" : '' ?>>餐廳票券</option>
-                                            <option value='3' <?php ($category == 3) ? "selected" : "" ?>>活動票券</option>
-                                            <option value='4' <?php ($category == 4) ? "selected" : "" ?>>寵物周邊>寵物外出用品</option>
-                                            <option value='5' <?php ($category == 5) ? "selected" : "" ?>>寵物周邊>寵物飼料</option>
-                                            <option value='6' <?php ($category == 6) ? "selected" : "" ?>>寵物周邊>寵物玩具</option>
-                                            <option value='7' <?php ($category == 7) ? "selected" : "" ?>>寵物周邊>寵物保健</option>
+                                            <option value='1' <?php if ($row['product_category'] == 1) {
+                                                                    echo "selected";
+                                                                } ?>>旅遊票券</option>
+                                            <option value='2' <?php if ($row['product_category'] == 2) {
+                                                                    echo "selected";
+                                                                } ?>>餐廳票券</option>
+                                            <option value='3' <?php if ($row['product_category'] == 3) {
+                                                                    echo "selected";
+                                                                } ?>>活動票券</option>
+                                            <option value='4' <?php if ($row['product_category'] == 4) {
+                                                                    echo "selected";
+                                                                } ?>>寵物周邊>寵物外出用品</option>
+                                            <option value='5' <?php if ($row['product_category'] == 5) {
+                                                                    echo "selected";
+                                                                } ?>>寵物周邊>寵物飼料</option>
+                                            <option value='6' <?php if ($row['product_category'] == 6) {
+                                                                    echo "selected";
+                                                                } ?>>寵物周邊>寵物玩具</option>
+                                            <option value='7' <?php if ($row['product_category'] == 7) {
+                                                                    echo "selected";
+                                                                } ?>>寵物周邊>寵物保健</option>
 
                                         </select>
                                         <label for="">商品簡述**</label>
@@ -377,13 +400,32 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <label for="">下架時間**</label>
                                         <input type="datetime-local" name="valid_end" class="form-control" value="<?= $row['valid_time_end'] ?>" required>
                                         <label for="">搭配優惠方案**</label><br>
-                                        <select name='coupon' class="form-control">
-                                            <option value='1'>折數優惠券</option>
-                                            <option value='2'>現金折價券</option>
-                                            <option value='3'>商品優惠方案</option>
-                                            <option value='4'>折數優惠+現金折價</option>
-                                            <option value='5' selected>全方案適用</option>
+                                        <select name='coupon_id' class="form-control">
+                                            <!-- /////家豪 這裡有改喔~ -->
+                                            <?php while ($rowC = $resultC->fetch_assoc()) : ?>
+                                                <option value='<?= $rowC["id"] ?>'<?php if ($rowC["id"] ==$row["coupon_id"] ) {
+                                                                    echo "selected";
+                                                                } ?> > <?= $rowC['name'] ?></option>
+                                            <?php endwhile; ?>
                                         </select>
+
+                                        <!-- <select name='coupon' class="form-control">
+                                            <option value='1' <?php if ($row['coupon_id'] == 1) {
+                                                                    echo "selected";
+                                                                } ?>>歡慶父親節活動</option>
+                                            <option value='2' <?php if ($row['coupon_id'] == 2) {
+                                                                    echo "selected";
+                                                                } ?>>1111周年慶</option>
+                                            <option value='3' <?php if ($row['coupon_id'] == 3) {
+                                                                    echo "selected";
+                                                                } ?>>商品優惠方案</option>
+                                            <option value='4' <?php if ($row['coupon_id'] == 4) {
+                                                                    echo "selected";
+                                                                } ?>>中秋佳節嗨起來</option>
+                                            <option value='5' <?php if ($row['coupon_id'] == 5) {
+                                                                    echo "selected";
+                                                                } ?>>汪汪汪汪汪汪</option>
+                                        </select> -->
                                         <!--
                                         <label for="">商品更新時間</label>
                                         <input type="date" name="create_time" placeholder="自由增建選項" class="form-control" value="<?= $row['create_time'] ?>">
