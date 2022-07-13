@@ -3,6 +3,8 @@ session_start();
 if (!isset($_SESSION["user"])) {
     header("location:login.php");
 }
+var_dump( $_SESSION);
+
 $accout = $_SESSION["user"]['account'];
 
 $storeid = $_SESSION["user"]['store_right']; ///////////////假設他是商家id

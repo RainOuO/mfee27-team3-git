@@ -11,19 +11,19 @@ $password = $_POST["password"];
 $newpassword= $_POST["newpassword"];
 $repassword=$_POST["repassword"];
 $sql="SELECT * FROM store_info WHERE id='$id' AND password='$password' ";
+$password = md5($password);
+$repassword = md5($repassword);
+$newpassword = md5($newpassword);
 
 session_start();
-$oldpassword = $_SESSION["user"]['password'];
-$password = md5($password);
-$newpassword = md5($newpassword);
-$repassword = md5($repassword);
+$oldpassword=$_SESSION["user"]['password'];
 
 if($oldpassword!==$password ){
     $_SESSION["update"] = $id;
     isset($_SESSION["error"]);
     $_SESSION['update'] = 'error1';
-    header("location: editpassword.php");
-    // echo "密碼錯誤";
+    // header("location: ./");
+    echo "密碼錯誤";
     exit;
 }
 
@@ -33,12 +33,12 @@ if($oldpassword!==$password ){
 if($newpassword != $repassword){
     isset($_SESSION["up"]);
     $_SESSION['update'] = 'error2';
-    header("location: editpassword.php");
+    // header("location: ./");
+    echo"Y";
     exit;
 }else{
     
 }
-
 
 $sql = "UPDATE store_info SET password='$repassword' WHERE id='$id'";
 
@@ -56,7 +56,7 @@ if ($conn->query($sql) === TRUE) {
 
     if (isset($_SESSION["id"])) {
         $_SESSION['update'] = 'success';
-        header("location: user1.php");
+        header("location: ../store-info");
         
     }
 } else {
