@@ -1,10 +1,14 @@
 <div class="d-flex my-4 photo">
     <?php foreach ($rowss as $rowa) : ?>
-    <img class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?>
-        src="./IMAGES/3669480_account_circle_ic_icon.svg" alt="">
-    <?php else : ?>
-    <img src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
-    <?php endif; ?>
+        <div class="w-50">
+            <div class="mx-auto" style="width: 300px; height: 300px;">
+            <?php if (isset($rowa["photo"]) == null) : ?>
+                <img class="object-contain" src="../images/store_photo/Sample_User_Icon.svg" alt="">
+            <?php else : ?>
+                <img class="object-contain" src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
+            <?php endif; ?>
+            </div>
+        </div>
 
     <?php endforeach; ?>
     <div class="container ">
@@ -41,8 +45,12 @@
                 <td>
                     <class="form-control">
                         <?php
-                                                foreach ($rows as $rowRight) {
-                                                    echo $rowRight['type_name'] . ' , ';
+                                                for ($i=0; $i<count($rows); $i++ ) {
+                                                    if($i == (count($rows)-1) ){
+                                                        echo $rows[$i]['type_name'];
+                                                    }else{
+                                                        echo $rows[$i]['type_name'] . '<br>';
+                                                    }
                                                 }
                                                 ?>
                 </td>

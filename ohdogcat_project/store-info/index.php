@@ -9,6 +9,8 @@ $main = "./main.php";
 $header = "./header.php";
 $filterSection = "./filter-section.php";
 $footer = false;
+$current = 'store-info';
+$pageType = false;
 
 
 

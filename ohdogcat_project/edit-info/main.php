@@ -1,13 +1,15 @@
 <div class="d-flex my-4">
     <div class="my-2 imgALL ">
         <?php foreach ($rowss as $rowa) : ?>
-        <img id="previewUP" class="object-cover" <?php if (isset($rowa["photo"]) == null) : ?>
-            src="../IMAGES/3669480_account_circle_ic_icon.svg" alt="">
+        <div class="mx-auto" style="width: 300px; height: 300px;">
+        <?php if (isset($rowa["photo"]) == null) : ?>
+            <img id="previewUP" class="object-contain" src="../images/store_photo/Sample_User_Icon.svg" alt="">
         <?php else : ?>
-        <img id="previewUP" src="../../images/store_photo/<?= $rowa["photo"] ?>" alt="">
+            <img id="previewUP" class="object-contain" src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
         <?php endif; ?>
-        <form class="photoinputALL" action="doUpdate.php" method="post" enctype="multipart/form-data">
-            <input class="form-control inputphoto mx-5" type="file" onchange="readURL(this)" targetID="previewUP"
+        </div>
+        <form class="photoinputALL mt-5" action="doUpdate.php" method="post" enctype="multipart/form-data">
+            <input class="form-control inputphoto mx-auto mt-3" type="file" onchange="readURL(this)" targetID="previewUP"
                 accept="image/gif, image/jpeg, image/png" type="file" name="myFile" />
             <?php endforeach; ?>
     </div>

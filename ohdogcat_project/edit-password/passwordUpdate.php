@@ -14,6 +14,7 @@ $sql="SELECT * FROM store_info WHERE id='$id' AND password='$password' ";
 $password = md5($password);
 $repassword = md5($repassword);
 $newpassword = md5($newpassword);
+var_dump($id);
 
 session_start();
 $oldpassword=$_SESSION["user"]['password'];
@@ -22,7 +23,7 @@ if($oldpassword!==$password ){
     $_SESSION["update"] = $id;
     isset($_SESSION["error"]);
     $_SESSION['update'] = 'error1';
-    // header("location: ./");
+    header("location: ./");
     echo "密碼錯誤";
     exit;
 }
@@ -33,7 +34,7 @@ if($oldpassword!==$password ){
 if($newpassword != $repassword){
     isset($_SESSION["up"]);
     $_SESSION['update'] = 'error2';
-    // header("location: ./");
+    header("location: ./");
     echo"Y";
     exit;
 }else{

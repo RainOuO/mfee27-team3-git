@@ -7,7 +7,6 @@
                             <form class="form2 px-3" action="storeRightupALL.php" method="POST">
                                 <table>
                                 <!-- <input name="id" type="hidden" value="<?= $row["id"] ?>"> -->
-                                <label class="titles" for="gender">權限更換:</label>
                                 <br>
                                 <div>
                                     <input class="tripinput" type="checkbox" name="type_1" value="1">旅遊

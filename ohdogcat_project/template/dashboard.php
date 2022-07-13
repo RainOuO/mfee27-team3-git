@@ -1,13 +1,3 @@
-<?php
-if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !='' && !empty($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] != 0 ){
-    $checkStoreRight = false;
-    $id = $_SESSION["user"]["id"];
-}else{
-    $checkStoreRight = true;
-    $id = $_SESSION["user"]["id"];
-}
-?>
-
 <!doctype html>
 <html lang="en">
 
@@ -35,7 +25,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
     <div class="lowest-background w-100 vh-100 d-flex  overflow-hidden">
         <aside id="side-bar" class="side-wrap vh-100 d-flex flex-column">
             <div class="logo-box d-flex justify-content-center align-items-center py-2">
-                <a href="" class="fill-w d-block px-4">
+                <a href="../dashboard/" class="fill-w d-block px-4">
                     <img class="img-component dog-body" src="../images/dashboard/logo_dog-body.svg" class="fill-w"
                         alt="">
                     <img class="img-component dog-tail" src="../images/dashboard/logo_dog-tail.svg" class="fill-w"
@@ -46,83 +36,77 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
             </div>
             <nav class="menu-box mt-2 overflow-auto flex-shrink-1 h-100">
                 <ul class="list-unstyled accordion" id="menu-accordion">
-                    <li class="menu-item"><a href="../dashboard/" class="menu-button icon-home no-accordion">狀態總覽</a></li>
+                    <li class="menu-item">
+                        <a href="../dashboard/" class="menu-button icon-home no-accordion <?=($current == 'dashboard')?'current-active':'';?>">狀態總覽</a>
+                    </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-products accordion-button collapsed"
+                        <button href="" class="menu-button icon-products accordion-button <?=($current == 'products')?'current-active':'collapsed';?>"
                             data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="true"
                             aria-controls="collapseProducts">商品管理
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseProducts" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
+                        <div id="collapseProducts" class="accordion-collapse collapse <?=($current == 'products')?'show':'';?>" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
-                                    <li>
-                                        <a href="" class="menu-link">商品總覽</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">旅館票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">餐廳票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">活動票券列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">實體商品列表</a>
-                                    </li>
+                                    <?php if(count($typeData)>1):?>
+                                        <li>
+                                            <a href="" class="menu-link <?=($current == 'products'&& $pageType == '0')?'current-active':'';?>">商品總覽</a>
+                                        </li>
+                                    <?php endif;?>
+                                    <?php foreach($typeData as $item):?>
+                                        <li>
+                                            <a href="<?=$item['href']?>" class="menu-link <?=($current == 'products'&& $pageType == '0')?'current-active':'';?>"><?=$item['text']?></a>
+                                        </li>
+                                    <?php endforeach;?>
                                 </ul>
                             </div>
                         </div>
                     </li>
                     <li class="menu-item">
-                        <a href="../order-list/" class="menu-button icon-orderlist no-accordion">訂單管理</a>
+                        <a href="../order-list/" class="menu-button icon-orderlist no-accordion <?=($current == 'order-list')?'current-active':'';?>">訂單管理</a>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-message accordion-button collapsed"
+                        <button href="" class="menu-button icon-message accordion-button <?=($current == 'letter')?'current-active':'collapsed';?>"
                             data-bs-toggle="collapse" data-bs-target="#collapseMessages" aria-expanded="true"
                             aria-controls="collapseMessages">信件匣
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseMessages" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
+                        <div id="collapseMessages" class="accordion-collapse collapse <?=($current == 'letter')?'show':'';?>" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="" class="menu-link">所有信件</a>
+                                        <a href="" class="menu-link <?=($current == 'letter'&& $pageType == '0')?'current-active':'';?>">所有信件</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link">系統信件列表</a>
+                                        <a href="" class="menu-link <?=($current == 'letter'&& $pageType == '1')?'current-active':'';?>">系統信件列表</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link">顧客信件列表</a>
+                                        <a href="" class="menu-link <?=($current == 'letter'&& $pageType == '2')?'current-active':'';?>">顧客信件列表</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-coupon accordion-button collapsed"
+                        <button href="" class="menu-button icon-coupon accordion-button <?=($current == 'discount')?'current-active':'collapsed';?>"
                             data-bs-toggle="collapse" data-bs-target="#collapseCoupon" aria-expanded="true"
-                            aria-controls="collapseCoupon">優惠券管理
+                            aria-controls="collapseCoupon">優惠管理
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseCoupon" class="accordion-collapse collapse" data-bs-parent="#menu-accordion">
+                        <div id="collapseCoupon" class="accordion-collapse collapse <?=($current == 'discount')?'show':'';?>" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="" class="menu-link">有效優惠券</a>
+                                        <a href="" class="menu-link <?=($current == 'discount'&& $pageType == '1')?'current-active':'';?>">優惠券</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link">排程中列表</a>
-                                    </li>
-                                    <li>
-                                        <a href="" class="menu-link">已過期列表</a>
+                                        <a href="" class="menu-link <?=($current == 'discount'&& $pageType == '2')?'current-active':'';?>">商品優惠活動</a>
                                     </li>
                                 </ul>
                             </div>
                         </div>
                     </li>
-                    <li class="menu-item"><a href="" class="menu-button icon-setting no-accordion">商家設定</a></li>
+                    <li class="menu-item"><a href="../store-info/" class="menu-button icon-setting no-accordion <?=($current == 'store-info')?'current-active':'';?>">商家設定</a></li>
                 </ul>
             </nav>
             <div class="menu-box mt-2 flex-shrink-0 logout">
@@ -136,10 +120,10 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
                         <div class="d-flex flex-shrink-1 w-100 align-items-center">
                             <?php if($header){ require($header);}?>
                         </div>
-                        <a href="" class="d-flex justify-content-end align-items-center flex-shrink-0">
-                            <div class="user-name pe-4">汪汪先輩</div>
-                            <div class="user-sticker rounded-3 overflow-hidden"><img
-                                    src="../images/dashboard/pohto_user-sticker.jpg" class="fill-w" alt=""></div>
+                        <a href="../store-info/" class="d-flex justify-content-end align-items-center flex-shrink-0">
+                            <div class="user-name pe-4"><?=$userNickName?></div>
+                            <div class="user-sticker rounded-3 overflow-hidden border border-1 p-1 bg-white"><img
+                                    src="../images/store_photo/<?=$userPhoto?>" class="fill-w object-fit" alt=""></div>
                         </a>
                     </div>
                     <div id="button-area">

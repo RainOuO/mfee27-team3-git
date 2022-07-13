@@ -29,6 +29,11 @@ a {
     height: 100%;
     object-fit: cover;
 }
+.object-contain{
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
 
 .transition-3 {
     transition: all .3s;
@@ -42,6 +47,11 @@ a {
 
 .current-active:active, .current-active:focus, .current-active:hover {
     box-shadow: none;
+}
+
+.content-footer .current-active:active,
+.content-footer .current-active:focus, 
+.content-footer .current-active:hover{
     color: #adadad;
     background-color: #fff;
 }
@@ -209,7 +219,7 @@ a {
     left: 0;
     height: 36px;
     width: 0px;
-    border-radius: 0 8px 8px 0;
+    border-radius: 0 8px 8px 0!important;
     transform: translateY(-50%);
     background-color: transparent;
     transition: all .45s;
@@ -217,13 +227,15 @@ a {
 }
 
 .side-wrap .menu-button:hover::after,
-.side-wrap .menu-button::after {
+.side-wrap .menu-button::after,
+.side-wrap .menu-button.no-accordion.current-active::after
+{
     width: 7px;
     background-color: #49586F;
 }
 
-.side-wrap .menu-button:hover {
-    background: url('../../images/dashboard/bg_side-button-effect.svg') no-repeat 0px center / contain;
+.side-wrap .menu-button:hover, .side-wrap .menu-button.current-active {
+    background: url('../../images/dashboard/bg_side-button-effect.svg') no-repeat 0px center / contain!important;
     transition: all .3s;
 }
 
@@ -302,7 +314,7 @@ a {
     transition: all .3s;
 }
 
-.menu-item a:hover {
+.menu-item .menu-link:hover, .menu-item .menu-link.current-active {
     background-color: rgba(34, 41, 52, 0.1);
     border-radius: 6px;
 }

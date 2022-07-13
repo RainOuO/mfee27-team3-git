@@ -6,5 +6,5 @@
     </span>
 
     <a href="#" class=" btn1 bd-highlight current-active">商家資訊總覽</a>
-    <a href="../edit" class=" btn2 bd-highlight">更新會員資料</a>
+    <a href="../edit-info" class=" btn2 bd-highlight">更新會員資料</a>
 </div>

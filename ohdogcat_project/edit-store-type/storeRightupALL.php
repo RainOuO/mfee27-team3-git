@@ -7,6 +7,7 @@ $type_2 = (isset($_POST["type_2"]))? $_POST["type_2"]:'';
 $type_3 = (isset($_POST["type_3"]))? $_POST["type_3"]:'';
 $type_4 = (isset($_POST["type_4"]))? $_POST["type_4"]:'';
 $typeArr = [ $type_1, $type_2, $type_3, $type_4];
+var_dump($typeArr);
 $storeRight = [];
 //判斷 true 的有那些，抓進 storeRight
 foreach($typeArr as  $item){
@@ -20,7 +21,7 @@ echo $storeRight_text;
 for($i=0; $i<count($storeRight); $i++){
     if($i == (count($storeRight)-1)){
         $storeRight_text .= $storeRight[$i];
-    }else{s
+    }else{
         $storeRight_text .= $storeRight[$i].",";
     }
 }
@@ -33,9 +34,10 @@ $sql = "UPDATE store_info SET store_right= '$storeRight_text'  WHERE account='$i
 
 
 if ($conn->query($sql) === TRUE) {
-    // echo "權限輸改成功! ";
+    echo "權限輸改成功! ";
     $_SESSION['update'] = 'success';
-         header("location: ../store-info");
+    header("location: ../store-info");
+    $_SESSION['user']['store_right'] = $storeRight_text;
 
 
     

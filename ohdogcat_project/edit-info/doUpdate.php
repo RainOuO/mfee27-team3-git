@@ -18,17 +18,27 @@ if ($_FILES["myFile"]["error"] == 0) {
         $fileName = $_FILES["myFile"]["name"];
         $sql = "UPDATE  store_info  SET  photo='$fileName' ,name='$name',phone='$phone',email='$email',address='$address'
         ,area='$area' WHERE account='$id'";
-if ($conn->query($sql) === TRUE) {
-    echo "資料照片更新成功! ";
-        $_SESSION['update'] = 'success';
-        header("location: ../store-info");
-} else {
-    echo "建立資料表錯誤: " . $conn->error;
-}}}
+        if ($conn->query($sql) === TRUE) {
+            $sqlUpdate = "SELECT * FROM store_info WHERE account=$id";
+            $resultUpdate = $conn->query($sqlUpdate);
+            $rowUpdate = $resultUpdate->fetch_assoc();
+            $_SESSION['user'] = $rowUpdate;
+            echo "資料照片更新成功! ";
+                $_SESSION['update'] = 'success';
+                header("location: ../store-info");
+        } else {
+            echo "建立資料表錯誤: " . $conn->error;
+        }
+    }
+}
 /////////////單獨更新名稱電話地方
 $sqln = "UPDATE  store_info  SET  name='$name',phone='$phone',email='$email',address='$address'
 ,area='$area' WHERE account='$id'";
 if ($conn->query($sqln) === TRUE) {
+    $sqlUpdate = "SELECT * FROM store_info WHERE account=$id";
+    $resultUpdate = $conn->query($sqlUpdate);
+    $rowUpdate = $resultUpdate->fetch_assoc();
+    $_SESSION['user'] = $rowUpdate;
 // echo "資料照片更新成功! ";
 $_SESSION['update'] = 'success';
 header("location: ../store-info");

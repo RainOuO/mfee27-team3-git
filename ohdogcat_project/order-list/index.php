@@ -9,10 +9,12 @@ $main = "./main.php";
 $header = "./header.php";
 $filterSection = "./filter-section.php";
 $footer = "./footer.php";
+$current = 'order-list';
+$pageType = false;
 
 
 require('../db-connect.php');
-$store_id = 1;
+$store_id = $_SESSION['user']['id'];
 
 
 // GET query-string

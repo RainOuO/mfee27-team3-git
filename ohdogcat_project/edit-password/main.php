@@ -5,10 +5,8 @@
                 <a class="btn btn-info" href="user.php">取消</a>
             </div> -->
 <form class="formpassword" action="passwordUpdate.php" method="POST">
-    <input name="id" type="hidden" value="<?= $row["id"] ?>">
+    <input name="id" type="hidden" value="<?= $_SESSION["user"]['id'] ?>">
     <table class="table">
-
-
         <th>舊密碼</th>
         <td><input type="tel" name="password" class="form-control"></td>
         </tr>
