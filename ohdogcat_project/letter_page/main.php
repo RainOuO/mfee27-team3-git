@@ -27,17 +27,12 @@ switch($order){
         $orderType="ASC";
 }
 
-// 列表顯示判斷
+// 列表顯示判斷&資料庫語法
 if( $type == 1 ){
-    // $sqlUserId = "SELECT * FROM letter letter_1 where user_id = 1 order by 'ASC'";
-    // $sqlUserId = "SELECT * FROM letter letter_1 where user_id = 1 AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id AND letter_1.store_id = letter.store_id ) order by $orderType";
     $sqlWhere = "user_id = 1 order by 'ASC'";
 }elseif( $type == 2){
-    // $sqlUserId = "SELECT * FROM letter letter_1 where user_id > 1 AND store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id AND letter_1.store_id = letter.store_id ) order by $orderType";
     $sqlWhere = "user_id > 1 AND store_id = $store_id AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id AND letter_1.store_id = letter.store_id ) order by $orderType";
 }else{
-    // $sqlUserId = "SELECT * FROM letter letter_1 where (store_id = $store_id OR user_id = 1) AND time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) order by $orderType";
-    // $sqlUserId = "SELECT * FROM letter letter_1 where time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) ORDER BY $orderType";
     $sqlWhere = "time = (SELECT MAX(time) FROM letter WHERE letter_1.user_id = letter.user_id) ORDER BY $orderType";
 }
 
