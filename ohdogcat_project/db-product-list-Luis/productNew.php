@@ -290,16 +290,16 @@ $type = $_GET["type"];
                                 <div class="photobar d-flex flex-column col-5">
                                     <div class="photo-window d-flex flex-column  ">
                                         <div class="cover-photo m-3">
-                                            <img src="./IMAGES/doglogo.png" alt="" id="preview_cover_img" src="#">
+                                            <img src="./IMAGES/no_img.png" alt="" id="preview_cover_img" src="#">
                                         </div>
                                         <div class="swiper mySwiper">
                                             <div class="swiper-wrapper">
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img1" src="#"></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img2" src="#"></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img3" src="#"></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img4" src="#"></div>
-                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_img5" src="#"></div>
-                                                <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" alt="" id="preview_sub_imgs" src="#"></div> -->
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_img1" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_img2" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_img3" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_img4" src="#"></div>
+                                                <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_img5" src="#"></div>
+                                                <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_imgs" src="#"></div> -->
                                             </div>
                                             <div class="swiper-pagination"></div>
                                         </div>

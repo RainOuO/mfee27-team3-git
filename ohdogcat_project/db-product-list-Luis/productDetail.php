@@ -310,7 +310,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                                 array_pop($rowSub);
                                                 foreach ($rowSub as $rowS) : ?>
                                                     <?php if ($row["sub_photo"] == '' || $rowS == '') : ?>
-                                                        <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
+                                                        <img class="swiper-slide photo1" src="./IMAGES/no_img.png" alt="">
                                                     <?php else : ?>
                                                         <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" alt=""></div>
                                                     <?php endif; ?>

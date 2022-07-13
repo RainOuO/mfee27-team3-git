@@ -141,7 +141,8 @@ $result = $conn->query($sql);
 
 // // $sqlCateName = "SELECT product_class.name FROM product_class, product  where product.product_category = '$proudct_category'  AND product.product_category = product_class.id" ;
 
-// ?>
+// 
+?>
 
 <!doctype html>
 <html lang="en">
@@ -455,7 +456,6 @@ $result = $conn->query($sql);
                                 <?php if ($product_count > 0) : ?>
                                     <h4 class="countBox">
                                         現在為第<?= $page ?>頁，商品第<?= $starItem ?>-<?= $endItem ?>筆資料，共<?= $product_count ?>筆商品資料</h4>
-5
                                 <?php endif; ?>
                             </div>
                             <button class="btn filterBtn me-1 ms-3 my-3" onclick="window.location.href='productNew.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">新增商品</button>
@@ -490,7 +490,6 @@ $result = $conn->query($sql);
                                                 <td class="align-middle col-2"><?= $row["name"] ?></td>
                                                 <td class="align-middle col-2"><?= $row["intro"] ?></td>
                                                 <td class="align-middle"><?= $row["coupon_name"] ?></td>
-                                               
                                                 <td class="align-middle text-end"><?= $row["price"] ?></td>
                                                 <td class="align-middle text-center">
                                                     <?= date("Y-m-d ", strtotime($row["valid_time_start"])) ?><br>
@@ -508,7 +507,7 @@ $result = $conn->query($sql);
                                     <nav aria-label="Page navigation example ">
                                         <ul class="pagination">
                                             <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                                                <a class="darkblueBtn <?php ($i == $page) ? "active" : ""?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?= $ordertype ?>"><?= $i ?></a>
+                                                <a class="darkblueBtn <?php ($i == $page) ? "active" : "" ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?= $ordertype ?>"><?= $i ?></a>
                                             <?php endfor; ?>
                                         </ul>
                                     </nav>
@@ -517,7 +516,6 @@ $result = $conn->query($sql);
                                 目前沒有資料
                             <?php endif; ?>
                         </div>
-
                     </main>
                 </div>
             </div>

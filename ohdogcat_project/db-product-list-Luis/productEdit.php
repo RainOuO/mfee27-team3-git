@@ -316,7 +316,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                                     array_pop($rowSub);
                                                     for ($i = 0; $i < count($rowSub); $i++) : ?>
                                                         <?php if ($rowSub[$i] == '') : ?>
-                                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" id="preview_sub_img<?= $i ?>" src="#" alt=""></div>
+                                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" id="preview_sub_img<?= $i ?>" src="#" alt=""></div>
                                                         <?php else : ?>
                                                             <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowSub[$i] ?>" id="preview_sub_img<?= $i ?>" src="#" alt=""></div>
                                                         <?php endif; ?>
