@@ -14,7 +14,7 @@
         </div>
     </div>
     <hr>
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center w-100">
         <div class="photobar d-flex flex-column col-5">
             <div class="photo-window d-flex flex-column  ">
                 <div class="cover-photo m-3">

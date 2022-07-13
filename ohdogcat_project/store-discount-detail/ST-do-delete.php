@@ -12,6 +12,6 @@ if ($conn->query($sql) === TRUE) {
 } else {
     echo "刪除資料錯誤: " . $conn->error;
 }
-header("location:ST-store-discounts.php")
+header("location: ../store-discounts");
 
 ?>

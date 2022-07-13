@@ -61,7 +61,7 @@
             </div>
         </div>
     </div>
-    <div class="col-6 row d-flex justify-content-end btn-group align-items-center mt-3">
+    <div class="col-6 row d-flex justify-content-end btn-group align-items-center m-0">
         <a class="col-2 orderBtn"
             href="../products/?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=1"
             class="darkblueBtn <?php if ($order == 1) echo "active" ?>" name="priceOrder ASC">單價↑</a>

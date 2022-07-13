@@ -1,8 +1,5 @@
 <?php if ($product_count > 0) :
                             $row = $result->fetch_assoc() ?>
-                            <div class="border-bottom pb-2">
-                                <h2>商品內容管理</h2>
-                            </div>
                             <div class="d-flex justify-content-between align-items-center m-2">
                                 <div class="title d-flex mt-2">
                                     <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
@@ -16,7 +13,7 @@
                             </div>
                             <hr>
 
-                            <div class="row d-flex justify-content-center">
+                            <div class="row d-flex justify-content-center w-100">
                                 <div class="photobar d-flex flex-column col-5">
                                     <div class="photo-window d-flex flex-column align-items-flex-start ">
                                         <div class="cover-photo">

@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Create Discount</title>
+    <title>ST Discount Detail</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -12,7 +12,8 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="../template/css/custom-bs.css">
     <link rel="stylesheet" href="../template/css/style.css">
-
+    <!-- 字體 -->
+    <link rel="stylesheet" href="/fontawesome-free-6.1.1-web/css/all.min.css">
 </head>
 
 <body>
@@ -133,7 +134,7 @@
                     <!-- 純標題區 -->
                     <div class="content-header d-flex justify-content-end mb-3">
                         <div class="d-flex flex-shrink-1 w-100 align-items-center">
-                            <h2 class="m-0">新增優惠券</h2>
+                            <h2 class="m-0">查看優惠細項</h2>
                         </div>
                         <!--汪汪照片區<a>-->
                         <a href="../store-info/" class="d-flex justify-content-end align-items-center flex-shrink-0">
@@ -141,139 +142,152 @@
                             <div class="user-sticker rounded-3 overflow-hidden border border-1 p-1 bg-white"><img src="../images/store_photo/<?= $userPhoto ?>" class="fill-w object-fit" alt=""></div>
                         </a>
                     </div>
+
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
 
-                        <!-- 家豪模板區 ------------------->
+                        <!-- end上方家豪模板區 ------------------->
 
+                        <!-- 采平discounts區域 -->
                         <style>
-                            #set_time {
-                                display: block;
-                            }
-
-                            #set_code {
-                                display: block;
-                            }
-
-                            #good {
-                                display: none;
-                                color: blue;
-                            }
-
-                            #nogood {
-                                display: none;
-                                color: red;
-                            }
-
-                            .yellowBtn,
-                            .yellowBtn:active,
-                            .yellowBtn:focus {
-                                color: #222934;
-                                background-color: #FFC845;
-                                border: 0;
-                                transition: all .3s;
-                            }
-
-                            .yellowBtn:hover {
-                                color: #222934;
-                                background-color: #ffe3a1;
-                            }
-
-
-                            .yellowBtn:visited {
-                                color: #222934;
-                                background-color: #FFC845;
-                            }
-
-                            .lightblueBtn,
-                            .lightblueBtn:focus {
-                                color: #222934;
-                                background-color: #D5EEEE;
-                            }
-
-
-
-                            .lightblueBtn:active,
-                            .lightblueBtn:visited,
-                            .lightblueBtn:hover {
-                                color: #fff;
-                                background-color: #49586f;
-                            }
+                            
                         </style>
+                        <?php
+                        if (!isset($_GET["id"])) {
+                            echo "沒有參數";
+                            // exit;
+                        }
+                        $id = $_GET["id"];
+                        $couponId = "AND coupon_id = $id";
+                        // var_dump($_GET["id"]);
+                        require("../db-connect.php");
+                        $sql = "SELECT * FROM discount_store WHERE id=$id AND valid=1";
+                        $result = $conn->query($sql);
+                        $userCount = $result->num_rows;
 
-                            <div class="container">
-                                <form action="doCreate.php" method="post">
-                                    <div class="mb-2">
-                                        <label for="">優惠券名稱： </label>
-                                        <input type="text" class="form-control" name="name" required>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">優惠券敘述： </label>
-                                        <input type="text" class="form-control" name="description">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">種類： </label><br>
-                                        <Input type="Radio" name="category_id" value="1" required onclick="document.getElementById('set_code').style.display = 'block'" checked>%數折價券
-                                        <Input type="Radio" name="category_id" value="2" onclick="document.getElementById('set_code').style.display = 'block'">現金折價券
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">折扣數字：</label>
-                                        <input type="number" class="form-control" name="discount_number" placeholder="EX:8折優惠/優惠券需填入80、現金折價100元需填入100" required>
-                                    </div>
-                                    <div class="mb-2" id="set_code">
-                                        <label for="">請填入八碼序號（限定使用英文大寫、數字）： <br></label>
-                                        <input type="text" class="form-control" id="code" name="discount_code" placeholder="EX:HAPPY100" onblur="myFunction(value)">
-                                        <h6 id="good">此序號可使用</h6>
-                                        <h6 id="nogood">此序號不可使用</h6>
+                        $sqlProduct = "SELECT * FROM product WHERE valid=1 $couponId";
+                        $resultProduct = $conn->query($sqlProduct);
+                        $productCount = $resultProduct->num_rows;
+                        // var_dump($productCount);
+                        ?>
 
-                                        <script>
-                                            const value = document.getElementById("code").value;
-
-                                            function myFunction(value) {
-                                                var regex = /[A-Z0-9]{8}/;
-                                                if (!regex.test(value)) {
-                                                    document.getElementById('good').style.display = 'none'
-                                                    document.getElementById('nogood').style.display = 'block'
-                                                } else {
-                                                    document.getElementById('good').style.display = 'block'
-                                                    document.getElementById('nogood').style.display = 'none'
-                                                }
-                                            }
-                                        </script>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">優惠券數量：</label>
-                                        <input type="number" class="form-control" name="amount">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">可用優惠券的最低價格：</label>
-                                        <input type="number" class="form-control" name="lower_limit">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">是否限制使用時間： </label><br>
-                                        <Input type="Radio" name="state" value="1" onclick="document.getElementById('set_time').style.display = 'block'" required checked>限制
-                                        <Input type="Radio" name="state" value="0" onclick="document.getElementById('set_time').style.display = 'none'">不限制
-                                    </div>
-                                    <div id="set_time">
-                                        <div class="mb-2">
-                                            <label for="">優惠啟用時間</label>
-                                            <input type="date" class="form-control" name="start_time">
-                                        </div>
-                                        <div class="mb-2">
-                                            <label for="">優惠結束時間</label>
-                                            <input type="date" class="form-control" name="end_time">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end ">
-                                        <button class="btn yellowBtn me-2" type="submit">確認送出</button>
-                                        <a href="discounts.php" class="lightblueBtn btn">回折價券列表</a>
-                                    </div>
-                                </form>
+                        <div class="container">
+                        <div class="py-2">
+                            <div class="d-flex justify-content-end">
+                                <button type="button" class="btn lightblueBtn mx-1">
+                                    <a class="bBtn btn-info" href="ST-store-discounts.php?id=<?=$id?>" >取消變更</a>
+                                </button>
+                                <button type="button" class="btn lightblueBtn mx-1">
+                                    <a class="bBtn" href="ST-discount-edit.php?id=<?= $id ?>">前往修改</a>
+                                </button>
+                                <a href="ST-do-delete.php?id=<?= $id  ?>" class="mx-1 btn btn-danger py-2">刪除</a>
                             </div>
+                        </div>
+
+                            <?php if ($userCount > 0) :
+                                $row = $result->fetch_assoc(); ?>
 
 
+                                <table class="table table-hover">
+                                    <tr>
+                                        <th>優惠編號</th>
+                                        <td><?= $row["id"] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>優惠活動名稱</th>
+                                        <td><?= $row["name"] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>優惠活動簡述</th>
+                                        <td><?= $row["description"] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>折扣數字</th>
+                                        <td><?= $row["discount_number"] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>啟用日期</th>
+                                        <td><?= $row["start_time"] ?></td>
+                                    </tr>
+                                    <tr>
+                                        <th>失效日期</th>
+                                        <td><?= $row["end_time"] ?></td>
+                                    </tr>
+                                    <th>狀態</th>
+                                    <td><?php
+                                        if ($row["buyer_valid"] == 2) {
+                                            echo "未生效/已過期";
+                                        } else {
+                                            echo "有效";
+                                        } ?>
+                                    </td>
+                                </table>
 
-                            <!-- 家豪模板區 ------------------->
+                                <p style="text-align:center; " class="mb-4 fs-5 mt-5"><span class="detail"> 使用此優惠活動的商品</span><br></p>
+                            <?php else : ?>
+                                沒有該使用者
+                            <?php endif; ?>
+                            <div class="table-responsive ">
+                                <?php if ($productCount > 0) : ?>
+                                    <table class="table table-sm table-hover">
+                                        <thead>
+                                            <tr>
+                                                <!-- <th class="align-middle text-center">商家ID</th> -->
+                                                <th class="align-middle text-center">商品No.</th>
+                                                <th class="align-middle">商品分類</th>
+                                                <th>商品名稱</th>
+                                                <th>商品簡述</th>
+                                                <th>優惠方案</th>
+                                                <th class="align-middle text-end">單價</th>
+                                                <th class="align-middle text-center">上架區間</th>
+                                                <th class="align-middle text-center">庫存</th>
+                                                <!-- <th class="align-middle text-center">啟用</th> -->
+                                                <th class="align-middle text-center">編修</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <?php //把資料轉換成關聯式陣列
+                                            while ($row = $resultProduct->fetch_assoc()) : //從資料庫一次抽取單筆資料 用while迴圈顯示
+                                            ?>
+                                                <tr>
+                                                    <!-- <td class="align-middle text-center"><?= $row["store_id"] ?></td> -->
+                                                    <td class="align-middle text-center"><?= $row["id"] ?></td>
+                                                    <td class="align-middle text"><?= $row["product_category"] ?></td>
+                                                    <td class="align-middle col-2"><?= $row["name"] ?></td>
+                                                    <td class="align-middle col-2"><?= $row["intro"] ?></td>
+                                                    <td class="align-middle"><?= $row["coupon_id"] ?></td>
+                                                    <td class="align-middle text-end"><?= $row["price"] ?></td>
+                                                    <td class="align-middle text-center">
+                                                        <?= date("Y-m-d ", strtotime($row["valid_time_start"])) ?><br>
+                                                        <?= date("Y-m-d ", strtotime($row["valid_time_end"])) ?></td>
+                                                    <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
+                                                    <!-- <td class="align-middle text-center"><?= $row["valid"] ?></td> -->
+                                                    <td class="align-middle text-center">
+                                                        <button type="button" class="btn lightblueBtn" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">查看</button>
+                                                    </td>
+                                                </tr>
+                                            <?php endwhile; ?>
+                                        </tbody>
+                                    </table>
+
+                                    <!-- <div class="d-flex justify-content-center pt-3">
+                                    <nav aria-label="Page navigation example ">
+                                        <ul class="pagination">
+                                            <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
+                                                <a class="pageBtn <?php if ($i == $page) echo "active"; ?> " href="allProductList.php?type=<?= $type ?>&page=<?= $i ?>&order=<?= $ordertype ?>"><?= $i ?></a>
+                                            <?php endfor; ?>
+                                        </ul>
+                                    </nav>
+                                </div> -->
+                                <?php else : ?>
+                                    沒有套用此優惠活動的商品
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                        <!-- end采平區域 -->
+
+
+                        <!-- 下方家豪模板區 ------------------->
                     </main>
                 </div>
             </div>
@@ -289,4 +303,4 @@
 
 </html>
 
-<!-- 家豪模板區 ------------------->
+<!-- end家豪模板區 ------------------->

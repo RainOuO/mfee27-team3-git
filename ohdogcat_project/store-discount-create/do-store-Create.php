@@ -37,5 +37,5 @@ if ($conn->query($sql) === TRUE) {
 }
 
 $conn->close();
-header("location: create-store-discount.php");
+header("location: ../store-discount-create/");
 exit;

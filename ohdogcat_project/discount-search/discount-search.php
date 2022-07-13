@@ -1,9 +1,14 @@
+<?php
+//搜尋用GET較好
+require("../db-connect.php");
+
+?>
 <!-- 家豪模板區 ------------------->
 <!doctype html>
 <html lang="en">
 
 <head>
-    <title>Create Discount</title>
+    <title>Discount Search</title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -16,6 +21,7 @@
 </head>
 
 <body>
+
     <div class="lowest-background w-100 vh-100 d-flex  overflow-hidden">
         <aside id="side-bar" class="side-wrap vh-100 d-flex flex-column">
             <div class="logo-box d-flex justify-content-center align-items-center py-2">
@@ -130,10 +136,11 @@
         <div class="content-wrap vh-100">
             <div class="container-fluid h-100 py-4 overflow-hidden">
                 <div class="d-flex flex-column h-100">
+
                     <!-- 純標題區 -->
                     <div class="content-header d-flex justify-content-end mb-3">
                         <div class="d-flex flex-shrink-1 w-100 align-items-center">
-                            <h2 class="m-0">新增優惠券</h2>
+                            <h2 class="m-0">搜尋</h2>
                         </div>
                         <!--汪汪照片區<a>-->
                         <a href="../store-info/" class="d-flex justify-content-end align-items-center flex-shrink-0">
@@ -144,140 +151,72 @@
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
 
-                        <!-- 家豪模板區 ------------------->
+                        <!-- end上方家豪模板區 ------------------->
 
-                        <style>
-                            #set_time {
-                                display: block;
-                            }
+                        <!-- 采平discounts區域 -->
+                        
+                        <div class="container">
+                            <div class="row d-flex justify-content-between btn-group align-items-center">
+                                <div class="col-4 row d-flex">
+                                    <form class=" col-8 d-flex" action="discount-search.php" method="get">
+                                        <input type="text" class="form-control col-3  mt-2 ms-4" name="search" placeholder="輸入關鍵字">
+                                        <input type="hidden" name="type" value="<?= $type ?>">
+                                        <button class="btn yellowBtn col-3 mx-2 mt-2" type="submit">搜尋</button>
+                                    </form>
+                                </div>
+                                <div class="col-2 countBox d-flex justify-content-end">
+                                    <button class="btn lightblueBtn d-flex justify-content-end me-4  mt-2" onclick="window.location.href='discounts.php'">回到優惠券列表</button>
 
-                            #set_code {
-                                display: block;
-                            }
-
-                            #good {
-                                display: none;
-                                color: blue;
-                            }
-
-                            #nogood {
-                                display: none;
-                                color: red;
-                            }
-
-                            .yellowBtn,
-                            .yellowBtn:active,
-                            .yellowBtn:focus {
-                                color: #222934;
-                                background-color: #FFC845;
-                                border: 0;
-                                transition: all .3s;
-                            }
-
-                            .yellowBtn:hover {
-                                color: #222934;
-                                background-color: #ffe3a1;
-                            }
-
-
-                            .yellowBtn:visited {
-                                color: #222934;
-                                background-color: #FFC845;
-                            }
-
-                            .lightblueBtn,
-                            .lightblueBtn:focus {
-                                color: #222934;
-                                background-color: #D5EEEE;
-                            }
-
-
-
-                            .lightblueBtn:active,
-                            .lightblueBtn:visited,
-                            .lightblueBtn:hover {
-                                color: #fff;
-                                background-color: #49586f;
-                            }
-                        </style>
-
-                            <div class="container">
-                                <form action="doCreate.php" method="post">
-                                    <div class="mb-2">
-                                        <label for="">優惠券名稱： </label>
-                                        <input type="text" class="form-control" name="name" required>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">優惠券敘述： </label>
-                                        <input type="text" class="form-control" name="description">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">種類： </label><br>
-                                        <Input type="Radio" name="category_id" value="1" required onclick="document.getElementById('set_code').style.display = 'block'" checked>%數折價券
-                                        <Input type="Radio" name="category_id" value="2" onclick="document.getElementById('set_code').style.display = 'block'">現金折價券
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">折扣數字：</label>
-                                        <input type="number" class="form-control" name="discount_number" placeholder="EX:8折優惠/優惠券需填入80、現金折價100元需填入100" required>
-                                    </div>
-                                    <div class="mb-2" id="set_code">
-                                        <label for="">請填入八碼序號（限定使用英文大寫、數字）： <br></label>
-                                        <input type="text" class="form-control" id="code" name="discount_code" placeholder="EX:HAPPY100" onblur="myFunction(value)">
-                                        <h6 id="good">此序號可使用</h6>
-                                        <h6 id="nogood">此序號不可使用</h6>
-
-                                        <script>
-                                            const value = document.getElementById("code").value;
-
-                                            function myFunction(value) {
-                                                var regex = /[A-Z0-9]{8}/;
-                                                if (!regex.test(value)) {
-                                                    document.getElementById('good').style.display = 'none'
-                                                    document.getElementById('nogood').style.display = 'block'
-                                                } else {
-                                                    document.getElementById('good').style.display = 'block'
-                                                    document.getElementById('nogood').style.display = 'none'
-                                                }
-                                            }
-                                        </script>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">優惠券數量：</label>
-                                        <input type="number" class="form-control" name="amount">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">可用優惠券的最低價格：</label>
-                                        <input type="number" class="form-control" name="lower_limit">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">是否限制使用時間： </label><br>
-                                        <Input type="Radio" name="state" value="1" onclick="document.getElementById('set_time').style.display = 'block'" required checked>限制
-                                        <Input type="Radio" name="state" value="0" onclick="document.getElementById('set_time').style.display = 'none'">不限制
-                                    </div>
-                                    <div id="set_time">
-                                        <div class="mb-2">
-                                            <label for="">優惠啟用時間</label>
-                                            <input type="date" class="form-control" name="start_time">
-                                        </div>
-                                        <div class="mb-2">
-                                            <label for="">優惠結束時間</label>
-                                            <input type="date" class="form-control" name="end_time">
-                                        </div>
-                                    </div>
-                                    <div class="d-flex justify-content-end ">
-                                        <button class="btn yellowBtn me-2" type="submit">確認送出</button>
-                                        <a href="discounts.php" class="lightblueBtn btn">回折價券列表</a>
-                                    </div>
-                                </form>
+                                </div>
                             </div>
-
-
-
-                            <!-- 家豪模板區 ------------------->
-                    </main>
+                            <div class="py-2 ms-4">
+                                <h2><?= $search ?>的搜尋結果</h2>
+                                <div class="py-2">共 <?= $userCount ?> 筆資料</div>
+                            </div>
+                            <?php if ($userCount > 0) : ?>
+                                <table class="table table-sm  table-hover">
+                                    <thead>
+                                        <tr>
+                                            <td class="align-middle text-center">優惠券編號</td>
+                                            <td class="align-middle text-center">優惠券名稱</td>
+                                            <td class="align-middle text-center">優惠券簡述</td>
+                                            <td class="align-middle text-center">庫存</td>
+                                            <td class="align-middle text-center">折扣數字</td>
+                                            <td class="align-middle text-center">優惠序號</td>
+                                            <td class="align-middle text-center">啟用日期</td>
+                                            <td class="align-middle text-center">失效日期</td>
+                                            <td class="align-middle text-center">編修</td>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        //把資料轉換成關聯式陣列
+                                        while ($row = $result->fetch_assoc()) : ?>
+                                            <tr>
+                                                <td class="align-middle text-center"><?php echo $row["id"] ?></td>
+                                                <td class="align-middle text-center"><?php echo $row["name"] ?></td>
+                                                <td class="align-middle text-center"><?php echo $row["description"] ?></td>
+                                                <td class="align-middle text-center"><?php echo $row["amount"]."張" ?></td>
+                                                <td class="align-middle text-center"><?php echo $row["discount_number"] ?></td>
+                                                <td class="align-middle text-center"><?php echo $row["discount_code"] ?></td>
+                                                <td class="align-middle text-center"><?php echo $row["start_time"] ?></td>
+                                                <td class="align-middle text-center"><?php echo $row["end_time"] ?></td>
+                                                <td class="align-middle text-center"><a class="btn lightblueBtn aBtn" href="discount.php?id=<?= $row["id"] ?>">查看</a></td>
+                                            </tr>
+                                        <?php endwhile; ?>
+                                    </tbody>
+                                <?php else : ?>
+                                    沒有符合的結果
+                                <?php endif; ?>
+                        </div>
                 </div>
+                <!-- end采平discounts區域 -->
+
+                <!-- 下方家豪模板區 ------------------->
+                </main>
             </div>
         </div>
+    </div>
     </div>
     <!-- Bootstrap JavaScript Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.5/dist/umd/popper.min.js" integrity="sha384-Xe+8cL9oJa6tN/veChSP7q+mnSPaj5Bcu9mPX5F5xIGE0DVittaqT5lorf0EI7Vk" crossorigin="anonymous">
@@ -289,4 +228,4 @@
 
 </html>
 
-<!-- 家豪模板區 ------------------->
+<!-- end家豪模板區 ------------------->

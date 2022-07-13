@@ -201,6 +201,7 @@
                             }
                         </style>
 
+                        <body>
                             <div class="container">
                                 <form action="doCreate.php" method="post">
                                     <div class="mb-2">

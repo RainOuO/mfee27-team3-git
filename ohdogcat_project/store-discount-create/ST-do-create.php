@@ -39,7 +39,7 @@ if ($conn->query($sqlUpdate) === TRUE) {
 
 
 $conn->close();
-header("location:ST-discount-create.php");
+header("location: ../store-discount-create/");
 exit;
 
 

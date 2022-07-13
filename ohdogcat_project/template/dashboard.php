@@ -18,7 +18,9 @@
     <link rel="stylesheet" href="<?=$path?>template/css/style.css">
     <link rel="stylesheet" href="<?= $css ?>">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+
+
 </head>
 
 <body>
@@ -40,7 +42,7 @@
                         <a href="../dashboard/" class="menu-button icon-home no-accordion <?=($current == 'dashboard')?'current-active':'';?>">狀態總覽</a>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-products accordion-button <?=($current == 'products')?'current-active':'collapsed';?>"
+                        <button class="menu-button icon-products accordion-button <?=($current == 'products')?'current-active':'collapsed';?>"
                             data-bs-toggle="collapse" data-bs-target="#collapseProducts" aria-expanded="true"
                             aria-controls="collapseProducts">商品管理
                             <div class="status-mark"></div>
@@ -66,7 +68,7 @@
                         <a href="../order-list/" class="menu-button icon-orderlist no-accordion <?=($current == 'order-list')?'current-active':'';?>">訂單管理</a>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-message accordion-button <?=($current == 'letter-box')?'current-active':'collapsed';?>"
+                        <button class="menu-button icon-message accordion-button <?=($current == 'letter-box')?'current-active':'collapsed';?>"
                             data-bs-toggle="<?=($current == 'letter-box')?'current-active':'collapse';?>" data-bs-target="#collapseMessages" aria-expanded="true"
                             aria-controls="collapseMessages">信件匣
                             <div class="status-mark"></div>
@@ -88,7 +90,7 @@
                         </div>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-coupon accordion-button <?=($current == 'discount')?'current-active':'collapsed';?>"
+                        <button class="menu-button icon-coupon accordion-button <?=($current == 'discount')?'current-active':'collapsed';?>"
                             data-bs-toggle="collapse" data-bs-target="#collapseCoupon" aria-expanded="true"
                             aria-controls="collapseCoupon">優惠管理
                             <div class="status-mark"></div>
@@ -97,10 +99,10 @@
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="" class="menu-link <?=($current == 'discount'&& $pageType == '1')?'current-active':'';?>">優惠券</a>
+                                        <a href="../discounts" class="menu-link <?=($current == 'discount'&& $pageType == '1')?'current-active':'';?>">折扣碼優惠券</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link <?=($current == 'discount'&& $pageType == '2')?'current-active':'';?>">商品優惠活動</a>
+                                        <a href="../store-discounts" class="menu-link <?=($current == 'discount'&& $pageType == '2')?'current-active':'';?>">商品優惠活動</a>
                                     </li>
                                 </ul>
                             </div>

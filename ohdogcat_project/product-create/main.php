@@ -1,18 +1,13 @@
 <form action="doCreateNew.php" method="post" enctype="multipart/form-data">
     <input type="hidden" name="type" value="<?= $type ?>" />
     <div class="d-flex justify-content-between align-items-center m-2">
-        <div class="title d-flex mt-2">
+        <div class="title d-flex">
             <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
             <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
         </div>
-        <div class="crudBox">
-            <button type="submit" class="btn filterBtn mx-1">儲存</button>
-            <button type="button" class="btn filterBtn ms-1"
-                onclick="window.location.href='../products/?store_id=<?= $storeID ?>&type=<?= $type ?>'">取消新增</button>
-        </div>
     </div>
     <hr>
-    <div class="row d-flex justify-content-center">
+    <div class="row d-flex justify-content-center w-100">
         <div class="photobar d-flex flex-column col-5">
             <div class="photo-window d-flex flex-column  ">
                 <div class="cover-photo m-3">

@@ -1,0 +1,31 @@
+.yellowBtn,
+.yellowBtn:active,
+.yellowBtn:focus {
+    color: #222934;
+    background-color: #FFC845;
+    border: 0;
+    transition: all .3s;
+}
+
+.yellowBtn:hover {
+    color: #222934;
+    background-color: #ffe3a1;
+}
+
+
+.yellowBtn:visited {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.lightblueBtn,
+.lightblueBtn:focus {
+    color: #222934;
+    background-color: #D5EEEE;
+}
+
+.lightblueBtn:active,
+.lightblueBtn:hover {
+    color: #fff;
+    background-color: #49586f;
+}

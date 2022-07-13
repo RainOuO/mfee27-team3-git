@@ -1,3 +1,7 @@
+<?php
+
+
+?>
 <!-- 家豪模板區 ------------------->
 <!doctype html>
 <html lang="en">
@@ -130,41 +134,24 @@
         <div class="content-wrap vh-100">
             <div class="container-fluid h-100 py-4 overflow-hidden">
                 <div class="d-flex flex-column h-100">
-                    <!-- 純標題區 -->
-                    <div class="content-header d-flex justify-content-end mb-3">
-                        <div class="d-flex flex-shrink-1 w-100 align-items-center">
-                            <h2 class="m-0">新增優惠券</h2>
-                        </div>
-                        <!--汪汪照片區<a>-->
-                        <a href="../store-info/" class="d-flex justify-content-end align-items-center flex-shrink-0">
-                            <div class="user-name pe-4"><?= $userNickName ?></div>
-                            <div class="user-sticker rounded-3 overflow-hidden border border-1 p-1 bg-white"><img src="../images/store_photo/<?= $userPhoto ?>" class="fill-w object-fit" alt=""></div>
-                        </a>
-                    </div>
+<!-- 純標題區 -->
+<div class="content-header d-flex justify-content-end mb-3">
+    <div class="d-flex flex-shrink-1 w-100 align-items-center">
+        <h2 class="m-0">修改優惠券</h2>
+    </div>
+    <!--汪汪照片區<a>-->
+    <a href="../store-info/" class="d-flex justify-content-end align-items-center flex-shrink-0">
+        <div class="user-name pe-4"><?= $userNickName ?></div>
+        <div class="user-sticker rounded-3 overflow-hidden border border-1 p-1 bg-white"><img src="../images/store_photo/<?= $userPhoto ?>" class="fill-w object-fit" alt=""></div>
+    </a>
+</div>
+
                     <hr class="flex-shrink-0">
                     <main id="main" class="content-main overflow-auto flex-shrink-1 h-100">
 
-                        <!-- 家豪模板區 ------------------->
-
+                        <!-- end上方家豪模板區 ------------------->
+                        <!-- 采平discounts區域 -->
                         <style>
-                            #set_time {
-                                display: block;
-                            }
-
-                            #set_code {
-                                display: block;
-                            }
-
-                            #good {
-                                display: none;
-                                color: blue;
-                            }
-
-                            #nogood {
-                                display: none;
-                                color: red;
-                            }
-
                             .yellowBtn,
                             .yellowBtn:active,
                             .yellowBtn:focus {
@@ -191,89 +178,81 @@
                                 background-color: #D5EEEE;
                             }
 
-
-
                             .lightblueBtn:active,
                             .lightblueBtn:visited,
                             .lightblueBtn:hover {
                                 color: #fff;
                                 background-color: #49586f;
                             }
+
+                            .aBtn {
+                                text-decoration: none;
+                                color: #222934;
+                            }
+
+                            .aBtn:hover {
+                                color: #222934;
+                            }
                         </style>
+                        <div class="container">
+                            <?php if ($userCount > 0) :
+                                $row = $result->fetch_assoc(); ?>
+                                <form action="doUpdate.php" method="post">
+                                    <input name="id" type="hidden" value="<?= $row["id"] ?>">
+                                    <table class="table ">
+                                        <tr>
+                                            <th>優惠券編號</th>
+                                            <td><?= $row["id"] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <th>優惠券名稱</th>
+                                            <td><input type="text" name="name" class="form-control" value="<?= $row["name"] ?>"></td>
+                                        </tr>
+                                        </tr>
+                                        <tr>
+                                            <th>優惠券簡述</th>
+                                            <td><input type="text" name="description" class="form-control" value="<?= $row["description"] ?>"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>庫存數量</th>
+                                            </th>
+                                            <td><input type="text" name="discount_number" class="form-control" value="<?= $row["discount_number"] ?>"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>最低使用金額</th>
+                                            </th>
+                                            <td><input type="number" name="lower_limit" class="form-control" value="<?= $row["lower_limit"] ?>"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>啟用日期</th>
+                                            </th>
+                                            <td><input type="date" name="start_time" class="form-control" value="<?= $row["start_time"] ?>"></td>
+                                        </tr>
+                                        <tr>
+                                            <th>失效日期</th>
+                                            </th>
+                                            <td><input type="date" name="end_time" class="form-control" value="<?= $row["end_time"] ?>"></td>
+                                        </tr>
+                                    </table>
+                                    <div class="py-2">
+                                        <div class="d-flex justify-content-end">
 
-                            <div class="container">
-                                <form action="doCreate.php" method="post">
-                                    <div class="mb-2">
-                                        <label for="">優惠券名稱： </label>
-                                        <input type="text" class="form-control" name="name" required>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">優惠券敘述： </label>
-                                        <input type="text" class="form-control" name="description">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">種類： </label><br>
-                                        <Input type="Radio" name="category_id" value="1" required onclick="document.getElementById('set_code').style.display = 'block'" checked>%數折價券
-                                        <Input type="Radio" name="category_id" value="2" onclick="document.getElementById('set_code').style.display = 'block'">現金折價券
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">折扣數字：</label>
-                                        <input type="number" class="form-control" name="discount_number" placeholder="EX:8折優惠/優惠券需填入80、現金折價100元需填入100" required>
-                                    </div>
-                                    <div class="mb-2" id="set_code">
-                                        <label for="">請填入八碼序號（限定使用英文大寫、數字）： <br></label>
-                                        <input type="text" class="form-control" id="code" name="discount_code" placeholder="EX:HAPPY100" onblur="myFunction(value)">
-                                        <h6 id="good">此序號可使用</h6>
-                                        <h6 id="nogood">此序號不可使用</h6>
-
-                                        <script>
-                                            const value = document.getElementById("code").value;
-
-                                            function myFunction(value) {
-                                                var regex = /[A-Z0-9]{8}/;
-                                                if (!regex.test(value)) {
-                                                    document.getElementById('good').style.display = 'none'
-                                                    document.getElementById('nogood').style.display = 'block'
-                                                } else {
-                                                    document.getElementById('good').style.display = 'block'
-                                                    document.getElementById('nogood').style.display = 'none'
-                                                }
-                                            }
-                                        </script>
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">優惠券數量：</label>
-                                        <input type="number" class="form-control" name="amount">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">可用優惠券的最低價格：</label>
-                                        <input type="number" class="form-control" name="lower_limit">
-                                    </div>
-                                    <div class="mb-2">
-                                        <label for="">是否限制使用時間： </label><br>
-                                        <Input type="Radio" name="state" value="1" onclick="document.getElementById('set_time').style.display = 'block'" required checked>限制
-                                        <Input type="Radio" name="state" value="0" onclick="document.getElementById('set_time').style.display = 'none'">不限制
-                                    </div>
-                                    <div id="set_time">
-                                        <div class="mb-2">
-                                            <label for="">優惠啟用時間</label>
-                                            <input type="date" class="form-control" name="start_time">
-                                        </div>
-                                        <div class="mb-2">
-                                            <label for="">優惠結束時間</label>
-                                            <input type="date" class="form-control" name="end_time">
+                                            <div class="py-2">
+                                                <a href="../discounts" class="btn lightblueBtn mx-2">回折價券列表</a>
+                                            </div>
+                                            <div class="py-2">
+                                                <button class="btn yellowBtn" type="submit">儲存</button>
+                                            </div>
                                         </div>
                                     </div>
-                                    <div class="d-flex justify-content-end ">
-                                        <button class="btn yellowBtn me-2" type="submit">確認送出</button>
-                                        <a href="discounts.php" class="lightblueBtn btn">回折價券列表</a>
-                                    </div>
+
                                 </form>
-                            </div>
-
-
-
-                            <!-- 家豪模板區 ------------------->
+                            <?php else : ?>
+                                沒有該使用者
+                            <?php endif; ?>
+                        </div>
+                        <!-- end采平discounts區域 -->
+                        <!-- 下方家豪模板區 ------------------->
                     </main>
                 </div>
             </div>
@@ -289,4 +268,4 @@
 
 </html>
 
-<!-- 家豪模板區 ------------------->
+<!-- end家豪模板區 ------------------->

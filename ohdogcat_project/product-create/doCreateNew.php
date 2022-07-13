@@ -44,7 +44,7 @@ $description = $_POST["description"];
 
 //圖片上傳資料庫
 if ($_FILES["main_photo"]["error"] == 0) {
-    if (move_uploaded_file($_FILES["main_photo"]["tmp_name"], "./upload_main_photo/" . $_FILES["main_photo"]["name"])) {
+    if (move_uploaded_file($_FILES["main_photo"]["tmp_name"], "../images/upload_main_photo/" . $_FILES["main_photo"]["name"])) {
         $fileNameC = $_FILES["main_photo"]["name"];
     }
 } else {
@@ -52,32 +52,32 @@ if ($_FILES["main_photo"]["error"] == 0) {
 }
 
 if ($_FILES["sub_photo1"]["error"] == 0) {
-    if (move_uploaded_file($_FILES["sub_photo1"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo1"]["name"])) {
+    if (move_uploaded_file($_FILES["sub_photo1"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo1"]["name"])) {
         $fileNameS1 = $_FILES["sub_photo1"]["name"];
     }
 } else {
     $fileNameS1 = '';
 }
 if ($_FILES["sub_photo2"]["error"] == 0) {
-    if (move_uploaded_file($_FILES["sub_photo2"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo2"]["name"])) {
+    if (move_uploaded_file($_FILES["sub_photo2"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo2"]["name"])) {
         $fileNameS2 = $_FILES["sub_photo2"]["name"];
     }
 } else {
     $fileNameS2 = '';
 }if ($_FILES["sub_photo3"]["error"] == 0) {
-    if (move_uploaded_file($_FILES["sub_photo3"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo3"]["name"])) {
+    if (move_uploaded_file($_FILES["sub_photo3"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo3"]["name"])) {
         $fileNameS3 = $_FILES["sub_photo3"]["name"];
     }
 } else {
     $fileNameS3 = '';
 }if ($_FILES["sub_photo4"]["error"] == 0) {
-    if (move_uploaded_file($_FILES["sub_photo4"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo4"]["name"])) {
+    if (move_uploaded_file($_FILES["sub_photo4"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo4"]["name"])) {
         $fileNameS4 = $_FILES["sub_photo4"]["name"];
     }
 } else {
     $fileNameS4 = '';
 }if ($_FILES["sub_photo5"]["error"] == 0) {
-    if (move_uploaded_file($_FILES["sub_photo5"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo5"]["name"])) {
+    if (move_uploaded_file($_FILES["sub_photo5"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo5"]["name"])) {
         $fileNameS5 = $_FILES["sub_photo5"]["name"];
     }
 } else {
@@ -94,12 +94,12 @@ if ($_FILES["sub_photo2"]["error"] == 0) {
 //     // ($_FILES["sub_photo5"]["error"] == 0)
 // ) {
     // if (
-    //     // move_uploaded_file($_FILES["main_photo"]["tmp_name"], "./upload_main_photo/" . $_FILES["main_photo"]["name"]) ||
-    //     // move_uploaded_file($_FILES["sub_photo1"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo1"]["name"]) ||
-    //     // move_uploaded_file($_FILES["sub_photo2"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo2"]["name"]) ||
-    //     // move_uploaded_file($_FILES["sub_photo3"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo3"]["name"]) ||
-    //     // move_uploaded_file($_FILES["sub_photo4"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo4"]["name"]) ||
-    //     // move_uploaded_file($_FILES["sub_photo5"]["tmp_name"], "./upload_sub_photo/" . $_FILES["sub_photo5"]["name"])
+    //     // move_uploaded_file($_FILES["main_photo"]["tmp_name"], "../images/upload_main_photo/" . $_FILES["main_photo"]["name"]) ||
+    //     // move_uploaded_file($_FILES["sub_photo1"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo1"]["name"]) ||
+    //     // move_uploaded_file($_FILES["sub_photo2"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo2"]["name"]) ||
+    //     // move_uploaded_file($_FILES["sub_photo3"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo3"]["name"]) ||
+    //     // move_uploaded_file($_FILES["sub_photo4"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo4"]["name"]) ||
+    //     // move_uploaded_file($_FILES["sub_photo5"]["tmp_name"], "../images/upload_sub_photo/" . $_FILES["sub_photo5"]["name"])
     // ) {
     //     // //TO-DO
     //     // $fileNameC =  isset($_FILES["main_photo"]["name"]) ? $_FILES["main_photo"]["name"] : "";
