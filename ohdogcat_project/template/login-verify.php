@@ -14,7 +14,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
             case 1:
                 $typeInfo = [
                     'text' => '旅遊票券列表',
-                    'href' => '321.php',
+                    'href' => '../products/?type=1',
                     'type' => '1'
                 ];
                 array_push($typeData, $typeInfo);
@@ -22,7 +22,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
             case 2:
                 $typeInfo = [
                     'text' => '餐廳票券列表',
-                    'href' => '321321.php',
+                    'href' => '../products/?type=2',
                     'type' => '2'
                 ];
                 array_push($typeData, $typeInfo);
@@ -30,7 +30,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
             case 3:
                 $typeInfo = [
                     'text' => '活動票券列表',
-                    'href' => '987.php',
+                    'href' => '../products/?type=3',
                     'type' => '3'
                 ];
                 array_push($typeData, $typeInfo);
@@ -38,7 +38,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
             case 4:
                 $typeInfo = [
                     'text' => '實體商品列表',
-                    'href' => '654.php',
+                    'href' => '../products/?type=4',
                     'type' => '4'
                 ];
                 array_push($typeData, $typeInfo);

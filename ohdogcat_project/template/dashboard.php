@@ -45,19 +45,19 @@
                             aria-controls="collapseProducts">商品管理
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseProducts" class="accordion-collapse collapse <?=($current == 'products')?'show':'';?>" data-bs-parent="#menu-accordion">
+                        <div id="collapseProducts" class="accordion-collapse <?=($current == 'products')?'show':'collapse';?>" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <?php if(count($typeData)>1):?>
                                         <li>
-                                            <a href="" class="menu-link <?=($current == 'products'&& $pageType == '0')?'current-active':'';?>">商品總覽</a>
+                                            <a href="../products/" class="menu-link <?=($current == 'products'&& $pageType == '0')?'current-active':'';?>">商品總覽</a>
                                         </li>
                                     <?php endif;?>
-                                    <?php foreach($typeData as $item):?>
+                                    <?php for($i=0; $i<count($typeData); $i++): $index = $i+1; ?>
                                         <li>
-                                            <a href="<?=$item['href']?>" class="menu-link <?=($current == 'products'&& $pageType == '0')?'current-active':'';?>"><?=$item['text']?></a>
+                                            <a href="<?=$typeData[$i]['href']?>" class="menu-link <?=($current == 'products'&& $pageType == $typeData[$i]['type'])?'current-active':'';?>"><?=$typeData[$i]['text']?></a>
                                         </li>
-                                    <?php endforeach;?>
+                                    <?php endfor;?>
                                 </ul>
                             </div>
                         </div>

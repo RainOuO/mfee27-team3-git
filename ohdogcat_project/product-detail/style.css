@@ -1,0 +1,96 @@
+.photo-window {
+    text-align: start;
+
+}
+
+.filterBtn {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.filterBtn:hover {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.filterBtn:active {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.filterBtn:visited {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.filterBtn:focus {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+label {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+.cover-photo img {
+    width: 500px;
+    height: 500px;
+
+    min-width: 350px;
+    width: 100%;
+    object-fit: contain;
+
+}
+
+.slideshow {
+    box-shadow: 2px 2px 5px;
+    width: 600px;
+    max-width: 100%;
+    height: 170px;
+    overflow-y: auto;
+    object-fit: contain;
+    white-space: nowrap;
+}
+
+
+.photo1 {
+    width: 150px;
+    height: 150px;
+}
+
+
+.swiper {
+    width: 600px;
+    height: 160px;
+    max-width: 100%;
+
+}
+
+.swiper-slide {
+    text-align: center;
+    font-size: 18px;
+    background: #fff;
+
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+
+.swiper-slide img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    border: 1px solid lightgrey;
+}
