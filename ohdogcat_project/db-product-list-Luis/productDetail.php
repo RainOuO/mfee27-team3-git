@@ -13,7 +13,12 @@ $id = $_GET["id"];
 //商品id 使用seesion?
 require("./db-connect.php");
 // require("./doproducts.php");
-$sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
+// $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
+$sql = "SELECT product.*, discount_category.id AS coupon_id_new,
+discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
+INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+WHERE product.valid = 1 and product.id = $id";
+
 // $sql = $storeID ? "AND store_id = $storeID" : "";
 $result = $conn->query($sql);
 
@@ -321,7 +326,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <div type="text" name="name" class="py-2"><?= $row['name'] ?> </div>
                                         <label for="">商品分類**</label>
                                         <div name='category' class=" py-2">
-                                            <?= $row['product_category'] ?>
+                                            <?= $row["category_name"]?>
                                             <!-- TO-DO 連動category -->
                                         </div>
                                         <label for="">商品簡述</label>
@@ -340,7 +345,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <label for="">優惠券方案使用</label><br>
                                         <div name='dragdown' class="" name="coupon">
                                             <!-- TO-DO 連動coupon -->
-                                            <?= $row['coupon_id'] ?>
+                                            <?= $row["coupon_name"] ?>
                                         </div>
                                         <!-- <label for="">商品更新時間</label>
                                         <div type="date" name="spec" class=""><?= $row['create_time'] ?></div> -->

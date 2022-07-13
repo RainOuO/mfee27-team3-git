@@ -307,12 +307,12 @@ $type = $_GET["type"];
                                     <!-- 圖片上傳UI位置 -->
                                     <div class="row photo-upload mt-3 d-flex justify-content-center">
                                         <div class="col-5 ">
-                                            
+
                                             <h6>封面照片</h6>
                                             <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
                                         <div class="col-7 row">
-                                            <h6>商品照片</h6> 
+                                            <h6>商品照片</h6>
                                             <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
                                             <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
                                             <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
@@ -323,20 +323,20 @@ $type = $_GET["type"];
                                 </div>
                                 <div class="basic-setting col-6">
                                     <label for="">商品名稱**</label>
-                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value=""required >
+                                    <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" required>
                                     <label for="">商品分類**</label>
                                     <select name='category' class="form-control" required>
                                         <!-- TO-DO 連動category -->
-                                        <option value='1'>旅遊票券</option>
-                                        <option value='2'>活動票券</option>
-                                        <option value='3'>餐廳票券</option>
-                                        <option value='4'>寵物周邊>寵物外出用品</option>
-                                        <option value='4'>寵物周邊>寵物飼料</option>
-                                        <option value='5'>寵物周邊>寵物玩具</option>
-                                        <option value='5'>寵物周邊>寵物保健</option>
+                                        <option value='1' >旅遊票券</option>
+                                        <option value='2' >餐廳票券</option>
+                                        <option value='3' >活動票券</option>
+                                        <option value='4' >寵物周邊>寵物外出用品</option>
+                                        <option value='5' >寵物周邊>寵物飼料</option>
+                                        <option value='6' >寵物周邊>寵物玩具</option>
+                                        <option value='7' >寵物周邊>寵物保健</option>
                                     </select>
                                     <label for="">商品簡述</label>
-                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" >
+                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
                                     <label for="">商品價格**</label>
                                     <input type="number" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control" required>
                                     <!-- <label for="">商品規格</label>
@@ -351,10 +351,13 @@ $type = $_GET["type"];
                                     <label for="">下架時間</label>
                                     <input type="datetime-local" name="valid_end" class="form-control" required>
                                     <label for="">優惠券方案使用</label><br>
-                                    <select name='coupon' class="form-control" required>
-                                        <option value='1'>可搭配折數優惠券</option>
-                                        <option value='2'>可搭配現金折價券</option>
-                                        <option value='3'>可搭配商品優惠方案</option>
+                                    <select name='coupon' class="form-control">
+                                        <!-- <option value=''>無優惠</option> -->
+                                        <option value='1'>折數優惠券</option>
+                                        <option value='2'>現金折價券</option>
+                                        <option value='3'>商品優惠方案</option>
+                                        <option value='4'>折數優惠+現金折價</option>
+                                        <option value='5' selected>全方案適用</option>
                                     </select>
                                     <!-- <label for="">商品更新時間</label>
                                     <input type="date" name="create_time" placeholder="自由增建選項" class="form-control" hidden> -->

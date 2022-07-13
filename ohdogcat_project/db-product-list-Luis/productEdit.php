@@ -8,16 +8,23 @@ if (!isset($_GET['id'])) {
     exit;
 }
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
-$category = isset($_POST["category"]) && !empty($_POST["category"]) ? $_POST["category"] : "";
+$category = $_GET["category"];
 $storeID = "";
 $id = $_GET["id"];
 
 //TO-DO
 //商品id 使用seesion?
-$sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
+// $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
+$sql = "SELECT product.*, discount_category.id AS coupon_id_new,
+discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
+INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+WHERE product.valid = 1 and product.id = $id";
 $result = $conn->query($sql);
 
 $product_count = $result->num_rows; //取得資料筆數 
+
+
+
 ?>
 
 
@@ -306,16 +313,14 @@ $product_count = $result->num_rows; //取得資料筆數
                                                 <div class="swiper-wrapper">
                                                     <?php
                                                     $rowSub = explode(",", $row["sub_photo"]); //explode去除逗號
-                                                    // var_dump($rowSub) ;
                                                     array_pop($rowSub);
-                                                    foreach ($rowSub as $rowS) : ?>
-
-                                                        <?php if ($row["sub_photo"] == '' || $rowS == '') : ?>
-                                                            <img class="swiper-slide photo1" src="./IMAGES/doglogo.png" alt="">
+                                                    for ($i = 0; $i < count($rowSub); $i++) : ?>
+                                                        <?php if ($rowSub[$i] == '') : ?>
+                                                            <div class="swiper-slide photo1"><img class="" src="./IMAGES/doglogo.png" id="preview_sub_img<?= $i ?>" src="#" alt=""></div>
                                                         <?php else : ?>
-                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowS ?>" id="preview_sub_img" src="#" alt=""></div>
+                                                            <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowSub[$i] ?>" id="preview_sub_img<?= $i ?>" src="#" alt=""></div>
                                                         <?php endif; ?>
-                                                    <?php endforeach; ?>
+                                                    <?php endfor; ?>
                                                 </div>
 
                                                 <div class="swiper-pagination"></div>
@@ -329,11 +334,11 @@ $product_count = $result->num_rows; //取得資料筆數
                                             </div>
                                             <div class="col-7 row">
                                                 <h6>商品照片</h6>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
-                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img0" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo3" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo4" onchange="readURL(this)" targetID="preview_sub_img3" accept="image/gif, image/jpeg, image/png"></div>
+                                                <div class="col-auto"><input class="form-control" type="file" name="sub_photo5" onchange="readURL(this)" targetID="preview_sub_img4" accept="image/gif, image/jpeg, image/png"></div>
                                             </div>
                                         </div>
                                     </div>
@@ -344,15 +349,14 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <label for="">商品分類**</label>
                                         <select name='category' class="form-control" required>
                                             <!-- TO-DO 連動category -->
-
-                                            <option value="none" selected disabled hidden>請重新確認產品分類</option>
-                                            <option value='1'>旅遊票券</option>
-                                            <option value='2'>活動票券</option>
-                                            <option value='3'>餐廳票券</option>
-                                            <option value='4'>寵物周邊>寵物外出用品</option>
-                                            <option value='5'>寵物周邊>寵物飼料</option>
-                                            <option value='6'>寵物周邊>寵物玩具</option>
-                                            <option value='7'>寵物周邊>寵物保健</option>
+                                            <!-- <option value="none"  disabled hidden>請重新確認產品分類</option> -->
+                                            <option value='1' <?php ($category == 1) ? "selected" : '' ?>>旅遊票券</option>
+                                            <option value='2' <?php ($category == 2) ? "selected" : '' ?>>餐廳票券</option>
+                                            <option value='3' <?php ($category == 3) ? "selected" : "" ?>>活動票券</option>
+                                            <option value='4' <?php ($category == 4) ? "selected" : "" ?>>寵物周邊>寵物外出用品</option>
+                                            <option value='5' <?php ($category == 5) ? "selected" : "" ?>>寵物周邊>寵物飼料</option>
+                                            <option value='6' <?php ($category == 6) ? "selected" : "" ?>>寵物周邊>寵物玩具</option>
+                                            <option value='7' <?php ($category == 7) ? "selected" : "" ?>>寵物周邊>寵物保健</option>
 
                                         </select>
                                         <label for="">商品簡述**</label>
@@ -378,7 +382,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                             <option value='2'>現金折價券</option>
                                             <option value='3'>商品優惠方案</option>
                                             <option value='4'>折數優惠+現金折價</option>
-                                            <option value='5'>全方案適用</option>
+                                            <option value='5' selected>全方案適用</option>
                                         </select>
                                         <!--
                                         <label for="">商品更新時間</label>
@@ -443,9 +447,11 @@ $product_count = $result->num_rows; //取得資料筆數
         function readURL(input) {
             if (input.files && input.files[0]) {
                 var imageTagID = input.getAttribute("targetID");
+                console.log(imageTagID);
                 var reader = new FileReader();
                 reader.onload = function(e) {
                     var img = document.getElementById(imageTagID);
+                    console.log(img);
                     img.setAttribute("src", e.target.result)
                 }
                 reader.readAsDataURL(input.files[0]);
