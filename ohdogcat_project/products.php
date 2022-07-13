@@ -269,5 +269,5 @@ for($i=0; $i<count($rows); $i++){
         });
     </script>
 </body>
-<?php session_destroy();?>
+<?php //session_destroy();?>
 </html>

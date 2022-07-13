@@ -22,11 +22,3 @@
         </li>
     </ul>
 </div>
-<script>
-    let activeBtn = document.getElementsByClassName('current-active');
-    for(let i=0; i<activeBtn.length; i++) {
-        activeBtn[i].onclick = function (event) {
-            event.preventDefault();
-        }
-    }
-</script>

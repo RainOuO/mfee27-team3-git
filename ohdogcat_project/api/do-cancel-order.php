@@ -4,6 +4,7 @@ session_start();
 
 $order_id = $_POST['id'];
 $index = $_POST['index'];
+$status = $_POST['status'];
 
 $sql = "UPDATE order_product SET status = 0 WHERE id = $order_id";
 if( $conn->query($sql) === TRUE ){
@@ -42,12 +43,26 @@ if( $conn->query($sql) === TRUE ){
             $rowOrderItem['status_text'] = "已結單";
             break;
     };
-    $data = [
-        "data" => [
-            "success" => true,
-            "statusChange" => $rowOrderItem
-        ]
-    ];
+    
+    $now = date('Y-m-d H:i:s');
+    $sqlLog = "INSERT INTO order_product_status (order_id, status_before, status, update_time) VALUES ('$order_id', '$status', 0, '$now')";
+    if ($conn->query($sqlLog) === TRUE) {
+        $data = [
+            "data" => [
+                "success" => true,
+                "statusChange" => $rowOrderItem,
+                "statusBefore" => $status
+            ]
+        ];
+    } else {
+        $data = [
+            "data" => [
+                "success" => false,
+                "message" => "Error: " . $sqlLog . "<br>" . $conn->error
+            ]
+        ];
+    }
+
 }else{
     $data = [
         "data" => [

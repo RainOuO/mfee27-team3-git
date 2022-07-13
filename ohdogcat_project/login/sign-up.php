@@ -2,7 +2,7 @@
 session_start();
 require("../db-connect.php");
 if(isset($_SESSION['user']) && !empty($_SESSION['user'])){
-    header("location:../login-index/");
+    header("location:../dashboard/");
 }
 ?>
 

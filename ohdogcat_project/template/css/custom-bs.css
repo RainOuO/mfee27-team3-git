@@ -1,6 +1,7 @@
+
+
 button, button:active, button:focus {
     box-shadow: none!important;
-    border: 0!important;
     border-color: transparent!important;
 }
 
@@ -16,4 +17,29 @@ button, button:active, button:focus {
 .container-fluid {
     padding-right: calc(var(--bs-gutter-x) * 1);
     padding-left: calc(var(--bs-gutter-x) * 1);
+}
+
+.dropdown-item.active, .dropdown-item:active {
+    color: #FFF;
+    text-decoration: none;
+    background-color:  #7c95bd;
+}
+
+.dropdown-item {
+    cursor: pointer;
+}
+
+.progress-bar {
+    transform: translateX(-100%);
+    border-radius: 20px;
+    animation: moveIn 1.5s ease-in-out .5s 1 forwards;
+}
+
+@keyframes moveIn {
+    0%{
+        transform: translateX(-100%);
+    }
+    100%{
+        transform: translateX(0%);
+    }
 }

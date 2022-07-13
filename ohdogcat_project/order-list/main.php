@@ -21,16 +21,27 @@
                 <td class="align-middle text-truncate"><?= $userName[$rows[$i]['user_id']] ?></td>
                 <td class="align-middle"><?= $rows[$i]['total'] ?></td>
                 <td class="order_status align-middle text-white">
-                    <div  class="d-inline-block py-1 px-3 rounded-5 <?= $rows[$i]['status_css']['bg'] ?>"><?= $rows[$i]['status_text'] ?></div>
+                    <div class="btn-group">
+                        <div class="d-flex align-items-center px-3 bg-wite pe-none border border-<?=$rows[$i]['status_css']['color']?> text-<?=$rows[$i]['status_css']['color']?> <?=$rows[$i]['status_css']['rounded']?> w-100">
+                            <?=$rows[$i]['status_text']?>
+                        </div>
+                        <button type="button" class="btn btn-<?=$rows[$i]['status_css']['color']?> dropdown-toggle dropdown-toggle-split <?=$rows[$i]['status_css']['display']?>" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="statusUpdateBtn dropdown-item" href="#" data-status="<?=$rows[$i]['status']?>" data-index="<?=$i?>" data-update-id="<?= $rows[$i]['id'] ?>"><?=$rows[$i]['next_status']?></a></li>
+                        </ul>
+                    </div>
+                    <!-- <div  class="d-inline-block py-1 px-3 rounded-5 pe-none <?= $rows[$i]['status_css']['bg'] ?>"><?= $rows[$i]['status_text'] ?></div> -->
                 </td>
                 <td class="align-middle"><?= $rows[$i]['order_time'] ?></td>
                 <td class="align-middle text-start">
-                    <button type="button" class="btn detailBtn" data-order-id="<?= $rows[$i]['id'] ?>"
+                    <button type="button" class="btn detailBtn me-1" data-order-id="<?= $rows[$i]['id'] ?>"
                         data-bs-toggle="offcanvas" data-bs-target="#offcanvasOrderList"
                         aria-controls="offcanvasOrderList">查看
                     </button>
                     <?php if($rows[$i]['activeOrder']): ?>
-                        <button type="button" class="orderCancelBtn btn btn-secondary" data-index="<?= $i ?>" data-cancel-id="<?= $rows[$i]['id'] ?>">取消訂單</button>
+                        <button type="button" class="orderCancelBtn btn btn-secondary" data-status="<?=$rows[$i]['status']?>" data-index="<?=$i?>" data-cancel-id="<?= $rows[$i]['id'] ?>">取消訂單</button>
                     <?php endif; ?>
                 </td>
             </tr>
@@ -50,7 +61,6 @@
                 <div id="productList" class="col-md-4 h-100 scroll-bar">
                 </div>
                 <div id="orderInfo" class="container-fluid col-md-8">
-                    <button type="button" id="orderCancelBtn" class="btn btn-danger">取消訂單</button>
                 </div>
             </div>
         </div>
@@ -68,16 +78,28 @@
     let offcanvas = document.querySelector('#offcanvasOrderList');
     let detailBtn = document.querySelectorAll('.detailBtn');
     let cancelBtn = document.querySelectorAll('.orderCancelBtn');
+    let updateBtn = document.querySelectorAll('.statusUpdateBtn');
+
 
     for (let i = 0; i < cancelBtn.length; i++){
         cancelBtn[i].addEventListener('click', function () {
             let cancelId = this.dataset.cancelId;
+            let status = this.dataset.status;
             let index = this.dataset.index;
             let removeBtn = cancelBtn[i];
-            doCancelOrder(cancelId, index, removeBtn);
+            doCancelOrder(cancelId, index, removeBtn, status);
         });
     }
-    
+
+    for (let i = 0; i < updateBtn.length; i++){
+        updateBtn[i].addEventListener('click', function () {
+            let updateId = this.dataset.updateId;
+            let status = this.dataset.status;
+            let index = this.dataset.index;
+            let removeBtn = detailBtn[i].nextElementSibling;
+            doStatuUpdate(updateId, index, removeBtn, status);
+        });
+    }
     
     
     for (let i = 0; i < detailBtn.length; i++) {
@@ -91,14 +113,18 @@
                         order_id: orderId,
                         index: i
                     }
-                })
+                }) 
                 .done(function (response) {
                     let productList = document.querySelector('#productList');
                     let orderInfo = document.querySelector('#orderInfo');
                     let orderNo = document.querySelector('.order-no');
                     let porductItem = '';
-                    let activeOrder = (response.data.order_item.status != 0 && response.data.order_item.status != 3 );
+                    let status = response.data.order_item.status;
+                    let activeOrder = (status != 0 && status != 3 );
                     let amount = 0;
+                    let logLength = response.data.progressLog.log.length;
+                    let itemLog = response.data.progressLog.log[logLength-1];
+                    
                     for(let item of response.data.order_detail){
                         amount += Number(item.amount);
                         porductItem += `
@@ -125,41 +151,71 @@
                             </div>
                         </div>`
                     }
-                    let cancelBtn = (activeOrder)? `<button type="button" id="orderCancelBtn" class="btn btn-danger" data-cancel-id="${response.data.order_item.id}">取消訂單</button>`:'';
+                    let statusBtn = (activeOrder)? `<div class="btn-group dropend">
+                                        <div class="d-flex align-items-center px-3 bg-wite pe-none border border-${response.data.order_item.status_css.offCanvas} text-${response.data.order_item.status_css.offCanvas} rounded-start w-100">${response.data.order_item.status_text}</div>
+                                        <button type="button" class="btn btn-${response.data.order_item.status_css.offCanvas} dropdown-toggle dropdown-toggle-split" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <span class="visually-hidden"></span>
+                                        </button>
+                                        <ul class="dropdown-menu">
+                                            <li><a id="statusUpdateBtn" class="dropdown-item" href="#" data-update-id="${response.data.order_item.id}"}>${response.data.order_item.nextStatus}</a></li>
+                                            <li><a id="orderCancelBtn" class="dropdown-item" href="#" data-cancel-id="${response.data.order_item.id}">取消訂單</a></li>
+                                        </ul>
+                                    </div>`:`<p class="bg-light p-2 rounded-3 ${response.data.order_item.status_css.text}">${response.data.order_item.status_text}</span></p>`;
+                    let progressStatus = (logLength==2)? `<div class="card mb-3 text-secondary bg-secondary bg-opacity-10">
+                                                            <div class="card-body">
+                                                                <p class="card-text fs-6">${response.data.progressLog.log[0].update_time}   訂單進入處理中</p>
+                                                            </div>
+                                                        </div>`:'';
+                    let isNew = (response.data.progressLog.newItem)? '':`<div class="card mb-3 text-secondary bg-${response.data.progressLog.progress.status} bg-opacity-10">
+                                                                        <div class="card-body">
+                                                                            <h5 class="card-title">訂單${response.data.progressLog.progress.text}</h5>
+                                                                            <p class="card-text fs-6">賣家已於 ${itemLog.update_time} 將訂單狀態更新為${response.data.progressLog.progress.text}</p>
+                                                                        </div>
+                                                                    </div>`;
                     let order_info = `
                         <h4>詳細資料</h4>
                         <hr>
                         <div class="row">
-                            <div class="col-6">
+                            <div class="col-4">
                                 <div>
                                     <h6 class="text-secondary">用戶暱稱</h6>
-                                    <p class="bg-light p-2 rounded-3">${response.data.order_item.userName}</span></p>
+                                    <p class="bg-light p-2 rounded-3">${response.data.order_item.userName}</p>
                                 </div>
                                 <div>
                                     <h6 class="text-secondary">商品總數</h6>
-                                    <p class="bg-light p-2 rounded-3">${amount}</span></p>
+                                    <p class="bg-light p-2 rounded-3">${amount}</p>
                                 </div>
                                 <div>
                                     <h6 class="text-secondary">總金額</h6>
-                                    <p class="bg-light p-2 rounded-3">${formatNum(response.data.order_item.total)}</span> 元</p>
+                                    <p class="bg-light p-2 rounded-3">${formatNum(response.data.order_item.total)} 元</p>
                                 </div>
-                            </div>
-                            <div class="col-6">
                                 <div>
                                     <h6 class="text-secondary">訂單成立時間</h6>
-                                    <p class="bg-light p-2 rounded-3">${response.data.order_item.order_time}</span></p>
+                                    <p class="bg-light p-2 rounded-3">${response.data.order_item.order_time}</p>
                                 </div>
                                 <div>
                                     <h6 class="text-secondary">優惠券序號</h6>
-                                    <p class="bg-light p-2 rounded-3">${(response.data.order_item.coupon_id == 0)? '未使用優惠券':'商品優惠'}</span></p>
+                                    <p class="bg-light p-2 rounded-3">${(response.data.order_item.coupon_id == 0)? '未使用優惠券':'商品優惠'}</p>
                                 </div>
                                 <div>
                                     <h6 class="text-secondary">訂單狀態</h6>
-                                    <p class="bg-light p-2 rounded-3 ${response.data.order_item.status_css.text}">${response.data.order_item.status_text}</span></p>
+                                    ${statusBtn}
                                 </div>
                             </div>
+                            <div class="col-8">
+                                <h6>目前處理進度：</h6>
+                                <div class="progress mb-3 gx-2">
+                                    <div class="progress-bar bg-${response.data.progressLog.progress.status}" role="progressbar" style="width: ${response.data.progressLog.progress.num}%" aria-valuenow="${response.data.progressLog.progress.num}" aria-valuemin="0" aria-valuemax="100"></div>
+                                </div>
+                                <div class="card mb-3 text-secondary bg-secondary bg-opacity-10">
+                                    <div class="card-body">
+                                        <p class="card-text fs-6">${response.data.order_item.order_time}   訂單建立</p>
+                                    </div>
+                                </div>
+                                ${progressStatus}
+                                ${isNew}
+                            </div>
                         </div>
-                        ${cancelBtn}
                     `;
                     
                     
@@ -167,12 +223,20 @@
                     productList.innerHTML = porductItem;
                     orderInfo.innerHTML = order_info;
                     orderCancelBtn = document.querySelector('#orderCancelBtn');
+                    statusUpdateBtn = document.querySelector('#statusUpdateBtn');
                     if(activeOrder){
                         orderCancelBtn.addEventListener('click', function() {
                             let cancelId = this.dataset.cancelId;
                             let index = i;
                             let removeBtn = detailBtn[i].nextElementSibling;
-                            doCancelOrder(cancelId, index, removeBtn);
+                            doCancelOrder(cancelId, index, removeBtn, status);
+                        });
+                        statusUpdateBtn.addEventListener('click', function() {
+                            let updateId = this.dataset.updateId;
+                            console.log(updateId);
+                            let index = i;
+                            let removeBtn = detailBtn[i].nextElementSibling;
+                            doStatuUpdate(updateId, index, removeBtn, status);
                         });
                     }
                     
@@ -219,10 +283,9 @@
 
 
     // 取消訂單按鈕
-    function doCancelOrder(cancelId, index, removeBtn) {
-        // console.log(cancelId, index);
+    function doCancelOrder(cancelId, index, removeBtn, status) {
         Swal.fire({
-            title: '確定取消訂單?',
+            title: '確定取消訂單？',
             text: '取消後的訂單將無法被回復',
             icon: 'warning',
             showCancelButton: true,
@@ -238,7 +301,8 @@
                     dataType: "json",
                     data: {
                         id: cancelId,
-                        index: index
+                        index: index,
+                        status: status
                     }
                 }).done(function (response) {
                     console.log(response.data);
@@ -246,7 +310,6 @@
                         let order_status = document.querySelectorAll('.order_status');
                         let offcanvasClose = document.querySelector('#offcanvasClose');
                         order_status[response.data.statusChange.index].innerHTML = `<div class="d-inline-block py-1 px-3 rounded-5 ${response.data.statusChange.status_css.bg}">${response.data.statusChange.status_text}</div>`;
-                        // console.log(order_status[response.data.statusChange.index].parentNode);
                         order_status[response.data.statusChange.index].parentNode.classList.add('text-secondary');
                         order_status[response.data.statusChange.index].parentNode.classList.add('text-opacity-50');
                         removeBtn.style['display'] = 'none';
@@ -256,6 +319,69 @@
                         '該筆訂單已被取消',
                         'success'
                         );
+                    }
+                    
+                }).fail(function (jqXHR, textStatus) {
+                    console.log("Request failed: " + textStatus);
+                });
+                
+            }
+        });
+    }
+
+    // 更新狀態按鈕
+    function doStatuUpdate(updateId, index, removeBtn, status) {
+        Swal.fire({
+            title: '確定更改訂單狀態？',
+            text: '訂單狀態更改將不可回溯',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            cancelButtonText:'取消',
+            confirmButtonText: '確定'
+            }).then((result) => {
+            if (result.isConfirmed) {
+                $.ajax({
+                    method: "POST",
+                    url: `../api/do-update-status.php`,
+                    dataType: "json",
+                    data: {
+                        id: updateId,
+                        index: index,
+                        status: status
+                    }
+                }).done(function (response) {
+                    console.log(response.data);
+                    if(response.data.success){
+                        let order_status = document.querySelectorAll('.order_status');
+                        let offcanvasClose = document.querySelector('#offcanvasClose');
+                        order_status[response.data.statusChange.index].innerHTML = `<div class="btn-group">
+                        <div class="d-flex align-items-center px-3 bg-wite pe-none border border-${response.data.statusChange['status_css']['color']} text-${response.data.statusChange['status_css']['color']} ${response.data.statusChange['status_css']['rounded']} w-100">
+                            ${response.data.statusChange['status_text']}
+                        </div>
+                        <button type="button" class="btn btn-${response.data.statusChange['status_css']['color']} dropdown-toggle dropdown-toggle-split ${response.data.statusChange['status_css']['display']}" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="statusUpdateBtn dropdown-item" href="#" data-status="${response.data.statusChange['status']}" data-index="${response.data.statusChange['index']}" data-update-id="${updateId}">${response.data.statusChange['next_status']}</a></li>
+                        </ul>
+                    </div>`;
+                        if(response.data.statusChange.status == '3'){removeBtn.style['display'] = 'none';};
+                        offcanvasClose.click();
+                        Swal.fire(
+                        '成功',
+                        `已將該筆訂單狀態更改為${response.data.statusChange.status_text}`,
+                        'success'
+                        );
+                        let newItem = document.querySelectorAll('.statusUpdateBtn');
+                        newItem[response.data.statusChange.index].addEventListener('click', function(){
+                            let updateId = this.dataset.updateId;
+                            let status = this.dataset.status;
+                            let index = this.dataset.index;
+                            let removeBtn = detailBtn[index].nextElementSibling;
+                            doStatuUpdate(updateId, index, removeBtn, status);
+                        });
                     }
                     
                 }).fail(function (jqXHR, textStatus) {
