@@ -66,22 +66,22 @@
                         <a href="../order-list/" class="menu-button icon-orderlist no-accordion <?=($current == 'order-list')?'current-active':'';?>">訂單管理</a>
                     </li>
                     <li class="menu-item accordion-header">
-                        <button href="" class="menu-button icon-message accordion-button <?=($current == 'letter')?'current-active':'collapsed';?>"
+                        <button href="" class="menu-button icon-message accordion-button <?=($current == 'letter-box')?'current-active':'collapsed';?>"
                             data-bs-toggle="collapse" data-bs-target="#collapseMessages" aria-expanded="true"
                             aria-controls="collapseMessages">信件匣
                             <div class="status-mark"></div>
                         </button>
-                        <div id="collapseMessages" class="accordion-collapse collapse <?=($current == 'letter')?'show':'';?>" data-bs-parent="#menu-accordion">
+                        <div id="collapseMessages" class="accordion-collapse collapse <?=($current == 'letter-box')?'show':'';?>" data-bs-parent="#menu-accordion">
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <li>
-                                        <a href="" class="menu-link <?=($current == 'letter'&& $pageType == '0')?'current-active':'';?>">所有信件</a>
+                                        <a href="../letter-box/" class="menu-link <?=($current == 'letter-box'&& $pageType == '0')?'current-active':'';?>">所有信件</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link <?=($current == 'letter'&& $pageType == '1')?'current-active':'';?>">系統信件列表</a>
+                                        <a href="" class="menu-link <?=($current == 'letter-box'&& $pageType == '1')?'current-active':'';?>">系統信件列表</a>
                                     </li>
                                     <li>
-                                        <a href="" class="menu-link <?=($current == 'letter'&& $pageType == '2')?'current-active':'';?>">顧客信件列表</a>
+                                        <a href="" class="menu-link <?=($current == 'letter-box'&& $pageType == '2')?'current-active':'';?>">顧客信件列表</a>
                                     </li>
                                 </ul>
                             </div>
