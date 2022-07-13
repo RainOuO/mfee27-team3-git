@@ -48,23 +48,25 @@ switch ($ordertype) {
         $ordertype = "product.id ASC";
 }
 
-//依條件取得商品
-$sql = "SELECT product.*, discount_category.id AS coupon_id_new,
-discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
-INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+//依條件取得商品: JOIN 資料表 discount_store & product_class 做fetch_all
+// 家豪: 更新SQL資料庫內容
+$sql = "SELECT product.*, discount_store.id AS coupon_id_store,
+discount_store.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
+INNER JOIN discount_store ON discount_store.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
 WHERE product.valid = 1";
+
+
 
 
 $sql .= $storeID ? " and store_id = $storeID" : "";
 $sql .= $type ? " and product_type = $type " : "";
-$sql .= $keyword ? " and (product.name LIKE '%$keyword%' OR intro LIKE '%$keyword%' OR description LIKE '%$keyword%' )" : "";
+$sql .= $keyword ? " and (product.name LIKE '%$keyword%' OR intro LIKE '%$keyword%' OR product.description LIKE '%$keyword%' )" : "";
 $sql .= $minPrice ? " and price >= $minPrice" : "";
 $sql .= $maxPrice ? " and price <= $maxPrice" : "";
 $sql .= $startDate ? " and (valid_time_start <= '$endDate') and (valid_time_end >= '$startDate')" : "";
+// 第二階段新增功能:篩選上架中商品 
 // $sql .= $available ? " and available = $available" : "";
 $sql .= $ordertype ? " ORDER BY $ordertype" : "";
-
-// SELECT product.*, product_class.id AS p_id, product_class.name AS category_name FROM product JOIN product_class ON product_class.id = product.product_category WHERE product.valid= 1 ORDER BY product.id ASC;
 
 
 
@@ -98,25 +100,12 @@ $conn->query($sql00);
 $conn->query($sql01);
 
 
-// $sqlCateName = " SELECT product_class.* FROM product_class INNER JOIN product ON product_class.id = product.product_category ";
-// $sqlCateName.= "LIMIT $start ,10";
-
-// $resultCateName = $conn->query($sqlCateName);
-
-// echo $sqlCateName;
-// var_dump ($rowsCateName);
-// while ($rowsCateName = $resultCateName->fetch_assoc()):
-// $rows = $result->fetch_all(MYSQLI_ASSOC);
-// var_dump($rowsCateName);
-
-// endwhile;
 //新增 SQL 條件: 取得第 N 頁的商品(一頁 10 筆)
 $sql .= " LIMIT $start ,10"; //顯示用
 //Query SQL
 $result = $conn->query($sql);
 
-// $row = $result->fetch_assoc();
-// var_dump($row);
+
 //判斷是否有效
 // if ($conn->query($sql) === TRUE) {
 
@@ -125,23 +114,6 @@ $result = $conn->query($sql);
 //     echo "Error: " . $sql . "<br>" . $conn->error;
 // }
 
-// $resultCate = $conn->query($sql);
-
-// $proudct_category = $rowCate["product_category"];
-// var_dump($rowCate);
-// while ($rowCate=$resultCate->fetch_assoc()):
-// // // echo $proudct_category;
-// echo ( $rowCate['product_category']);
-// // var_dump ( $rowCate['product_category']);
-// $categoryname =  $rowCate['product_category'];
-
-
-
-
-
-// // $sqlCateName = "SELECT product_class.name FROM product_class, product  where product.product_category = '$proudct_category'  AND product.product_category = product_class.id" ;
-
-// 
 ?>
 
 <!doctype html>
@@ -474,28 +446,28 @@ $result = $conn->query($sql);
                                             <th class="align-middle text-end">單價</th>
                                             <th class="align-middle text-center">上架區間</th>
                                             <th class="align-middle text-center">庫存</th>
-                                            <!-- <th class="align-middle text-center">啟用</th> -->
                                             <th class="align-middle text-center">編修</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <?php //把資料轉換成關聯式陣列
+                                        <?php
                                         while ($row = $result->fetch_assoc()) :
                                             // var_dump($row); //從資料庫一次抽取單筆資料 用while迴圈顯示
                                         ?>
                                             <tr>
                                                 <!-- <td class="align-middle text-center"><?= $row["store_id"] ?></td> -->
                                                 <td class="align-middle text-center"><?= $row["id"] ?></td>
+                                                <!-- 家豪: 更新分類取值$row["category_name"] -->
                                                 <td class="align-middle text"><?= $row["category_name"] ?></td>
                                                 <td class="align-middle col-2"><?= $row["name"] ?></td>
                                                 <td class="align-middle col-2"><?= $row["intro"] ?></td>
+                                                <!-- 家豪: 更新分類取值$row["coupon_name"]  -->
                                                 <td class="align-middle"><?= $row["coupon_name"] ?></td>
                                                 <td class="align-middle text-end"><?= $row["price"] ?></td>
                                                 <td class="align-middle text-center">
                                                     <?= date("Y-m-d ", strtotime($row["valid_time_start"])) ?><br>
                                                     <?= date("Y-m-d ", strtotime($row["valid_time_end"])) ?></td>
                                                 <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
-                                                <!-- <td class="align-middle text-center"><?= $row["valid"] ?></td> -->
                                                 <td class="align-middle text-center">
                                                     <button type="button" class="btn lightblueBtn" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&type=<?= $row['product_type'] ?>&id=<?= $row['id'] ?>'">查看</button>
                                                 </td>

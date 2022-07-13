@@ -29,8 +29,13 @@ $product_count = $result->num_rows; //取得資料筆數
 
 // echo $category;
 
+//拉 discount_store 資料庫放入下拉式選單
 $sqlC = "SELECT * FROM discount_store WHERE valid = 1 AND buyer_valid = 1 ";
 $resultC = $conn->query($sqlC);
+
+//拉 product_class 資料庫放入下拉式選單
+$sqlP = "SELECT * FROM product_class ";
+$resultP = $conn->query($sqlP);
 
 
 ?>
@@ -341,6 +346,7 @@ $resultC = $conn->query($sqlC);
                                                 <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
                                             </div>
                                             <div class="col-7 row">
+                                                <!-- 第二階段 清空撤回圖片 -->
                                                 <h6>商品照片</h6>
                                                 <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img0" accept="image/gif, image/jpeg, image/png"></div>
                                                 <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
@@ -356,31 +362,12 @@ $resultC = $conn->query($sqlC);
                                         <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="<?= $row['name'] ?>" required>
                                         <label for="">商品分類**</label>
                                         <select name='category' class="form-control" required>
-                                            <!-- TO-DO 連動category -->
-
-                                            <!-- <option value="none"  disabled hidden>請重新確認產品分類</option> -->
-                                            <option value='1' <?php if ($row['product_category'] == 1) {
-                                                                    echo "selected";
-                                                                } ?>>旅遊票券</option>
-                                            <option value='2' <?php if ($row['product_category'] == 2) {
-                                                                    echo "selected";
-                                                                } ?>>餐廳票券</option>
-                                            <option value='3' <?php if ($row['product_category'] == 3) {
-                                                                    echo "selected";
-                                                                } ?>>活動票券</option>
-                                            <option value='4' <?php if ($row['product_category'] == 4) {
-                                                                    echo "selected";
-                                                                } ?>>寵物周邊>寵物外出用品</option>
-                                            <option value='5' <?php if ($row['product_category'] == 5) {
-                                                                    echo "selected";
-                                                                } ?>>寵物周邊>寵物飼料</option>
-                                            <option value='6' <?php if ($row['product_category'] == 6) {
-                                                                    echo "selected";
-                                                                } ?>>寵物周邊>寵物玩具</option>
-                                            <option value='7' <?php if ($row['product_category'] == 7) {
-                                                                    echo "selected";
-                                                                } ?>>寵物周邊>寵物保健</option>
-
+                                            <!-- 家豪: 改用資料庫連動下拉式選單 -->
+                                            <?php while ($rowP = $resultP->fetch_assoc()) : ?>
+                                                <option value='<?= $rowP["id"] ?>' <?php if ($rowP["id"] == $row["product_category"]) {
+                                                                                        echo "selected";
+                                                                                    } ?>> <?= $rowP['name'] ?></option>
+                                            <?php endwhile; ?>
                                         </select>
                                         <label for="">商品簡述**</label>
                                         <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" value="<?= $row['intro'] ?>" required>
@@ -401,31 +388,13 @@ $resultC = $conn->query($sqlC);
                                         <input type="datetime-local" name="valid_end" class="form-control" value="<?= $row['valid_time_end'] ?>" required>
                                         <label for="">搭配優惠方案**</label><br>
                                         <select name='coupon_id' class="form-control">
-                                            <!-- /////家豪 這裡有改喔~ -->
+                                            <!-- 家豪: 改用資料庫連動下拉式選單 -->
                                             <?php while ($rowC = $resultC->fetch_assoc()) : ?>
-                                                <option value='<?= $rowC["id"] ?>'<?php if ($rowC["id"] ==$row["coupon_id"] ) {
-                                                                    echo "selected";
-                                                                } ?> > <?= $rowC['name'] ?></option>
+                                                <option value='<?= $rowC["id"] ?>' <?php if ($rowC["id"] == $row["coupon_id"]) {
+                                                                                        echo "selected";
+                                                                                    } ?>> <?= $rowC['name'] ?></option>
                                             <?php endwhile; ?>
                                         </select>
-
-                                        <!-- <select name='coupon' class="form-control">
-                                            <option value='1' <?php if ($row['coupon_id'] == 1) {
-                                                                    echo "selected";
-                                                                } ?>>歡慶父親節活動</option>
-                                            <option value='2' <?php if ($row['coupon_id'] == 2) {
-                                                                    echo "selected";
-                                                                } ?>>1111周年慶</option>
-                                            <option value='3' <?php if ($row['coupon_id'] == 3) {
-                                                                    echo "selected";
-                                                                } ?>>商品優惠方案</option>
-                                            <option value='4' <?php if ($row['coupon_id'] == 4) {
-                                                                    echo "selected";
-                                                                } ?>>中秋佳節嗨起來</option>
-                                            <option value='5' <?php if ($row['coupon_id'] == 5) {
-                                                                    echo "selected";
-                                                                } ?>>汪汪汪汪汪汪</option>
-                                        </select> -->
                                         <!--
                                         <label for="">商品更新時間</label>
                                         <input type="date" name="create_time" placeholder="自由增建選項" class="form-control" value="<?= $row['create_time'] ?>">
