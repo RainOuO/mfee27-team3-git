@@ -212,7 +212,7 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
                                 <h1>回覆</h1>
                             </div>
                             <?php foreach ($rows as $row) : ?>
-                                <div class="card mb-3" style="max-width: auto;">
+                                <div id="letterMessageBox" class="card mb-3" style="max-width: auto;">
                                     <div class="row p-1 g-0">
                                         <div class="col-md-1 d-flex justify-content-center align-items-center object-cover">
                                             <?php if($row['reply_status'] == 1): ?>
@@ -268,5 +268,4 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
         chatHistory.scrollTop = chatHistory.scrollHeight;
     </script>
 </body>
-
 </html>

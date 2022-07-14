@@ -4,10 +4,10 @@ require("../../db-connect.php");
 
 
 // GET 資料處理
-$user_id = $_GET['user_id'];
+$store_id = $_GET['store_id'];
 
 // SESSION 資料處理
-$store_id = $_SESSION['user']['store_id'];
+$user_id = $_SESSION['user']['user_id'];
 
 // 抓取 letter資料表內容，且只有 user_id AND $store_id資料
 $sql = "SELECT * FROM letter where user_id = '$user_id' AND (store_id = '$store_id' OR store_id IS NULL)";
@@ -240,7 +240,7 @@ $rowsStoreName = $resultStoreName -> fetch_assoc();
                     </main>
                     <div class="bottom-area">
                         <hr>
-                        <form action="doReply.php" method="post">
+                        <form action="UserDoReply.php" method="post">
                             <input name="user_id" type="hidden" value="<?= $user_id ?>">
                             <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" name="message" required placeholder="請輸入訊息" onkeydown="if(event.keyCode==32||event.keyCode==13){return false;}"></textarea>
                             <div class="error"></div>

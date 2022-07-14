@@ -134,10 +134,10 @@ $userName = array_column($rowsUserName, "name", "id");
             <!-- </form> -->
         <!-- </div> -->
         <div class="col-6 d-flex justify-content-end align-items-center mt-3">
-            <a href="index.php?order=1&type=<?= $type ?>" class="orderBtn col-3 <?php if ($order == 1) echo "active" ?>">回覆時間↑</a>
-            <a href="index.php?order=2&type=<?= $type ?>" class="orderBtn col-3 <?php if ($order == 2) echo "active" ?>">回覆時間↓</a>
-            <a href="index.php?order=3&type=<?= $type ?>" class="orderBtn col-2 <?php if ($order == 3) echo "active" ?>">已回覆↓</a>
-            <a href="index.php?order=4&type=<?= $type ?>" class="orderBtn col-2 <?php if ($order == 4) echo "active" ?>">未回覆↓</a>
+            <a href="index.php?order=1&type=<?= $type ?>" class="orderBtn col-3 <?php if ($order == 1) echo " active" ?>">回覆時間↑</a>
+            <a href="index.php?order=2&type=<?= $type ?>" class="orderBtn col-3 <?php if ($order == 2) echo " active" ?>">回覆時間↓</a>
+            <a href="index.php?order=3&type=<?= $type ?>" class="orderBtn col-2 <?php if ($order == 3) echo " active" ?>">已回覆↓</a>
+            <a href="index.php?order=4&type=<?= $type ?>" class="orderBtn col-2 <?php if ($order == 4) echo " active" ?>">未回覆↓</a>
         </div>
     </div>
     <hr>
@@ -175,7 +175,7 @@ $userName = array_column($rowsUserName, "name", "id");
                 <nav aria-label="Page navigation example">
                     <ul class="pagination">
                         <?php for ($i = 1; $i <= $totalPage; $i++) : ?>
-                            <a type="role" class="btn darkblueBtn <?php if ($i == $page) echo 'active'; ?>" href="index.php?order=<?= $order ?>&type=<?= $type ?>&page=<?= $i ?>"><?= $i ?></a>
+                            <a type="role" class="btn darkblueBtn <?php if ($i == $page) echo ' active'; ?>" href="index.php?order=<?= $order ?>&type=<?= $type ?>&page=<?= $i ?>"><?= $i ?></a>
                         <?php endfor; ?>
                     </ul>
                 </nav>
