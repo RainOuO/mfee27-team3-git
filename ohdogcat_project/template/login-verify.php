@@ -6,7 +6,6 @@ if(!isset($_SESSION['user'])||empty($_SESSION['user'])){
 if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !='' && !empty($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] != 0 ){
     $checkStoreRight = false;
     $id = $_SESSION["user"]["id"];
-
     $typeArr = explode(',', $_SESSION["user"]["store_right"]);
     $typeData = [];
     for ($i = 0; $i < count($typeArr); $i++) {

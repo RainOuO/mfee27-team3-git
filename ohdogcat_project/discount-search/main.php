@@ -46,7 +46,7 @@
                 <td class="align-middle text-center"><?php echo $row["start_time"] ?></td>
                 <td class="align-middle text-center"><?php echo $row["end_time"] ?></td>
                 <td class="align-middle text-center"><a class="btn lightblueBtn aBtn"
-                        href="../discounts/?id=<?= $row["id"] ?>">查看</a></td>
+                        href="../discount-detail/?id=<?= $row["id"] ?>">查看</a></td>
             </tr>
             <?php endwhile; ?>
         </tbody>

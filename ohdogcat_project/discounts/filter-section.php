@@ -36,12 +36,12 @@
                     </li>
                     <li>
                         <a class="col-2 orderBtn"
-                            href="../discounts/php?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=<?= $valid ?>&order=2"
+                            href="../discounts/?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=<?= $valid ?>&order=2"
                             class="orderBtn <?php if ($order == 2) echo "active" ?>" name="id DESC">編號排序↑</a>
                     </li>
                     <li>
                         <a class="col-2 orderBtn"
-                            href="../discounts/php?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=<?= $valid ?>&order=3"
+                            href="../discounts/?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=<?= $valid ?>&order=3"
                             class="orderBtn <?php if ($order == 3) echo "active" ?>"
                             name="discount_number ASC">折扣價格↓</a>
                     </li>

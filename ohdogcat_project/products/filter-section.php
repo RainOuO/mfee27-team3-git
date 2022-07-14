@@ -64,16 +64,16 @@
     <div class="col-6 row d-flex justify-content-end btn-group align-items-center m-0">
         <a class="col-2 orderBtn"
             href="../products/?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=1"
-            class="darkblueBtn <?php if ($order == 1) echo "active" ?>" name="priceOrder ASC">單價↑</a>
+            class="darkblueBtn <?php if ($order == 1) echo "active" ?>" name="priceOrder ASC">單價↓</a>
         <a class="col-2 orderBtn"
             href="../products/?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=2"
-            class="darkblueBtn <?php if ($order == 2) echo "active" ?>" name="priceOrder DESC">單價↓</a>
+            class="darkblueBtn <?php if ($order == 2) echo "active" ?>" name="priceOrder DESC">單價↑</a>
         <a class="col-2 orderBtn"
             href="../products/?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=3"
-            class="darkblueBtn <?php if ($order == 3) echo "active" ?>" name="launchOrder ASC">上架時間↑</a>
+            class="darkblueBtn <?php if ($order == 3) echo "active" ?>" name="launchOrder ASC">上架時間↓</a>
         <a class="col-2 orderBtn"
             href="../products/?type=<?= $type ?>&keyword=<?= $keyword ?>&minPrice=<?= $minPrice ?>&maxPrice=<?= $maxPrice ?>&startDate=<?= $startDate ?>&endDate=<?= $endDate ?>&order=4"
-            class="darkblueBtn <?php if ($order == 4) echo "active" ?>" name="launchOrder DESC">上架時間↓</a>
+            class="darkblueBtn <?php if ($order == 4) echo "active" ?>" name="launchOrder DESC">上架時間↑</a>
     </div>
     
 </div>

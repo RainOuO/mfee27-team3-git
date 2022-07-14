@@ -3,7 +3,7 @@
         <hr>
         <form action="doReply.php" method="post">
             <input name="user_id" type="hidden" value="<?= $user_id ?>">
-            <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" name="message" required placeholder="請輸入訊息" onkeydown="if(event.keyCode==32||event.keyCode==13){return false;}"></textarea>
+            <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" name="message" required placeholder="請輸入訊息"></textarea>
             <div class="error"></div>
             <div class="mt-2 g-2 justify-content-end text-end">
                 <div class="">

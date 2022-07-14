@@ -91,7 +91,7 @@
                     <!-- <td class="align-middle text-center"><?= $row["valid"] ?></td> -->
                     <td class="align-middle text-center">
                         <button type="button" class="btn lightblueBtn"
-                            onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">查看</button>
+                            onclick="window.location.href='../product-detail/?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">查看</button>
                     </td>
                 </tr>
                 <?php endwhile; ?>

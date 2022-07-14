@@ -13,7 +13,7 @@ if (isset($_SESSION["user"])) {
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" />
     <!-- CSS only -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <style>
@@ -27,7 +27,7 @@ if (isset($_SESSION["user"])) {
             color: #222934;
         }
         .sign-up-panel {
-            width: 18%;
+            width: 20%;
         }
 
         .logo {
@@ -70,6 +70,12 @@ if (isset($_SESSION["user"])) {
             background: white;
             border-radius: 19px;
         }
+        #checkEye {
+            position: absolute;
+            top: 50%;
+            right: 10px;
+            transform: translateY(-50%);
+        }
     </style>
 
 </head>
@@ -98,7 +104,8 @@ if (isset($_SESSION["user"])) {
                         </div>
                         <div class="form-floating">
                             <input name="password" type="password" class="form-control input-bottom" id="floatingPassword" placeholder="密碼" required>
-                            <label for="floatingPassword">密碼</label>
+                            <label for="floatingInput">密碼</label>
+                            <i id="checkEye" class="fas fa-eye"></i>
                         </div>
                         <div class="mt-3 mb-2 d-flex">
                             <?php if (isset($_SESSION["error"])) : ?>
@@ -127,5 +134,20 @@ if (isset($_SESSION["user"])) {
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
 </body>
+    <script>
+        var checkEye = document.getElementById("checkEye");
+        var floatingPassword = document.getElementById("floatingPassword");
 
+        checkEye.addEventListener("click", function(e) {
+            if (e.target.classList.contains('fa-eye')) {
+                e.target.classList.remove('fa-eye');
+                e.target.classList.add('fa-eye-slash');
+                floatingPassword.setAttribute('type', 'text')
+            } else {
+                floatingPassword.setAttribute('type', 'password');
+                e.target.classList.remove('fa-eye-slash');
+                e.target.classList.add('fa-eye')
+            }
+        });
+    </script>
 </html>

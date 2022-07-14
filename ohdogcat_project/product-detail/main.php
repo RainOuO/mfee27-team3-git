@@ -8,7 +8,7 @@
         <button type="button" class="btn filterBtn mx-1"
             onclick="window.location.href='../product-edit/?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id?>&category=<?=$row['product_category']?>'">編輯</button>
         <button type="button" class="btn filterBtn mx-1"
-            onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
+            onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>&type=<?=$type?>'">刪除</button>
         <button type="button" class="btn filterBtn ms-1"
             onclick="window.location.href='../products/?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
     </div>
@@ -100,7 +100,7 @@
         <button type="button" class="btn filterBtn mx-1"
             onclick="window.location.href='../product-edit/?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id?>&category=<?=$row['product_category']?>'">編輯</button>
         <button type="button" class="btn filterBtn mx-1"
-            onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
+            onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>&type=<?=$type?>'">刪除</button>
         <button type="button" class="btn filterBtn ms-1"
             onclick="window.location.href='../products/?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
     </div>

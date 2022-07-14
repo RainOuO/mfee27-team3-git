@@ -44,8 +44,7 @@
                 <th>店鋪權限</th>
                 <td>
                     <class="form-control">
-                        <?php
-                                                for ($i=0; $i<count($rows); $i++ ) {
+                        <?php   for ($i=0; $i<count($rows); $i++ ) {
                                                     if($i == (count($rows)-1) ){
                                                         echo $rows[$i]['type_name'];
                                                     }else{

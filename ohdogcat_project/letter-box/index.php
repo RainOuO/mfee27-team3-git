@@ -108,6 +108,5 @@ $sqlUserName = "SELECT id,name FROM users";
 $resultUserName = $conn->query($sqlUserName);
 $rowsUserName = $resultUserName->fetch_all(MYSQLI_ASSOC);
 $userName = array_column($rowsUserName, "name", "id");
-var_dump($sqlUserId);
 require("../template/dashboard.php");
 ?>

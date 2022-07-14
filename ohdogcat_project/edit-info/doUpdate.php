@@ -19,10 +19,11 @@ if ($_FILES["myFile"]["error"] == 0) {
         $sql = "UPDATE  store_info  SET  photo='$fileName' ,name='$name',phone='$phone',email='$email',address='$address'
         ,area='$area' WHERE account='$id'";
         if ($conn->query($sql) === TRUE) {
-            $sqlUpdate = "SELECT * FROM store_info WHERE account=$id";
-            $resultUpdate = $conn->query($sqlUpdate);
-            $rowUpdate = $resultUpdate->fetch_assoc();
-            $_SESSION['user'] = $rowUpdate;
+            $sqlUpdateSesstion = "SELECT * FROM store_info WHERE account='$id'";
+            $resultUpdateSesstion = $conn->query($sqlUpdateSesstion);
+            // var_dump($resultUpdateSesstion->error_log);
+            $rowUpdateSesstion = $resultUpdateSesstion->fetch_assoc();
+            $_SESSION['user'] = $rowUpdateSesstion;
             echo "資料照片更新成功! ";
                 $_SESSION['update'] = 'success';
                 header("location: ../store-info");
@@ -35,11 +36,12 @@ if ($_FILES["myFile"]["error"] == 0) {
 $sqln = "UPDATE  store_info  SET  name='$name',phone='$phone',email='$email',address='$address'
 ,area='$area' WHERE account='$id'";
 if ($conn->query($sqln) === TRUE) {
-    $sqlUpdate = "SELECT * FROM store_info WHERE account=$id";
-    $resultUpdate = $conn->query($sqlUpdate);
-    $rowUpdate = $resultUpdate->fetch_assoc();
-    $_SESSION['user'] = $rowUpdate;
-// echo "資料照片更新成功! ";
+    $sqlUpdateSesstion = "SELECT * FROM store_info WHERE account='$id'";
+    $resultUpdateSesstion = $conn->query($sqlUpdateSesstion);
+    // var_dump($resultUpdateSesstion->error_log);
+    $rowUpdateSesstion = $resultUpdateSesstion->fetch_assoc();
+    $_SESSION['user'] = $rowUpdateSesstion;
+echo "333! ";
 $_SESSION['update'] = 'success';
 header("location: ../store-info");
 }

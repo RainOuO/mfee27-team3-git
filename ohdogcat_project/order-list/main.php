@@ -48,6 +48,18 @@
             <?php endfor; ?>
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-12">
+            <form action="doMessage.php">
+                <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" name="message" required placeholder="請輸入訊息" ></textarea>
+                <div class="mt-2 g-2 justify-content-end text-end">
+                    <div class="">
+                        <button class="btn filterBtn" type="submit">送出</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
 
     <!-- offcanvas -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasOrderList"
@@ -214,6 +226,7 @@
                                 </div>
                                 ${progressStatus}
                                 ${isNew}
+                                <div class="row"></div>
                             </div>
                         </div>
                     `;
@@ -309,7 +322,17 @@
                     if(response.data.success){
                         let order_status = document.querySelectorAll('.order_status');
                         let offcanvasClose = document.querySelector('#offcanvasClose');
-                        order_status[response.data.statusChange.index].innerHTML = `<div class="d-inline-block py-1 px-3 rounded-5 ${response.data.statusChange.status_css.bg}">${response.data.statusChange.status_text}</div>`;
+                        order_status[response.data.statusChange.index].innerHTML = `<div class="btn-group">
+                        <div class="d-flex align-items-center px-3 bg-wite pe-none border border-secondary text-secondary rounded w-100">
+                            已取消                        </div>
+                        <button type="button" class="btn btn-secondary dropdown-toggle dropdown-toggle-split invisible" data-bs-toggle="dropdown" aria-expanded="false">
+                            <span class="visually-hidden"></span>
+                        </button>
+                        <ul class="dropdown-menu">
+                            <li><a class="statusUpdateBtn dropdown-item" href="#" data-status="0" data-index="3" data-update-id="39"></a></li>
+                        </ul>
+                    </div>`;
+                        
                         order_status[response.data.statusChange.index].parentNode.classList.add('text-secondary');
                         order_status[response.data.statusChange.index].parentNode.classList.add('text-opacity-50');
                         removeBtn.style['display'] = 'none';

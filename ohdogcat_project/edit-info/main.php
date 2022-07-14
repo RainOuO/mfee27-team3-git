@@ -2,15 +2,15 @@
     <div class="my-2 imgALL ">
         <?php foreach ($rowss as $rowa) : ?>
         <div class="mx-auto" style="width: 300px; height: 300px;">
-        <?php if (isset($rowa["photo"]) == null) : ?>
+            <?php if (isset($rowa["photo"]) == null) : ?>
             <img id="previewUP" class="object-contain" src="../images/store_photo/Sample_User_Icon.svg" alt="">
-        <?php else : ?>
+            <?php else : ?>
             <img id="previewUP" class="object-contain" src="../images/store_photo/<?= $rowa["photo"] ?>" alt="">
-        <?php endif; ?>
+            <?php endif; ?>
         </div>
         <form class="photoinputALL mt-5" action="doUpdate.php" method="post" enctype="multipart/form-data">
-            <input class="form-control inputphoto mx-auto mt-3" type="file" onchange="readURL(this)" targetID="previewUP"
-                accept="image/gif, image/jpeg, image/png" type="file" name="myFile" />
+            <input class="form-control inputphoto mx-auto mt-3" type="file" onchange="readURL(this)"
+                targetID="previewUP" accept="image/gif, image/jpeg, image/png" type="file" name="myFile" />
             <?php endforeach; ?>
     </div>
     <?php if ($userCount > 0) :?>
@@ -42,9 +42,12 @@
                 <th>
                     <label class="title " for="livingn">區域:</label>
                     <select name="area">
-                        <option>北部</option>
-                        <option>中部</option>
-                        <option>南部</option>
+                        <option <?php if ($row["area"] == "北部") 
+                            {echo "selected";} ?>>北部</option>
+                        <option <?php if ($row["area"] == "中部") 
+                            { echo "selected";} ?>>中部</option>
+                        <option <?php if ($row["area"] == "南部") 
+                            { echo "selected";} ?>>南部</option>
                     </select>
                 </th>
 

@@ -19,6 +19,7 @@ if (!isset($_GET["id"])) {
     echo "沒有參數";
     // exit;
 }
+$storeID = $_SESSION['user']['id'];
 $id = $_GET["id"];
 $couponId = "AND coupon_id = $id";
 // var_dump($_GET["id"]);

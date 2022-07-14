@@ -68,17 +68,17 @@ discount_store.name AS coupon_name, product_class.id AS p_id, product_class.name
 INNER JOIN discount_store ON discount_store.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
 WHERE product.valid = 1";
 
+
 $sql .= $storeID ? " and store_id = $storeID" : "";
 $sql .= $type ? " and product_type = $type " : "";
-$sql .= $keyword ? " and (product.name LIKE '%$keyword%' OR intro LIKE '%$keyword%' OR description LIKE '%$keyword%' )" : "";
+$sql .= $keyword ? " and (product.name LIKE '%$keyword%' OR intro LIKE '%$keyword%' OR product.description LIKE '%$keyword%' )" : "";
 $sql .= $minPrice ? " and price >= $minPrice" : "";
 $sql .= $maxPrice ? " and price <= $maxPrice" : "";
 $sql .= $startDate ? " and (valid_time_start <= '$endDate') and (valid_time_end >= '$startDate')" : "";
 // $sql .= $available ? " and available = $available" : "";
 $sql .= $ordertype ? " ORDER BY $ordertype" : "";
-
 // SELECT product.*, product_class.id AS p_id, product_class.name AS category_name FROM product JOIN product_class ON product_class.id = product.product_category WHERE product.valid= 1 ORDER BY product.id ASC;
-
+// echo sql
 // var_dump($_SESSION['user']);
 
 // var_dump( $sql);
@@ -91,6 +91,8 @@ $endItem = $page * $perPage;
 if ($endItem > $product_count) {
     $endItem = $product_count;
 };
+
+
 
 $totalPage = 1;
 //商數 取商數後無條件捨去floor

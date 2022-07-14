@@ -20,8 +20,8 @@
             <tr>
                 <th>庫存數量</th>
                 </th>
-                <td><input type="text" name="discount_number" class="form-control"
-                        value="<?= $row["discount_number"] ?>"></td>
+                <td><input type="text" name="amount" class="form-control"
+                        value="<?= $row["amount"] ?>"></td>
             </tr>
             <tr>
                 <th>最低使用金額</th>
