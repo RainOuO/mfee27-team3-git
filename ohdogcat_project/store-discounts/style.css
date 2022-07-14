@@ -1,0 +1,189 @@
+* {
+    -webkit-user-drag: none;
+    font-family: 'Noto Sans TC', sans-serif;
+    color: #222934;
+
+}
+
+thead {
+    font-weight: 600;
+}
+
+.filterBtn {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.filterBtn:hover {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.filterBtn:active {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.filterBtn:visited {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.filterBtn:focus {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+.detail {
+
+    text-decoration: none;
+}
+
+.detailBtn {
+    color: #222934;
+    background-color: #D5EEEE;
+}
+
+.detailBtn:hover {
+    color: #fff;
+    background-color: #49586f;
+}
+
+.detailBtn:active {
+    color: #fff;
+    background-color: #49586f;
+}
+
+.detailBtn:visited {
+    color: #fff;
+    background-color: #49586f;
+}
+
+.detailBtn:focus {
+    color: #222934;
+    background-color: #D5EEEE;
+}
+
+
+.catBtn {
+    background-color: #D5EEEE;
+    color: #222934;
+    font-size: 1.25rem;
+}
+
+.catBtn:hover {
+    color: #fff;
+    background-color: #49586f;
+}
+
+.keywordBar,
+.priceBar {
+    height: 48px;
+}
+
+.countBox {
+    line-height: 37px;
+    height: 37px;
+    font-size: 16px;
+
+}
+
+.orderBtn {
+    color: #222934;
+    padding: 5px;
+    margin-left: 3px;
+    text-decoration: none;
+    text-align: center;
+}
+
+.orderBtn:hover {
+    color: #fff;
+    background-color: #49586f;
+}
+
+
+.pageBtn {
+    padding: 10px;
+    border: 2px solid #49586f;
+    border-radius: 5px;
+    color: #222934;
+    text-decoration: none;
+}
+
+.pageBtn.active {
+    color: #fff;
+    background-color: #49586f;
+}
+
+.pageBtn:hover {
+    color: #fff;
+    background-color: #49586f;
+}
+
+.dateF {
+    font-size: 0.8rem;
+}
+
+.dateS {
+    height: 30px;
+}
+
+.lightblueBtn,
+.lightblueBtn:focus {
+    color: #222934;
+    background-color: #D5EEEE;
+}
+
+.lightblueBtn:active,
+.lightblueBtn:hover {
+    color: #fff;
+    background-color: #49586f;
+}
+
+
+.aBtn {
+    text-decoration: none;
+    color: #222934;
+}
+
+.aBtn:hover {
+    color: white;
+}
+
+.yellowBtn,
+.yellowBtn:active,
+.yellowBtn:focus {
+    color: #222934;
+    background-color: #FFC845;
+    border: 0;
+    transition: all .3s;
+}
+
+.yellowBtn:hover {
+    color: #222934;
+    background-color: #ffe3a1;
+}
+
+
+.yellowBtn:visited {
+    color: #222934;
+    background-color: #FFC845;
+}
+
+/* 純藍框無底色CSS  */
+.darkblueBtn {
+    border-color: #49586f;
+    color: #222934;
+    font-size: 16px;
+    margin: 4px 0;
+    margin-right: 0.25vw;
+    letter-spacing: .5px;
+    padding: 4px 12px;
+}
+
+.darkblueBtn:hover,
+.darkblueBtn.current-active,
+.darkblueBtn.active {
+    color: #fff !important;
+    background-color: #49586f;
+}
