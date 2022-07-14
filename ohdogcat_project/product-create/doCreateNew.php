@@ -1,5 +1,5 @@
 <?php
-
+session_start();
 require("../db-connect.php");
 // if (!isset($_POST["store_id"])) {
 //     echo "沒有帶入資料";
@@ -7,7 +7,7 @@ require("../db-connect.php");
 // }
 
 // 進資料庫比對前先檢查 減少效能浪費
-$store_id = "";
+$store_id =  $_SESSION['user']['id'];
 // TO-DO 
 $type = $_POST["type"];
 // echo $type;

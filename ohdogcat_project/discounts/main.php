@@ -62,7 +62,7 @@
 
             <td class="align-middle text-center"><?php
                                                               if ($row["buyer_valid"] == 2) {
-                                                                echo "失效<br>";
+                                                                echo "無效/失效<br>";
                                                               } else {
                                                                 echo "有效<br>";
                                                               } ?>

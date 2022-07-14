@@ -40,11 +40,9 @@ if (isset($_GET["startDate"]) && isset($_GET["endDate"])) {
     $endDate = "";
 };
 
-
-
 //TO-DO: 未來加入 store_id(從 session 拿) 判斷商家
 //$storeID= isset($_GET["store_id"]) ? $_GET["store_id"] : "";
-$storeID = "";
+$storeID = $_SESSION['user']['id'];
 
 $ordertype = isset($_GET["order"]) ? $_GET["order"] : 5;
 switch ($ordertype) {
@@ -66,10 +64,9 @@ switch ($ordertype) {
 
 //依條件取得商品
 $sql = "SELECT product.*, discount_category.id AS coupon_id_new,
-discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
-INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name 
+FROM (product INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
 WHERE product.valid = 1";
-
 
 $sql .= $storeID ? " and store_id = $storeID" : "";
 $sql .= $type ? " and product_type = $type " : "";
@@ -82,7 +79,7 @@ $sql .= $ordertype ? " ORDER BY $ordertype" : "";
 
 // SELECT product.*, product_class.id AS p_id, product_class.name AS category_name FROM product JOIN product_class ON product_class.id = product.product_category WHERE product.valid= 1 ORDER BY product.id ASC;
 
-
+// var_dump($_SESSION['user']);
 
 // var_dump( $sql);
 //根據商品筆數，取得頁碼資訊
@@ -94,6 +91,8 @@ $endItem = $page * $perPage;
 if ($endItem > $product_count) {
     $endItem = $product_count;
 };
+
+echo $sql;
 
 $totalPage = 1;
 //商數 取商數後無條件捨去floor

@@ -51,9 +51,7 @@
                             <div class="accordion-body">
                                 <ul class="list-unstyled">
                                     <?php if(count($typeData)>1):?>
-                                        <li>
-                                            <a href="../products/" class="menu-link <?=($current == 'products'&& $pageType == '0')?'current-active':'';?>">商品總覽</a>
-                                        </li>
+                                        <!-- 總覽 -->
                                     <?php endif;?>
                                     <?php for($i=0; $i<count($typeData); $i++): $index = $i+1; ?>
                                         <li>

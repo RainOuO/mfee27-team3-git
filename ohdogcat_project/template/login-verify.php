@@ -37,7 +37,7 @@ if(isset($_SESSION["user"]["store_right"]) && $_SESSION["user"]["store_right"] !
                 break;
             case 4:
                 $typeInfo = [
-                    'text' => '實體商品列表',
+                    'text' => '寵物商品列表',
                     'href' => '../products/?type=4',
                     'type' => '4'
                 ];

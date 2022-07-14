@@ -19,7 +19,7 @@ $pageType = (isset($_GET['type'])&&!empty($_GET['type']))?$_GET['type']:'0';
 require("../db-connect.php");
 
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
-$storeID = "";
+$storeID = $_SESSION['user']['id'];
 $type = $_GET["type"];
 // echo $type;
 

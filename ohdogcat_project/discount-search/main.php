@@ -8,7 +8,7 @@
             </form>
         </div>
         <div class="col-2 countBox d-flex justify-content-end">
-            <button class="btn lightblueBtn d-flex justify-content-end me-4  mt-2"
+            <button class="btn lightblueBtn d-flex justify-content-end me-4"
                 onclick="window.location.href='../discounts'">回到優惠券列表</button>
 
         </div>

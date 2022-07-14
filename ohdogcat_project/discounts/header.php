@@ -7,6 +7,6 @@
         href="../discounts/?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=1">有效
     </a>
     <a class="btn catBtn  <?php if ($_GET['valid'] == "2") echo "active";?>" aria-current="page"
-        href="../discounts/?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=2">失效
+        href="../discounts/?ordertype=<?= $ordertype ?>&category=<?= $category ?>&valid=2">無效/失效
     </a>
 </div>
