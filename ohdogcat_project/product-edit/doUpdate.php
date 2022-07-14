@@ -1,6 +1,6 @@
 <?php
 // session_start();
-require("./db-connect.php");
+require("../db-connect.php");
 
 
 // echo $_GET["id"];
@@ -8,7 +8,7 @@ require("./db-connect.php");
 $id = $_POST["id"];
 $store_id = "";
 //TO-DO: validate session
-$type = "";
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
 $name = $_POST["name"];
 $category = $_POST["category"];
 $intro = $_POST["intro"];
@@ -137,7 +137,7 @@ $isUpdate = $conn->query($sqlUpdate);
 $conn->close();
 if ($isUpdate === TRUE) {
     echo "資料修改成功";
-    header("location: productDetail.php?type=$type&id=$id");
+    header("location: ../product-detail/?type=$type&id=$id");
 } else {
     echo "Error: " . $sqlUpdate . "<br>" . $conn->error;
     echo "資料更新錯誤";

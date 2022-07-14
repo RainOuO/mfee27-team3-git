@@ -2,7 +2,6 @@
 
 session_start();
 if (!isset($_SESSION["user"]))
-
     if (!isset($_GET['id'])) {
         echo "沒有資料";
         exit;
@@ -11,12 +10,12 @@ $storeID = "";
 $id = $_GET["id"];
 //TO-DO
 //商品id 使用seesion?
-require("../db-connect.php");
-// require("./doproducts.php");
-// $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
-$sql = "SELECT product.*, discount_category.id AS coupon_id_new,
-discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
-INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+
+require("./db-connect.php");
+// 原本sql $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
+$sql = "SELECT product.*, discount_store.id AS coupon_id_store,
+discount_store.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
+INNER JOIN discount_store ON discount_store.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
 WHERE product.valid = 1 and product.id = $id";
 
 // $sql = $storeID ? "AND store_id = $storeID" : "";
@@ -285,10 +284,10 @@ $product_count = $result->num_rows; //取得資料筆數
                                     <h4 class="pt-3">基本設定</h4>
                                 </div>
                                 <div class="crudBox">
-                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id?>&category=<?=$row['product_category']?>'">編輯</button>
-                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
-                                <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
-                            </div>
+                                    <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id ?>&category=<?= $row['product_category'] ?>'">編輯</button>
+                                    <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
+                                    <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
+                                </div>
                             </div>
                             <hr>
 
@@ -325,10 +324,8 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <label for="">商品名稱**</label>
                                         <div type="text" name="name" class="py-2"><?= $row['name'] ?> </div>
                                         <label for="">商品分類**</label>
-                                        <div name='category' class=" py-2">
-                                            <?= $row["category_name"]?>
-                                            <!-- TO-DO 連動category -->
-                                        </div>
+                                        <!-- 家豪:更新連動取值 -->
+                                        <div name='category' class=" py-2"><?= $row["category_name"] ?></div>
                                         <label for="">商品簡述</label>
                                         <div type="text" name="intro" class="py-2"><?= $row['intro'] ?></div>
                                         <label for="">商品價格**</label>
@@ -342,11 +339,9 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <div type="datetime-local" name="spec" class=""><?= $row['valid_time_start'] ?></div>
                                         <label for="">下架時間</label>
                                         <div type="datetime-local" name="spec" class=""><?= $row['valid_time_end'] ?></div>
-                                        <label for="">優惠券方案使用</label><br>
-                                        <div name='dragdown' class="" name="coupon">
-                                            <!-- TO-DO 連動coupon -->
-                                            <?= $row["coupon_name"] ?>
-                                        </div>
+                                        <label for="">優惠券方案使用</label>
+                                        <!-- 家豪:更新連動取值 -->
+                                        <div name='dragdown' class="" name="coupon"><?= $row["coupon_name"] ?></div>
                                         <!-- <label for="">商品更新時間</label>
                                         <div type="date" name="spec" class=""><?= $row['create_time'] ?></div> -->
                                         <label for="">商品庫存數</label>
@@ -377,7 +372,7 @@ $product_count = $result->num_rows; //取得資料筆數
                         <hr>
                         <div class="d-flex justify-content-end">
                             <div class="crudBox">
-                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id?>&category=<?=$row['product_category']?>'">編輯</button>
+                                <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='productEdit.php?store_id=<?= $storeID ?>&type=<?= $type ?>&id=<?= $id ?>&category=<?= $row['product_category'] ?>'">編輯</button>
                                 <button type="button" class="btn filterBtn mx-1" onclick="window.location.href='doDelete.php?id=<?= $row['id'] ?>'">刪除</button>
                                 <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='allProductList.php?store_id=<?= $storeID ?>&type=<?= $type ?>'">返回總表</button>
                             </div>

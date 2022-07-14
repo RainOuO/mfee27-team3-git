@@ -33,7 +33,6 @@
                     <?= date("Y-m-d ", strtotime($row["valid_time_start"])) ?><br>
                     <?= date("Y-m-d ", strtotime($row["valid_time_end"])) ?></td>
                 <td class="align-middle text-center"><?= $row["stock_quantity"] ?></td>
-                <!-- <td class="align-middle text-center"><?= $row["valid"] ?></td> -->
                 <td class="align-middle text-center">
                     <button type="button" class="btn lightblueBtn"
                         onclick="window.location.href='../product-detail/?store_id=<?= $storeID ?>&type=<?= $row['product_type'] ?>&id=<?= $row['id'] ?>'">查看</button>

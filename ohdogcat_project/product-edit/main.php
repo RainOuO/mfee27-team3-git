@@ -1,16 +1,15 @@
 <?php if ($product_count > 0) :
                             $row = $result->fetch_assoc() ?>
-<form action="doUpdate.php" method="post" enctype="multipart/form-data">
+<form action="doUpdate.php?type=<?=$type?>" method="post" enctype="multipart/form-data">
     <input type="hidden" name="id" value="<?= $id ?>" />
     <div class="d-flex justify-content-between align-items-center m-2">
         <div class="title d-flex mt-2">
-            <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
             <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
         </div>
         <div class="crudBox">
             <button type="submit" class="btn filterBtn mx-1">儲存</button>
             <button type="button" class="btn filterBtn ms-1"
-                onclick="window.location.href='../product-detail/?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
+                onclick="window.location.href='../product-detail/?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>&type=<?=$type?>'">取消返回</button>
         </div>
     </div>
     <hr>
@@ -20,10 +19,11 @@
                 <div class="cover-photo m-3">
                     <?php if ($row["main_photo"] == '') : ?>
 
-                    <img src="./IMAGES/doglogo.png" alt="">
+                    <img src="../images/no_img.png" alt="">
                     <?php else : ?>
                     <!-- <img src="./IMAGES/doglogo.png" alt="" id="preview_cover_img" src="#"> -->
-                    <img src="./upload_main_photo/<?= $row['main_photo'] ?>" id="preview_cover_img" src="#" alt="">
+                    <img src="../images/upload_main_photo/<?= $row['main_photo'] ?>" id="preview_cover_img" src="#"
+                        alt="">
                     <?php endif; ?>
                 </div>
                 <div class="swiper mySwiper">
@@ -33,11 +33,12 @@
                                                     array_pop($rowSub);
                                                     for ($i = 0; $i < count($rowSub); $i++) : ?>
                         <?php if ($rowSub[$i] == '') : ?>
-                        <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png"
+                        <div class="swiper-slide photo1"><img class="" src="../IMAGES/no_img.png"
                                 id="preview_sub_img<?= $i ?>" src="#" alt=""></div>
                         <?php else : ?>
-                        <div class="swiper-slide photo1"><img class="" src="./upload_sub_photo/<?= $rowSub[$i] ?>"
-                                id="preview_sub_img<?= $i ?>" src="#" alt=""></div>
+                        <div class="swiper-slide photo1"><img class=""
+                                src="../images/upload_sub_photo/<?= $rowSub[$i] ?>" id="preview_sub_img<?= $i ?>"
+                                src="#" alt=""></div>
                         <?php endif; ?>
                         <?php endfor; ?>
                     </div>
@@ -79,16 +80,11 @@
                 value="<?= $row['name'] ?>" required>
             <label for="">商品分類**</label>
             <select name='category' class="form-control" required>
-                <!-- TO-DO 連動category -->
-                <!-- <option value="none"  disabled hidden>請重新確認產品分類</option> -->
-                <option value='1' <?php ($category == 1) ? "selected" : '' ?>>旅遊票券</option>
-                <option value='2' <?php ($category == 2) ? "selected" : '' ?>>餐廳票券</option>
-                <option value='3' <?php ($category == 3) ? "selected" : "" ?>>活動票券</option>
-                <option value='4' <?php ($category == 4) ? "selected" : "" ?>>寵物周邊>寵物外出用品</option>
-                <option value='5' <?php ($category == 5) ? "selected" : "" ?>>寵物周邊>寵物飼料</option>
-                <option value='6' <?php ($category == 6) ? "selected" : "" ?>>寵物周邊>寵物玩具</option>
-                <option value='7' <?php ($category == 7) ? "selected" : "" ?>>寵物周邊>寵物保健</option>
-
+                <?php while ($rowP = $resultP->fetch_assoc()) : ?>
+                <option value='<?= $rowP["id"] ?>' <?php if ($rowP["id"] == $row["product_category"]) {
+                                                                                        echo "selected";
+                                                                                    } ?>> <?= $rowP['name'] ?></option>
+                <?php endwhile; ?>
             </select>
             <label for="">商品簡述**</label>
             <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control"
@@ -101,7 +97,6 @@
                                         <input type="text" name="spec" placeholder="自由增建選項" class="form-control">
                                         -->
             <div class="d-flex mt-2">
-                <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                 <h3 class="pt-3">進階設定</h3>
             </div>
             <hr>
@@ -112,12 +107,12 @@
             <input type="datetime-local" name="valid_end" class="form-control" value="<?= $row['valid_time_end'] ?>"
                 required>
             <label for="">搭配優惠方案**</label><br>
-            <select name='coupon' class="form-control">
-                <option value='1'>折數優惠券</option>
-                <option value='2'>現金折價券</option>
-                <option value='3'>商品優惠方案</option>
-                <option value='4'>折數優惠+現金折價</option>
-                <option value='5' selected>全方案適用</option>
+            <select name='coupon_id' class="form-control">
+                <?php while ($rowC = $resultC->fetch_assoc()) : ?>
+                <option value='<?= $rowC["id"] ?>' <?php if ($rowC["id"] == $row["coupon_id"]) {
+                                                                                        echo "selected";
+                                                                                    } ?>> <?= $rowC['name'] ?></option>
+                <?php endwhile; ?>
             </select>
             <!--
                                         <label for="">商品更新時間</label>
@@ -144,7 +139,7 @@
         <div class="crudBox">
             <button type="submit" class="btn filterBtn mx-1">儲存</button>
             <button type="button" class="btn filterBtn ms-1"
-                onclick="window.location.href='../product-detail/?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
+                onclick="window.location.href='../product-detail/?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>&type=<?=$type?>'">取消返回</button>
         </div>
     </div>
     </div>

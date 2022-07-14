@@ -1,11 +1,21 @@
 <?php
 
-require("../db-connect.php");
+require("./db-connect.php");
 
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
 $storeID = "";
+//第二階段 : 加入store_id 取值
 $type = $_GET["type"];
-// echo $type;
+
+
+//拉 discount_store 資料庫放入下拉式選單
+$sql = "SELECT * FROM discount_store WHERE valid = 1 AND buyer_valid = 1 ";
+$result = $conn->query($sql);
+
+//拉 product_class 資料庫放入下拉式選單
+$sqlP = "SELECT * FROM product_class ";
+$resultP = $conn->query($sqlP);
+
 
 ?>
 
@@ -299,7 +309,6 @@ $type = $_GET["type"];
                                                 <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_img3" src="#"></div>
                                                 <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_img4" src="#"></div>
                                                 <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_img5" src="#"></div>
-                                                <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_imgs" src="#"></div> -->
                                             </div>
                                             <div class="swiper-pagination"></div>
                                         </div>
@@ -312,6 +321,7 @@ $type = $_GET["type"];
                                             <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
                                         </div>
                                         <div class="col-7 row">
+                                            <!-- 第二階段 清空撤回圖片 -->
                                             <h6>商品照片</h6>
                                             <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
                                             <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img2" accept="image/gif, image/jpeg, image/png"></div>
@@ -327,16 +337,13 @@ $type = $_GET["type"];
                                     <label for="">商品分類**</label>
                                     <select name='category' class="form-control" required>
                                         <!-- TO-DO 連動category -->
-                                        <option value='1' >旅遊票券</option>
-                                        <option value='2' >餐廳票券</option>
-                                        <option value='3' >活動票券</option>
-                                        <option value='4' >寵物周邊>寵物外出用品</option>
-                                        <option value='5' >寵物周邊>寵物飼料</option>
-                                        <option value='6' >寵物周邊>寵物玩具</option>
-                                        <option value='7' >寵物周邊>寵物保健</option>
+                                        <!-- 家豪: 改用資料庫連動下拉式選單 -->
+                                        <?php while ($rowP = $resultP->fetch_assoc()) : ?>
+                                            <option value='<?= $rowP["id"] ?>'> <?= $rowP['name'] ?></option>
+                                        <?php endwhile; ?>
                                     </select>
-                                    <label for="">商品簡述</label>
-                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
+                                    <label for="">商品簡述**</label>
+                                    <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" required>
                                     <label for="">商品價格**</label>
                                     <input type="number" name="price" placeholder="只能輸入大於0的數字NTD" class="form-control" required>
                                     <!-- <label for="">商品規格</label>
@@ -351,13 +358,11 @@ $type = $_GET["type"];
                                     <label for="">下架時間</label>
                                     <input type="datetime-local" name="valid_end" class="form-control" required>
                                     <label for="">優惠券方案使用</label><br>
-                                    <select name='coupon' class="form-control">
-                                        <!-- <option value=''>無優惠</option> -->
-                                        <option value='1'>折數優惠券</option>
-                                        <option value='2'>現金折價券</option>
-                                        <option value='3'>商品優惠方案</option>
-                                        <option value='4'>折數優惠+現金折價</option>
-                                        <option value='5' selected>全方案適用</option>
+                                    <select name='coupon_id' class="form-control">
+                                        <!-- 家豪: 改用資料庫連動下拉式選單 -->
+                                        <?php while ($row = $result->fetch_assoc()) : ?>
+                                            <option value='<?= $row["id"] ?>'> <?= $row['name'] ?></option>
+                                        <?php endwhile; ?>
                                     </select>
                                     <!-- <label for="">商品更新時間</label>
                                     <input type="date" name="create_time" placeholder="自由增建選項" class="form-control" hidden> -->
@@ -375,7 +380,7 @@ $type = $_GET["type"];
                             <hr>
                             <label for="">商品文案編輯頁面</label>
                             <textarea class="form-control" rows="10" placeholder="請輸入文案" maxlength="500" name="description"></textarea>
-                            <!-- <form method="post">
+                            <!-- <form method="post"> //第二階端開發功能 :所見及所得
                             <div class="text-end mb-1 d-flex justify-content-between">
                                 <h3>商品文案編輯頁面</h3> <button class="btnry" type="submit">儲存草稿</button>
                             </div>
@@ -431,29 +436,7 @@ $type = $_GET["type"];
             }
         }
     </script>
-    <script>
-        //多張照片上傳預覽
-        // $("#progressbarTWInput").change(function() {
-        //     $("#preview_sub_imgs").html(""); // 清除預覽
-        //     readURLM(this);
-        // });
 
-        // function readURLM(input) {
-        //     if (input.files && input.files.length >= 0) {
-        //         for (var i = 0; i < input.files.length; i++) {
-        //             var reader1 = new FileReader();
-        //             reader1.onload = function(e) {
-        //                 var img1 = $("<img width='150' height='150'>").attr('src', e.target.result);
-        //                 $("#preview_sub_imgs").append(img1);
-        //             }
-        //             reader1.readAsDataURL(input.files[i]);
-        //         }
-        //     } else {
-        //         var noPictures = $("<p>目前沒有圖片</p>");
-        //         $("#preview_sub_imgs").append(noPictures);
-        //     }
-        // }
-    </script>
     <!-- <script>
         tinymce.init({
             selector: 'textarea',

@@ -1,5 +1,5 @@
 <?php
-require("../db-connect.php");
+require("./db-connect.php");
 // require("./doProducts.php");
 
 if (!isset($_GET['id'])) {
@@ -12,17 +12,30 @@ $category = $_GET["category"];
 $storeID = "";
 $id = $_GET["id"];
 
+
 //TO-DO
 //商品id 使用seesion?
 // $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
-$sql = "SELECT product.*, discount_category.id AS coupon_id_new,
-discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
-INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+$sql = "SELECT product.*, discount_store.id AS coupon_id_store,
+discount_store.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
+INNER JOIN discount_store ON discount_store.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
 WHERE product.valid = 1 and product.id = $id";
+
+
+
 $result = $conn->query($sql);
 
 $product_count = $result->num_rows; //取得資料筆數 
 
+// echo $category;
+
+//拉 discount_store 資料庫放入下拉式選單
+$sqlC = "SELECT * FROM discount_store WHERE valid = 1 AND buyer_valid = 1 ";
+$resultC = $conn->query($sqlC);
+
+//拉 product_class 資料庫放入下拉式選單
+$sqlP = "SELECT * FROM product_class ";
+$resultP = $conn->query($sqlP);
 
 
 ?>
@@ -333,6 +346,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                                 <input class="form-control" type="file" name="main_photo" onchange="readURL(this)" targetID="preview_cover_img" accept="image/gif, image/jpeg, image/png">
                                             </div>
                                             <div class="col-7 row">
+                                                <!-- 第二階段 清空撤回圖片 -->
                                                 <h6>商品照片</h6>
                                                 <div class="col-auto"><input class="form-control" type="file" name="sub_photo1" onchange="readURL(this)" targetID="preview_sub_img0" accept="image/gif, image/jpeg, image/png"></div>
                                                 <div class="col-auto"><input class="form-control" type="file" name="sub_photo2" onchange="readURL(this)" targetID="preview_sub_img1" accept="image/gif, image/jpeg, image/png"></div>
@@ -348,16 +362,12 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="<?= $row['name'] ?>" required>
                                         <label for="">商品分類**</label>
                                         <select name='category' class="form-control" required>
-                                            <!-- TO-DO 連動category -->
-                                            <!-- <option value="none"  disabled hidden>請重新確認產品分類</option> -->
-                                            <option value='1' <?php ($category == 1) ? "selected" : '' ?>>旅遊票券</option>
-                                            <option value='2' <?php ($category == 2) ? "selected" : '' ?>>餐廳票券</option>
-                                            <option value='3' <?php ($category == 3) ? "selected" : "" ?>>活動票券</option>
-                                            <option value='4' <?php ($category == 4) ? "selected" : "" ?>>寵物周邊>寵物外出用品</option>
-                                            <option value='5' <?php ($category == 5) ? "selected" : "" ?>>寵物周邊>寵物飼料</option>
-                                            <option value='6' <?php ($category == 6) ? "selected" : "" ?>>寵物周邊>寵物玩具</option>
-                                            <option value='7' <?php ($category == 7) ? "selected" : "" ?>>寵物周邊>寵物保健</option>
-
+                                            <!-- 家豪: 改用資料庫連動下拉式選單 -->
+                                            <?php while ($rowP = $resultP->fetch_assoc()) : ?>
+                                                <option value='<?= $rowP["id"] ?>' <?php if ($rowP["id"] == $row["product_category"]) {
+                                                                                        echo "selected";
+                                                                                    } ?>> <?= $rowP['name'] ?></option>
+                                            <?php endwhile; ?>
                                         </select>
                                         <label for="">商品簡述**</label>
                                         <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control" value="<?= $row['intro'] ?>" required>
@@ -377,12 +387,13 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <label for="">下架時間**</label>
                                         <input type="datetime-local" name="valid_end" class="form-control" value="<?= $row['valid_time_end'] ?>" required>
                                         <label for="">搭配優惠方案**</label><br>
-                                        <select name='coupon' class="form-control">
-                                            <option value='1'>折數優惠券</option>
-                                            <option value='2'>現金折價券</option>
-                                            <option value='3'>商品優惠方案</option>
-                                            <option value='4'>折數優惠+現金折價</option>
-                                            <option value='5' selected>全方案適用</option>
+                                        <select name='coupon_id' class="form-control">
+                                            <!-- 家豪: 改用資料庫連動下拉式選單 -->
+                                            <?php while ($rowC = $resultC->fetch_assoc()) : ?>
+                                                <option value='<?= $rowC["id"] ?>' <?php if ($rowC["id"] == $row["coupon_id"]) {
+                                                                                        echo "selected";
+                                                                                    } ?>> <?= $rowC['name'] ?></option>
+                                            <?php endwhile; ?>
                                         </select>
                                         <!--
                                         <label for="">商品更新時間</label>

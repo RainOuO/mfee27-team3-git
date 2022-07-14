@@ -9,6 +9,11 @@
     font-family: 'Noto Sans TC', sans-serif;
 }
 
+img, .swiper-wrapper {
+    user-select: none;
+    -webkit-user-select: none;
+}
+
 a {
     text-decoration: none;
     color: var(--menu-text-color);

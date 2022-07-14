@@ -18,9 +18,20 @@ $pageType = (isset($_GET['type'])&&!empty($_GET['type']))?$_GET['type']:'0';
 
 require("../db-connect.php");
 
-$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
 $storeID = $_SESSION['user']['id'];
+
+$type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
+//第二階段 : 加入store_id 取值
 $type = $_GET["type"];
+
+
+//拉 discount_store 資料庫放入下拉式選單
+$sql = "SELECT * FROM discount_store WHERE valid = 1 AND buyer_valid = 1 ";
+$result = $conn->query($sql);
+
+//拉 product_class 資料庫放入下拉式選單
+$sqlP = "SELECT * FROM product_class ";
+$resultP = $conn->query($sqlP);
 // echo $type;
 
 require('../template/dashboard.php');

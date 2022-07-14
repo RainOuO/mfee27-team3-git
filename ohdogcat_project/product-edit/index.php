@@ -17,7 +17,6 @@ $pageType = (isset($_GET['type'])&&!empty($_GET['type']))?$_GET['type']:'0';
 
 
 require("../db-connect.php");
-
 if (!isset($_GET['id'])) {
     //Enhance-TO-DO: redirect to product not found page.
     echo "沒有資料";
@@ -25,19 +24,33 @@ if (!isset($_GET['id'])) {
 }
 $type = isset($_GET["type"]) && !empty($_GET["type"]) ? $_GET["type"] : "";
 $category = $_GET["category"];
-$storeID = "";
+$storeID = $_SESSION['user']['id'];
 $id = $_GET["id"];
+
 
 //TO-DO
 //商品id 使用seesion?
 // $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
-$sql = "SELECT product.*, discount_category.id AS coupon_id_new,
-discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
-INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+$sql = "SELECT product.*, discount_store.id AS coupon_id_store,
+discount_store.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
+INNER JOIN discount_store ON discount_store.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
 WHERE product.valid = 1 and product.id = $id";
+
+
+
 $result = $conn->query($sql);
 
 $product_count = $result->num_rows; //取得資料筆數 
+
+// echo $category;
+
+//拉 discount_store 資料庫放入下拉式選單
+$sqlC = "SELECT * FROM discount_store WHERE valid = 1 AND buyer_valid = 1 ";
+$resultC = $conn->query($sqlC);
+
+//拉 product_class 資料庫放入下拉式選單
+$sqlP = "SELECT * FROM product_class ";
+$resultP = $conn->query($sqlP);
 
 require('../template/dashboard.php');
 ?>

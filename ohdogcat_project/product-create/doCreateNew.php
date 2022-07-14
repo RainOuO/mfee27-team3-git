@@ -30,7 +30,7 @@ echo $valid_start;
 echo $valid_end; 
 
 
-$coupon = $_POST["coupon"];
+$coupon = $_POST["coupon_id"];
 $now = date('Y-m-d H:i:s');
 $stock = $_POST["stock"];
 $description = $_POST["description"];

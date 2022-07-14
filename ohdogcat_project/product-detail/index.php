@@ -29,9 +29,9 @@ $id = $_GET["id"];
 //商品id 使用seesion?
 // require("./doproducts.php");
 // $sql = "SELECT * FROM product WHERE valid=1 AND id = $id";
-$sql = "SELECT product.*, discount_category.id AS coupon_id_new,
-discount_category.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
-INNER JOIN discount_category ON discount_category.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
+$sql = "SELECT product.*, discount_store.id AS coupon_id_store,
+discount_store.name AS coupon_name, product_class.id AS p_id, product_class.name AS category_name FROM (product 
+INNER JOIN discount_store ON discount_store.id = product.coupon_id ) INNER JOIN product_class ON product_class.id = product.product_category
 WHERE product.valid = 1 and product.id = $id";
 
 // $sql = $storeID ? "AND store_id = $storeID" : "";

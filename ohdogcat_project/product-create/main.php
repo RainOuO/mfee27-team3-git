@@ -2,7 +2,6 @@
     <input type="hidden" name="type" value="<?= $type ?>" />
     <div class="d-flex justify-content-between align-items-center m-2">
         <div class="title d-flex">
-            <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
             <h4 class="pt-3">基本設定(**項目為必填不可空白)</h4>
         </div>
     </div>
@@ -11,19 +10,19 @@
         <div class="photobar d-flex flex-column col-5">
             <div class="photo-window d-flex flex-column  ">
                 <div class="cover-photo m-3">
-                    <img src="./IMAGES/no_img.png" alt="" id="preview_cover_img" src="#">
+                    <img src="../IMAGES/no_img.png" alt="" id="preview_cover_img" src="#">
                 </div>
                 <div class="swiper mySwiper">
                     <div class="swiper-wrapper">
-                        <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt=""
+                        <div class="swiper-slide photo1"><img class="" src="../IMAGES/no_img.png" alt=""
                                 id="preview_sub_img1" src="#"></div>
-                        <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt=""
+                        <div class="swiper-slide photo1"><img class="" src="../IMAGES/no_img.png" alt=""
                                 id="preview_sub_img2" src="#"></div>
-                        <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt=""
+                        <div class="swiper-slide photo1"><img class="" src="../IMAGES/no_img.png" alt=""
                                 id="preview_sub_img3" src="#"></div>
-                        <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt=""
+                        <div class="swiper-slide photo1"><img class="" src="../IMAGES/no_img.png" alt=""
                                 id="preview_sub_img4" src="#"></div>
-                        <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt=""
+                        <div class="swiper-slide photo1"><img class="" src="../IMAGES/no_img.png" alt=""
                                 id="preview_sub_img5" src="#"></div>
                         <!-- <div class="swiper-slide photo1"><img class="" src="./IMAGES/no_img.png" alt="" id="preview_sub_imgs" src="#"></div> -->
                     </div>
@@ -63,14 +62,9 @@
             <input type="text" name="name" placeholder="最多輸入20字元，禁用特殊符號" class="form-control" value="" required>
             <label for="">商品分類**</label>
             <select name='category' class="form-control" required>
-                <!-- TO-DO 連動category -->
-                <option value='1'>旅遊票券</option>
-                <option value='2'>餐廳票券</option>
-                <option value='3'>活動票券</option>
-                <option value='4'>寵物周邊>寵物外出用品</option>
-                <option value='5'>寵物周邊>寵物飼料</option>
-                <option value='6'>寵物周邊>寵物玩具</option>
-                <option value='7'>寵物周邊>寵物保健</option>
+                <?php while ($rowP = $resultP->fetch_assoc()) : ?>
+                <option value='<?= $rowP["id"] ?>'> <?= $rowP['name'] ?></option>
+                <?php endwhile; ?>
             </select>
             <label for="">商品簡述</label>
             <input type="text" name="intro" placeholder="最多輸入50字元，至少10個字" class="form-control">
@@ -79,7 +73,6 @@
             <!-- <label for="">商品規格</label>
                                     <input type="text" name="spec" placeholder="自由增建選項" class="form-control"required> -->
             <div class="d-flex mt-2">
-                <img src="./IMAGES/8666681_edit_icon.png" width="48" height="48" alt="">
                 <h3 class="pt-3">進階設定</h3>
             </div>
             <hr>
@@ -88,13 +81,10 @@
             <label for="">下架時間</label>
             <input type="datetime-local" name="valid_end" class="form-control" required>
             <label for="">優惠券方案使用</label><br>
-            <select name='coupon' class="form-control">
-                <!-- <option value=''>無優惠</option> -->
-                <option value='1'>折數優惠券</option>
-                <option value='2'>現金折價券</option>
-                <option value='3'>商品優惠方案</option>
-                <option value='4'>折數優惠+現金折價</option>
-                <option value='5' selected>全方案適用</option>
+            <select name='coupon_id' class="form-control">
+                <?php while ($row = $result->fetch_assoc()) : ?>
+                <option value='<?= $row["id"] ?>'> <?= $row['name'] ?></option>
+                <?php endwhile; ?>
             </select>
             <!-- <label for="">商品更新時間</label>
                                     <input type="date" name="create_time" placeholder="自由增建選項" class="form-control" hidden> -->
