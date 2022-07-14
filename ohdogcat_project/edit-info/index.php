@@ -11,6 +11,7 @@ $filterSection = "./filter-section.php";
 $footer = false;
 $current = 'store-info';
 $pageType = false;
+$title = '編輯商家資料';
 
 
 $accout = $_SESSION["user"]['account'];
@@ -32,6 +33,7 @@ $userCount = $result->num_rows;
 $results = $conn->query($sql);
 $row = $result->fetch_assoc(); //撈所有使用者
 $rowss = $results->fetch_all(MYSQLI_ASSOC);
+var_dump($rowss);
 
 $typeArr = explode(',', $row["store_right"]);
 

@@ -11,6 +11,8 @@ $filterSection = './filter-section.php';
 $footer = false;
 $current = 'letter-box';
 $pageType = (isset($_GET['type'])&&!empty($_GET['type']))?$_GET['type']:'0';
+$title = '信件匣';
+
 require("../db-connect.php");
 
 

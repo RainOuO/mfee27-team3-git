@@ -11,6 +11,7 @@ $filterSection = "./filter-section.php";
 $footer = "./footer.php";
 $current = 'discount';
 $pageType = '2';
+$title = '優惠活動列表';
 
 
 require('../db-connect.php');

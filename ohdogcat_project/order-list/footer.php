@@ -1,4 +1,4 @@
-<div class="d-flex justify-content-center">
+<div class="d-flex justify-content-center footer-page">
     <ul class="pagination m-0">
         <li class="page-item">
             <a class="page-link <?= ($page-1<1)? 'current-active':''; ?>" 

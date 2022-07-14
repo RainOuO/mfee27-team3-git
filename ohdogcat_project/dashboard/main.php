@@ -40,7 +40,7 @@
                         <div class="card-content col-8">
                             <div class="col">
                                 <p class="row-2 card-title">今日訂單數</p>
-                                <h3 class="fs-3  row-10 card-text "><span class="dashboard-data"></span> <span class="fs-5">單</span></h3>
+                                <h3 class="fs-3  row-10 card-text "><span class="dashboard-data"></span> <span class="fs-5">筆</span></h3>
                             </div>
                         </div>
                     </div>
@@ -56,7 +56,7 @@
                         </div>
                         <div class="card-content col-8">
                             <p class="card-title">未處理訂單</p>
-                            <h3 class="fs-3  row-10 card-text "><span class="dashboard-data"></span> <span class="fs-5">封</span></h3>
+                            <h3 class="fs-3  row-10 card-text "><span class="dashboard-data"></span> <span class="fs-5">筆</span></h3>
                         </div>
                     </div>
                 </div>
@@ -73,7 +73,7 @@
                             <h5 style="
     border-bottom: 2px solid #E6E9ED;
     padding: 1px 5px 6px;
-    margin-bottom: 10px;">每日訂單數統計</h5>
+    margin-bottom: 10px;">近七日訂單數統計</h5>
                         </div>
                         <canvas id="lineChart"></canvas>
                     </div>
@@ -90,7 +90,7 @@
                                 <h5 style="
     border-bottom: 2px solid #E6E9ED;
     padding: 1px 5px 6px;
-    margin-bottom: 10px;">訂單狀態</h5>
+    margin-bottom: 10px;">近七日訂單狀態</h5>
                             </div>
                             <canvas id="barChart" height="320%"></canvas>
                         </div>

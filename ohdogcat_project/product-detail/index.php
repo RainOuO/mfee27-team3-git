@@ -11,6 +11,7 @@ $filterSection = "./filter-section.php";
 $footer = false;
 $current = 'products';
 $pageType = (isset($_GET['type'])&&!empty($_GET['type']))?$_GET['type']:'0';
+$title = '查看商品';
 
 
 

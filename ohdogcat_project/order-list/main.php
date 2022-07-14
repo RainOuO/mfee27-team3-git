@@ -48,7 +48,7 @@
             <?php endfor; ?>
         </tbody>
     </table>
-    <div class="row">
+    <!-- <div class="row">
         <div class="col-12">
             <form action="doMessage.php">
                 <textarea class="form-control textarea" id="exampleFormControlTextarea1" rows="3" name="message" required placeholder="請輸入訊息" ></textarea>
@@ -59,7 +59,7 @@
                 </div>
             </form>
         </div>
-    </div>
+    </div> -->
 
     <!-- offcanvas -->
     <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasOrderList"

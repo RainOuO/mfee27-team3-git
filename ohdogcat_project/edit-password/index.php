@@ -11,6 +11,7 @@ $filterSection = "./filter-section.php";
 $footer = false;
 $current = 'store-info';
 $pageType = false;
+$title = '更改密碼';
 
 
 $accout = $_SESSION["user"]['account'];

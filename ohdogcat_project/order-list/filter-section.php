@@ -14,7 +14,7 @@
         </div>
         <div class="filters ms-2" id="searchbykey" style="display:block; width: 360px;">
             <div class="d-flex keywordBar row gx-1">
-                <input id="keyword" type="text" class="form-control col me-2" name="keyword" placeholder="輸入關鍵字"
+                <input id="keyword" type="text" class="form-control col me-2" name="keyword" placeholder="請輸入訂單序號/暱稱"
                     value="<?=$search?>">
                 <button class="col-2 btn filterBtn go-filter me-2" type="button">搜尋</button>
                 <a href="?status=<?=$status?>&order=<?=$order?>&sort=<?=$sort?>&priceMin=<?=$priceMin?>&priceMax=<?=$priceMax?>&dateStart=<?=$dateStart?>&dateEnd=<?=$dateEnd?>&search=&page=<?=$page?>" class="col-2 btn filterBtn">清空</a>

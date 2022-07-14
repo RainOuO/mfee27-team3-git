@@ -11,6 +11,8 @@ $filterSection = "./filter-section.php";
 $footer = "./footer.php";
 $current = 'order-list';
 $pageType = false;
+$title = '訂單列表';
+
 
 
 require('../db-connect.php');

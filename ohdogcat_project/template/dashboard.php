@@ -2,7 +2,7 @@
 <html lang="en">
 
 <head>
-    <title>Title</title>
+    <title><?=$title?></title>
     <!-- Required meta tags -->
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
@@ -10,8 +10,10 @@
     <meta http-equiv="pragma" content="no-cache">
     <meta http-equiv="expires" content="0">
     <meta http-equiv="cache-control" content="no-cache">
+    
 
     <!-- Bootstrap CSS v5.2.0-beta1 -->
+    
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css"
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <link rel="stylesheet" href="<?=$path?>template/css/custom-bs.css">
@@ -19,6 +21,7 @@
     <link rel="stylesheet" href="<?= $css ?>">
     <link rel="stylesheet" type="text/css" href="https://cdn.jsdelivr.net/npm/toastify-js/src/toastify.min.css">
     <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css" />
+    <link rel="icon" href="../images/store_photo/Sample_User_Icon.svg" type="image/x-icon"/>
 
 
 </head>
@@ -110,7 +113,7 @@
                 </ul>
             </nav>
             <div class="menu-box mt-2 flex-shrink-0 logout">
-                <div class="menu-item"><a href="../login/doLogout.php" class="menu-button no-accordion icon-logout">粗企玩</a></div>
+                <div class="menu-item"><a id="logout" class="menu-button no-accordion icon-logout" style="cursor: pointer;">粗企玩</a></div>
             </div>
         </aside>
         <div class="content-wrap vh-100">
@@ -158,6 +161,25 @@
     <script>
         // activeBtn event.preventDefault()
         let activeBtn = document.getElementsByClassName('current-active');
+        let logoutBtn = document.querySelector('#logout')
+        logoutBtn.addEventListener('click', function(e){
+            e.preventDefault();
+            Swal.fire({
+            title: '確定要登出嗎？',
+            icon: 'info',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: 'grey',
+            cancelButtonText:'我按錯了我是笨蛋',
+            confirmButtonText: '確定'
+            }).then((result) => {
+            /* Read more about isConfirmed, isDenied below */
+            if (result.isConfirmed) {
+                location.href = '../login/doLogout.php';
+            } else if (result.isDenied) {
+            }
+            })
+        });
         for(let i=0; i<activeBtn.length; i++) {
             activeBtn[i].onclick = function (event) {
                 event.preventDefault();

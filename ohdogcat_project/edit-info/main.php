@@ -1,6 +1,6 @@
 <div class="d-flex my-4">
     <div class="my-2 imgALL ">
-        <?php foreach ($rowss as $rowa) : ?>
+        <?php foreach ($rowss as $rowa) :  var_dump($rowa);?>
         <div class="mx-auto" style="width: 300px; height: 300px;">
             <?php if (isset($rowa["photo"]) == null) : ?>
             <img id="previewUP" class="object-contain" src="../images/store_photo/Sample_User_Icon.svg" alt="">

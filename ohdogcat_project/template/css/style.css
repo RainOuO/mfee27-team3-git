@@ -3,7 +3,9 @@
 :root {
     --menu-text-color: #222934;
 }
-
+.footer-page .page-link {
+    color: #49586f;
+}
 * {
     -webkit-user-drag: none;
     font-family: 'Noto Sans TC', sans-serif;
@@ -54,10 +56,11 @@ a {
     box-shadow: none;
 }
 
+.content-footer .current-active,
 .content-footer .current-active:active,
 .content-footer .current-active:focus, 
 .content-footer .current-active:hover{
-    color: #adadad;
+    color: #adadad!important;
     background-color: #fff;
 }
 

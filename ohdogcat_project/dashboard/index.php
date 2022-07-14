@@ -11,5 +11,6 @@ $filterSection = "./filter-section.php";
 $footer = false;
 $current = 'dashboard';
 $pageType = false;
+$title = '狀態總覽';
 require('../template/dashboard.php');
 ?>

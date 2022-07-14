@@ -11,6 +11,7 @@ $filterSection = "./filter-section.php";
 $footer = false;
 $current = 'store-info';
 $pageType = false;
+$title = '商家設定';
 
 
 

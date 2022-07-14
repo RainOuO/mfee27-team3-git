@@ -11,6 +11,8 @@ $filterSection = false;
 $footer = './footer.php';
 $current = 'letter-box';
 $pageType = false;
+$title = '回覆';
+
 require("../db-connect.php");
 
 
