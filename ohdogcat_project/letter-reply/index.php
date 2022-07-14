@@ -22,7 +22,7 @@ $user_id = $_GET['user_id'];
 $store_id = $_SESSION['user']['id'];
 
 // 抓取 letter資料表內容，且只有 user_id AND $store_id資料
-$sql = "SELECT * FROM letter where user_id = '$user_id' AND (store_id = '$store_id' OR store_id IS NULL)";
+$sql = "SELECT * FROM letter where user_id = '$user_id' AND (store_id IN ('$store_id', 0))";
 $result = $conn->query($sql);
 $letterCount = $result->num_rows;
 $rows = $result->fetch_all(MYSQLI_ASSOC);
@@ -36,6 +36,7 @@ $rowsUserName = $resultUserName -> fetch_assoc();
 $sqlStoreName = "SELECT id, name, photo FROM store_info WHERE id = '$store_id'";
 $resultStoreName = $conn -> query($sqlStoreName);
 $rowsStoreName = $resultStoreName -> fetch_assoc();
+
 require("../template/dashboard.php");
 ?>
 <script>
