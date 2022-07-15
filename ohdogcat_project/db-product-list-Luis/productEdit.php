@@ -306,7 +306,7 @@ $resultP = $conn->query($sqlP);
                                     </div>
                                     <div class="crudBox">
                                         <button type="submit" class="btn filterBtn mx-1">儲存</button>
-                                        <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
+                                        <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>&type<?=$type?>'">取消返回</button>
                                     </div>
                                 </div>
                                 <hr>
@@ -417,7 +417,7 @@ $resultP = $conn->query($sqlP);
                                 <div class="d-flex justify-content-end">
                                     <div class="crudBox">
                                         <button type="submit" class="btn filterBtn mx-1">儲存</button>
-                                        <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>'">取消返回</button>
+                                        <button type="button" class="btn filterBtn ms-1" onclick="window.location.href='productDetail.php?store_id=<?= $storeID ?>&id=<?= $row['id'] ?>&type='">取消返回</button>
                                     </div>
                                 </div>
                 </div>

@@ -296,7 +296,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                     <div class="photo-window d-flex flex-column align-items-flex-start ">
                                         <div class="cover-photo">
                                             <?php if ($row["main_photo"] == '') : ?>
-                                                <img src="./IMAGES/doglogo.png" alt="">
+                                                <img src="./IMAGES/no_img.png" alt="">
                                             <?php else : ?>
                                                 <img src="./upload_main_photo/<?= $row['main_photo'] ?>" alt="">
                                             <?php endif; ?>
@@ -341,7 +341,7 @@ $product_count = $result->num_rows; //取得資料筆數
                                         <div type="datetime-local" name="spec" class=""><?= $row['valid_time_end'] ?></div>
                                         <label for="">優惠券方案使用</label>
                                         <!-- 家豪:更新連動取值 -->
-                                        <div name='dragdown' class="" name="coupon"><?= $row["coupon_name"] ?></div>
+                                        <div name='dragdown' class="" name="coupon_id"><?= $row["coupon_name"] ?></div>
                                         <!-- <label for="">商品更新時間</label>
                                         <div type="date" name="spec" class=""><?= $row['create_time'] ?></div> -->
                                         <label for="">商品庫存數</label>
